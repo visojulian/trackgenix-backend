@@ -5,9 +5,13 @@ import express from 'express';
 const admins = require('./data/admins.json');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
+
+const projectRouterJuli = require('./resources/projects');
+
+app.use('/projectsJuli', projectRouterJuli);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
