@@ -1,11 +1,13 @@
 // use "import" to import libraries
 import express from 'express';
+import { getAllEmployees, getEmployeeById, createNewEmployee } from './resources/employees';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
+// const employees = require('./data/employees.json');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
@@ -18,6 +20,10 @@ app.get('/admins', (req, res) => {
     data: admins,
   });
 });
+
+app.get('/getAllEmployees', getAllEmployees);
+app.get('/getEmployeeById/:id', getEmployeeById);
+app.post('/createNewEmployee', createNewEmployee);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
