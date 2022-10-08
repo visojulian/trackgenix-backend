@@ -29,6 +29,45 @@ const createNewEmployee = (req, res) => {
   });
 };
 
+// function edit an existing employee
+const editAnEmployee = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const employee = employees.find((element) => element.id === id);
+  if (employee) {
+    const index = employees.indexOf(employee);
+    const newEmployee = req.body;
+    employees[index] = newEmployee;
+    res.status(200).json({ data: employees });
+    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.status(404).json({ error: 'Employee not found' });
+  }
+};
+
+// function delete employee
+const deleteAnEmployee = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const employee = employees.find((element) => element.id === id);
+  if (employee) {
+    const deleteEmployee = req.body;
+    employees.push(deleteEmployee);
+    res.status(201).json({ deleteEmployee });
+    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.status(404).json({ error: 'Employee not found' });
+  }
+};
+
+// function to fillter all employees and get all employees by
+
 module.exports = {
-  getAllEmployees, getEmployeeById, createNewEmployee,
+  getAllEmployees, getEmployeeById, createNewEmployee, editAnEmployee, deleteAnEmployee,
 };
