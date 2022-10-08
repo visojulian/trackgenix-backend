@@ -1,6 +1,6 @@
 // use "import" to import libraries
 import express from 'express';
-import { getAllTimeSheets } from './resources/time-sheets';
+import { getAllTimeSheets, welcomeTimeSheets } from './resources/time-sheets';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
@@ -20,6 +20,7 @@ app.get('/admins', (req, res) => {
   });
 });
 
+app.get('/time-sheets', welcomeTimeSheets);
 app.get('/time-sheets/getAll', getAllTimeSheets);
 
 app.listen(port, () => {
