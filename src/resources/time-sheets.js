@@ -10,7 +10,29 @@ const getAllTimeSheets = (req, res) => {
   });
 };
 
+const filterTimeSheets = (req, res) => {
+  const filteredArray = [];
+  const idValue = parseInt(req.params.id, 10);
+  timeSheets.forEach((element) => {
+    console.log(element.id);
+    if (element.id === idValue) {
+      filteredArray.push(element);
+    }
+  });
+  console.log(filteredArray);
+  res.status(200).json({
+    filteredArray,
+  });
+};
+
+// const createTimeSheet = (req, res) => {
+//   res.status(200).json({
+//     data:
+//   });
+// };
+
 module.exports = {
   getAllTimeSheets,
   welcomeTimeSheets,
+  filterTimeSheets,
 };
