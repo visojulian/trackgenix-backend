@@ -36,9 +36,31 @@ const createTimeSheet = (req, res) => {
   });
 };
 
+const editTimeSheet = (req, res) => {
+  const idValue = parseInt(req.params.id, 10);
+  const editableTimeSheet = timeSheets.find((element) => element.id === idValue);
+
+  editableTimeSheet.id = req.body.id;
+  editableTimeSheet.startDate = req.body.startDate;
+  editableTimeSheet.endDate = req.body.endDate;
+  editableTimeSheet.description = req.body.description;
+
+  res.status(200).json({
+    timeSheets,
+  });
+  fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
+    if (err) {
+      res.send('Cannot save New Project');
+    } else {
+      res.send('Project Created');
+    }
+  });
+};
+
 module.exports = {
   getAllTimeSheets,
   welcomeTimeSheets,
   filterTimeSheets,
   createTimeSheet,
+  editTimeSheet,
 };
