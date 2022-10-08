@@ -57,10 +57,29 @@ const editTimeSheet = (req, res) => {
   });
 };
 
+const deleteTimeSheet = (req, res) => {
+  const idValue = parseInt(req.params.id, 10);
+  const removeThisTimesheet = timeSheets.find((element) => element.id === idValue);
+
+  timeSheets.splice(timeSheets.indexOf(removeThisTimesheet), 1);
+
+  res.status(200).json({
+    timeSheets,
+  });
+  fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
+    if (err) {
+      res.send('Cannot save New Project');
+    } else {
+      res.send('Project Created');
+    }
+  });
+};
+
 module.exports = {
   getAllTimeSheets,
   welcomeTimeSheets,
   filterTimeSheets,
   createTimeSheet,
   editTimeSheet,
+  deleteTimeSheet,
 };
