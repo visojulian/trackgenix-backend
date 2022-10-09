@@ -26,3 +26,15 @@ export const addAdmin = (req, res) => {
     }
   });
 };
+
+export const deleteAdmin = (req, res) => {
+  const adminId = req.params.id;
+  const filteredAdmin = admins.filter((admin) => admin.id !== parseInt(adminId, 10));
+  fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
+    if (err) {
+      res.send(`Cannot delete Admin with id ${req.params.id}, please check!`);
+    } else {
+      res.send('Admin has been deleted!');
+    }
+  });
+};
