@@ -27,8 +27,27 @@ const createTask = (req, res) => {
   });
 };
 
+const editTask = (req, res) => {
+  const taskId = parseInt(req.params.id, 10);
+  const putTask = tasks.find((task) => task.id === taskId);
+  if (putTask) {
+    const index = tasks.indexOf(putTask);
+    const newTask = req.body;
+    tasks[index] = newTask;
+    fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.status(200).json({ data: newTask });
+  } else {
+    res.status(404).json({ error: 'Task not found' });
+  }
+};
+
 module.exports = {
   getAllTasks,
   filterTasks,
   createTask,
+  editTask,
 };
