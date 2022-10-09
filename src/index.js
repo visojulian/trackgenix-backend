@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  superAdminAlls, getSuperAdminById, superAdminCreate,
+  superAdminAlls, getSuperAdminById, superAdminCreate, deleteSuperAdmin,
 } from './resources/super-admins';
 
 // use "require" to import JSON files
@@ -27,6 +27,8 @@ app.get('/superAdminAlls', superAdminAlls);
 app.get('/getSuperAdminById/:id', getSuperAdminById);
 
 app.post('/superAdminCreate', superAdminCreate);
+
+app.delete('/deleteSuperAdmin/:id', deleteSuperAdmin);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

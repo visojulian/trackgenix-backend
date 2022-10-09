@@ -27,6 +27,17 @@ const superAdminCreate = (req, res) => {
   });
 };
 
+const deleteSuperAdmin = (req, res) => {
+  const element = parseInt(req.params.id, 10);
+  const deleted = superAdmins.filter((superAdmin) => superAdmin.id !== element);
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(deleted, null, 2), () => {
+    if (!deleted) {
+      res.status(404).json({ error: 'Cannot delete super admin' });
+    } else {
+      res.status(200).json({ data: deleted });
+    }
+  });
+};
 module.exports = {
-  superAdminAlls, getSuperAdminById, superAdminCreate,
+  superAdminAlls, getSuperAdminById, superAdminCreate, deleteSuperAdmin,
 };
