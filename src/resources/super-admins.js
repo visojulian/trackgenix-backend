@@ -1,3 +1,4 @@
+const fs = require('fs');
 const superAdmins = require('../data/super-admins.json');
 
 const superAdminAlls = (req, res) => {
@@ -14,4 +15,18 @@ const getSuperAdminById = (req, res) => {
   }
 };
 
-module.exports = { superAdminAlls, getSuperAdminById };
+const superAdminCreate = (req, res) => {
+  const newSA = req.body;
+  superAdmins.push(newSA);
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
+    if (err) {
+      res.send('Cannot save New super admin');
+    } else {
+      res.send('super admin created');
+    }
+  });
+};
+
+module.exports = {
+  superAdminAlls, getSuperAdminById, superAdminCreate,
+};

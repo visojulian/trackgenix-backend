@@ -1,6 +1,8 @@
 // use "import" to import libraries
 import express from 'express';
-import { superAdminAlls, getSuperAdminById } from './resources/super-admins';
+import {
+  superAdminAlls, getSuperAdminById, superAdminCreate,
+} from './resources/super-admins';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
@@ -23,6 +25,8 @@ app.get('/admins', (req, res) => {
 app.get('/superAdminAlls', superAdminAlls);
 
 app.get('/getSuperAdminById/:id', getSuperAdminById);
+
+app.post('/superAdminCreate', superAdminCreate);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
