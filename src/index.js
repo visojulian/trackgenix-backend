@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllAdmins, getAdminsById,
+  getAllAdmins, getAdminsById, addAdmin,
 } from './resources/admins';
 
 const app = express();
@@ -15,6 +15,7 @@ app.get('/', async (req, res) => {
 
 app.get('/admins', getAllAdmins);
 app.get('/admins/:id', getAdminsById);
+app.post('/admins/add', addAdmin);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
