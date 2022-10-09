@@ -1,4 +1,4 @@
-// const fs = require('fs');
+const fs = require('fs');
 const tasks = require('../data/tasks.json');
 
 const getAllTasks = (req, res) => {
@@ -15,19 +15,20 @@ const filterTasks = (req, res) => {
   }
 };
 
-// const createTask = (req, res) => {
-//   const newTask = req.body;
-//   tasks.push(newTask);
-//   fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
-//     if (err) {
-//       res.send('Cannot save new task');
-//     } else {
-//       res.send('Task created');
-//     }
-//   });
-// };
+const createTask = (req, res) => {
+  const newTask = req.body;
+  tasks.push(newTask);
+  fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
+    if (err) {
+      res.status(404).json({ error: 'Cannot create new task' });
+    } else {
+      res.status(200).json({ data: 'Task created' });
+    }
+  });
+};
 
 module.exports = {
   getAllTasks,
   filterTasks,
+  createTask,
 };
