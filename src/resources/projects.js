@@ -1,5 +1,6 @@
 const fs = require('fs');
 const projects = require('../data/projects.json');
+const employeesData = require('../data/employees.json');
 
 // getAll projects
 const getAllProjects = (req, res) => {
@@ -66,6 +67,46 @@ const deleteProjects = (req, res) => {
   }
 };
 
+// Assign employee
+const assignEmployee = (req, res) => {
+  const projectId = parseInt(req.params.id, 10);
+  const foundProject = projects.find((project) => project.id === projectId);
+  if (foundProject) {
+    // validar si employee ya esta asignado
+    const alreadyAssigned = (foundProject.employees.some(
+      (employee) => employee.id === req.body.id,
+    ));
+      // validar si body esta vacio
+    const emptyBody = JSON.stringify(req.body) === '{}';
+    // validar si employee.id existe en employees.json
+    const employeeExists = (employeesData.some(
+      (employee) => employee.id === req.body.id,
+    ));
+    if (!emptyBody && !alreadyAssigned && employeeExists && req.body.rate >= 0) {
+      ((foundProject.employees).push(req.body));
+      fs.writeFile('src/data/projects.json', JSON.stringify(projects), (err) => {
+        if (err) {
+          res.status(500).json({ msg: `Cannot assign employees. ${err}`, error: true });
+        } else {
+          res.status(202).json({ msg: 'Employee assign', foundProject, error: false });
+        }
+      });
+    } else {
+      res.status(404).json({
+        msg: {
+          alreadyAssigned,
+          emptyBody,
+          employeeDoesNotExists: !employeeExists,
+          employeeRate: 'Employee Rate cannot be negative',
+        },
+        error: true,
+      });
+    }
+  } else {
+    res.status(404).json({ msg: `Project not found by id: ${projectId}`, error: true });
+  }
+};
+
 module.exports = {
-  getAllProjects, getActiveProjects, getProjectById, updateProjects, deleteProjects,
+  getAllProjects, getActiveProjects, getProjectById, updateProjects, deleteProjects, assignEmployee,
 };
