@@ -19,19 +19,23 @@ const getAdminsById = (req, res) => {
 
 // CREATE AN ADMIN
 const addAdmin = (req, res) => {
+  const adminId = Number(req.body.id);
+  const oneAdmin = admins.find((admin) => admin.id === adminId);
   const newAdmin = req.body;
   if (JSON.stringify(newAdmin) === '{}') {
     res.status(400).json({ msg: 'Error! Cannot create an empty Admin' });
+  } else if (oneAdmin) {
+    res.status(400).json({ msg: 'Admin already exists!' });
   } else {
     admins.push(newAdmin);
+    fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
+      if (err) {
+        res.status(400).json({ msg: 'Error! Cannot create new Admin' });
+      } else {
+        res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
+      }
+    });
   }
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-    if (err) {
-      res.status(400).json({ msg: 'Error! Cannot create new Admin' });
-    } else {
-      res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
-    }
-  });
 };
 
 // DELETE AN ADMIN
@@ -40,7 +44,7 @@ const deleteAdmin = (req, res) => {
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   const oneAdmin = admins.find((admin) => admin.id === adminId);
   if (!oneAdmin) {
-    res.status(400).json({ msg: `Cannot delete Admin with id ${req.params.id}, because it doesent exist!` });
+    res.status(400).json({ msg: `Cannot delete Admin with id ${req.params.id}, because it does not exist!` });
   }
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
@@ -78,6 +82,13 @@ const editAdmin = (req, res) => {
 // SEARCH ADMINS BY FILTERS
 const filterAdmin = (req, res) => {
   let filterByParams = admins;
+  // Checking that the user uses the correct filter params.
+  const queriesArray = Object.keys(req.query);
+  queriesArray.forEach((query) => {
+    if (query !== 'id' && query !== 'name' && query !== 'lastName' && query !== 'email') {
+      res.status(400).json({ msg: 'The filter you apply does not exist!' });
+    }
+  });
 
   if (req.query.id) {
     filterByParams = filterByParams.filter(

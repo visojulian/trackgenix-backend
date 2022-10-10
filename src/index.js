@@ -1,7 +1,12 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllAdmins, getAdminsById, addAdmin, deleteAdmin, editAdmin, filterAdmin,
+  getAllAdmins,
+  getAdminsById,
+  addAdmin,
+  deleteAdmin,
+  editAdmin,
+  filterAdmin,
 } from './resources/admins';
 
 const app = express();
