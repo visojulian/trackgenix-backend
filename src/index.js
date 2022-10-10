@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllTasks, getTasks, createTask, editTask, deleteTask,
+  getAllTasks, getTasks, createTask, editTask, deleteTask, filterTasks,
 } from './resources/tasks';
 
 // use "require" to import JSON files
@@ -32,7 +32,7 @@ app.put('/tasks/edit/:id', editTask);
 
 app.delete('/tasks/delete/:id', deleteTask);
 
-// app.get('/tasks/filter', filterTasks);
+app.get('/tasks/filter', filterTasks);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

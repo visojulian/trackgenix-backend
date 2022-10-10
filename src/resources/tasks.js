@@ -66,23 +66,23 @@ const deleteTask = (req, res) => {
   });
 };
 
-// const filterTasks = (req, res) => {
-//   let filteredTasks = tasks;
+const filterTasks = (req, res) => {
+  let filteredTasks = tasks;
 
-//   if (req.query.id) {
-//     filteredTasks = filteredTasks.filter((task) => task.id === req.query.id);
-//   }
+  if (req.query.id) {
+    filteredTasks = filteredTasks.filter((task) => task.id === req.query.id);
+  }
 
-//   if (req.query.title) {
-//     filteredTasks = filteredTasks.filter((task) => task.title === req.query.title);
-//   }
+  if (req.query.title) {
+    filteredTasks = filteredTasks.filter((task) => task.title === req.query.title);
+  }
 
-//   if (req.query.description) {
-//     filteredTasks = filteredTasks.filter((task) => task.description === req.query.description);
-//   }
+  if (req.query.description) {
+    filteredTasks = filteredTasks.filter((task) => task.description === req.query.description);
+  }
 
-//   res.status(200).json({ filteredTasks });
-// };
+  res.status(200).json({ filteredTasks });
+};
 
 module.exports = {
   getAllTasks,
@@ -90,4 +90,5 @@ module.exports = {
   createTask,
   editTask,
   deleteTask,
+  filterTasks,
 };
