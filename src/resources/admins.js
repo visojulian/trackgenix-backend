@@ -43,9 +43,33 @@ const deleteAdmin = (req, res) => {
   });
 };
 
+const editAdmin = (req, res) => {
+  const adminId = Number(req.params.id);
+  const oneAdmin = admins.find((admin) => admin.id === adminId);
+  if (oneAdmin) {
+    const updateAdmin = req.body;
+    admins.forEach((admin) => {
+      if (admin.id === adminId) {
+        oneAdmin.name = updateAdmin.name ? updateAdmin.name : oneAdmin.name;
+        oneAdmin.lastName = updateAdmin.lastName ? updateAdmin.lastName : oneAdmin.lastName;
+        oneAdmin.email = updateAdmin.email ? updateAdmin.email : oneAdmin.email;
+        oneAdmin.password = updateAdmin.password ? updateAdmin.password : oneAdmin.password;
+      }
+    });
+  }
+  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
+    if (err) {
+      res.send('Error! Cannot update Admin');
+    } else {
+      res.send(`Admin ${req.params.id} has been updated successfully!`);
+    }
+  });
+};
+
 module.exports = {
   getAllAdmins,
   getAdminsById,
   addAdmin,
   deleteAdmin,
+  editAdmin,
 };
