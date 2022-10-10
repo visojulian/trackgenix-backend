@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllAdmins, getAdminsById, addAdmin, deleteAdmin, editAdmin,
+  getAllAdmins, getAdminsById, addAdmin, deleteAdmin, editAdmin, filterAdmin,
 } from './resources/admins';
 
 const app = express();
@@ -15,6 +15,7 @@ app.get('/', async (req, res) => {
 
 app.get('/admins', getAllAdmins);
 app.get('/admins/:id', getAdminsById);
+app.get('/admins/filter/search', filterAdmin);
 app.post('/admins/add', addAdmin);
 app.put('/admins/edit/:id', editAdmin);
 app.delete('/admins/delete/:id', deleteAdmin);

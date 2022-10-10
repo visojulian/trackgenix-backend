@@ -66,10 +66,39 @@ const editAdmin = (req, res) => {
   });
 };
 
+const filterAdmin = (req, res) => {
+  let filterByParams = admins;
+
+  if (req.query.id) {
+    filterByParams = filterByParams.filter(
+      (admin) => admin.id === Number(req.query.id),
+    );
+  }
+  if (req.query.name) {
+    filterByParams = filterByParams.filter(
+      (admin) => admin.name === req.query.name,
+    );
+  }
+  if (req.query.lastName) {
+    filterByParams = filterByParams.filter(
+      (admin) => admin.lastName === req.query.lastName,
+    );
+  }
+  if (req.query.email) {
+    filterByParams = filterByParams.filter(
+      (admin) => admin.email === req.query.email,
+    );
+  }
+  res.status(200).json({
+    filterByParams,
+  });
+};
+
 module.exports = {
   getAllAdmins,
   getAdminsById,
   addAdmin,
   deleteAdmin,
   editAdmin,
+  filterAdmin,
 };
