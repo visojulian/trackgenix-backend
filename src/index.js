@@ -2,7 +2,7 @@
 import express from 'express';
 import {
   getAllTimeSheets, welcomeTimeSheets, filterTimeSheets, createTimeSheet, editTimeSheet,
-  deleteTimeSheet,
+  deleteTimeSheet, getTimeSheet,
 } from './resources/time-sheets';
 
 // use "require" to import JSON files
@@ -25,7 +25,8 @@ app.get('/admins', (req, res) => {
 
 app.get('/time-sheets', welcomeTimeSheets);
 app.get('/time-sheets/getAll', getAllTimeSheets);
-app.get('/time-sheets/filter/:id', filterTimeSheets);
+app.get('/time-sheets/get/:id', getTimeSheet);
+app.get('/time-sheets/filter', filterTimeSheets);
 app.post('/time-sheets/create', createTimeSheet);
 app.put('/time-sheets/edit/:id', editTimeSheet);
 app.delete('/time-sheets/delete/:id', deleteTimeSheet);

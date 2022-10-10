@@ -11,7 +11,7 @@ const getAllTimeSheets = (req, res) => {
   });
 };
 
-const filterTimeSheets = (req, res) => {
+const getTimeSheet = (req, res) => {
   const filteredArray = [];
   const idValue = parseInt(req.params.id, 10);
   timeSheets.forEach((element) => {
@@ -19,6 +19,38 @@ const filterTimeSheets = (req, res) => {
       filteredArray.push(element);
     }
   });
+  res.status(200).json({
+    filteredArray,
+  });
+};
+
+const filterTimeSheets = (req, res) => {
+  let filteredArray = timeSheets;
+
+  if (req.query.id) {
+    filteredArray = filteredArray.filter(
+      (element) => element.id === req.query.id,
+    );
+  }
+
+  if (req.query.startDate) {
+    filteredArray = filteredArray.filter(
+      (element) => element.startDate === req.query.startDate,
+    );
+  }
+
+  if (req.query.endDate) {
+    filteredArray = filteredArray.filter(
+      (element) => element.endDate === req.query.endDate,
+    );
+  }
+
+  if (req.query.description) {
+    filteredArray = filteredArray.filter(
+      (element) => element.description === req.query.description,
+    );
+  }
+
   res.status(200).json({
     filteredArray,
   });
@@ -37,7 +69,7 @@ const createTimeSheet = (req, res) => {
 };
 
 const editTimeSheet = (req, res) => {
-  const idValue = parseInt(req.params.id, 10);
+  const idValue = Number(req.params.id);
   const editableTimeSheet = timeSheets.find((element) => element.id === idValue);
 
   editableTimeSheet.id = req.body.id;
@@ -61,6 +93,10 @@ const deleteTimeSheet = (req, res) => {
   const idValue = parseInt(req.params.id, 10);
   const removeThisTimesheet = timeSheets.find((element) => element.id === idValue);
 
+  if (removeThisTimesheet === undefined) {
+    res.send('The timesheet you are trying to delete does not exist.');
+  }
+
   timeSheets.splice(timeSheets.indexOf(removeThisTimesheet), 1);
 
   res.status(200).json({
@@ -68,9 +104,9 @@ const deleteTimeSheet = (req, res) => {
   });
   fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
     if (err) {
-      res.send('Cannot save New Project');
+      res.send('Created New Project');
     } else {
-      res.send('Project Created');
+      res.send('Cannot delete');
     }
   });
 };
@@ -82,4 +118,5 @@ module.exports = {
   createTimeSheet,
   editTimeSheet,
   deleteTimeSheet,
+  getTimeSheet,
 };
