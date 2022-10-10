@@ -38,6 +38,66 @@ const deleteSuperAdmin = (req, res) => {
     }
   });
 };
+
+const editSuperAdmin = (req, res) => {
+  const element = parseInt(req.params.id, 10);
+  const editSA = superAdmins.find((superAdmin) => superAdmin.id === element);
+
+  editSA.id = req.body.id;
+  editSA.name = req.body.name;
+  editSA.lastName = req.body.lastName;
+  editSA.email = req.body.email;
+  editSA.password = req.body.password;
+
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
+    if (err) {
+      res.status(404).json({ error: 'Cannot edit super admin' });
+    } else {
+      res.status(200).json({ superAdmins });
+    }
+  });
+};
+
+const filterAdmin = (req, res) => {
+  let filterSuperAdmin = superAdmins;
+  const queriesArray = Object.keys(req.query);
+
+  queriesArray.forEach((query) => {
+    if (query !== 'id' && query !== 'name' && query !== 'lastName' && query !== 'email') {
+      res.status(400).json({
+        message: 'one or more filters do not exist',
+      });
+    }
+  });
+
+  if (req.query.id) {
+    filterSuperAdmin = filterSuperAdmin.filter(
+      (superAdmin) => superAdmin.id === Number(req.query.id),
+    );
+  }
+  if (req.query.name) {
+    filterSuperAdmin = filterSuperAdmin.filter(
+      (superAdmin) => superAdmin.name === req.query.name,
+    );
+  }
+  if (req.query.lastName) {
+    filterSuperAdmin = filterSuperAdmin.filter(
+      (superAdmin) => superAdmin.lastName === req.query.lastName,
+    );
+  }
+  if (req.query.email) {
+    filterSuperAdmin = filterSuperAdmin.filter(
+      (superAdmin) => superAdmin.email === req.query.email,
+    );
+  }
+  res.status(200).json({ filterSuperAdmin });
+};
+
 module.exports = {
-  superAdminAlls, getSuperAdminById, superAdminCreate, deleteSuperAdmin,
+  superAdminAlls,
+  getSuperAdminById,
+  superAdminCreate,
+  deleteSuperAdmin,
+  editSuperAdmin,
+  filterAdmin,
 };
