@@ -1,12 +1,10 @@
 const fs = require('fs');
 const employees = require('../data/employees.json');
 
-// function to get all employees
 const getAllEmployees = (req, res) => {
   res.status(200).json({ data: employees });
 };
 
-// function to get employee by id
 const getEmployeeById = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const employee = employees.find((element) => element.id === id);
@@ -17,7 +15,6 @@ const getEmployeeById = (req, res) => {
   }
 };
 
-// function create employee
 const createNewEmployee = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const employee = employees.find((element) => element.id === id);
@@ -38,7 +35,6 @@ const createNewEmployee = (req, res) => {
   }
 };
 
-// function edit an existing employee
 const editAnEmployee = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const employee = employees.find((element) => element.id === id);
@@ -57,7 +53,6 @@ const editAnEmployee = (req, res) => {
   }
 };
 
-// function delete employee
 const deleteAnEmployee = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const employee = employees.find((element) => element.id === id);
@@ -74,7 +69,6 @@ const deleteAnEmployee = (req, res) => {
   }
 };
 
-// function that gets all employees and then filters by query parameters
 const fillterAllEmployees = (req, res) => {
   let filterAll = employees;
   if (req.query.id) {
