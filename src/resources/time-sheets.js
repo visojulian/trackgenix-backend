@@ -1,10 +1,6 @@
 const fs = require('fs');
 const timeSheets = require('../data/time-sheets.json');
 
-const welcomeTimeSheets = (req, res) => {
-  res.send('What do you want to do with timesheets? \n 1-Get All 2-Filter 3-Create new');
-};
-
 const getAllTimeSheets = (req, res) => {
   res.status(200).json({
     data: timeSheets,
@@ -12,16 +8,15 @@ const getAllTimeSheets = (req, res) => {
 };
 
 const getTimeSheet = (req, res) => {
-  const filteredArray = [];
   const idValue = parseInt(req.params.id, 10);
   timeSheets.forEach((element) => {
     if (element.id === idValue) {
-      filteredArray.push(element);
+      res.status(200).json({
+        element,
+      });
     }
   });
-  res.status(200).json({
-    filteredArray,
-  });
+  res.status(404).send('There is no element with that id.');
 };
 
 const filterTimeSheets = (req, res) => {
@@ -29,7 +24,7 @@ const filterTimeSheets = (req, res) => {
 
   if (req.query.id) {
     filteredArray = filteredArray.filter(
-      (element) => element.id === req.query.id,
+      (element) => element.id === parseInt(req.query.id, 10),
     );
   }
 
@@ -58,24 +53,36 @@ const filterTimeSheets = (req, res) => {
 
 const createTimeSheet = (req, res) => {
   const newTimeSheet = req.body;
-  timeSheets.push(newTimeSheet);
-  fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
-    if (err) {
-      res.send('Cannot save New Project');
-    } else {
-      res.send('Project Created');
-    }
-  });
+  if (JSON.stringify(newTimeSheet) === '{}') {
+    res.status(404).send('Cannot save New Project because its empty');
+  } else {
+    timeSheets.push(newTimeSheet);
+    fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
+      if (err) {
+        res.send('Cannot save New Project');
+      } else {
+        res.send('Project Created');
+      }
+    });
+  }
 };
 
 const editTimeSheet = (req, res) => {
-  const idValue = Number(req.params.id);
+  const idValue = parseInt(req.params.id, 10);
   const editableTimeSheet = timeSheets.find((element) => element.id === idValue);
 
-  editableTimeSheet.id = req.body.id;
-  editableTimeSheet.startDate = req.body.startDate;
-  editableTimeSheet.endDate = req.body.endDate;
-  editableTimeSheet.description = req.body.description;
+  if (req.body.id) {
+    editableTimeSheet.id = req.body.id;
+  }
+  if (req.body.startDate) {
+    editableTimeSheet.startDate = req.body.startDate;
+  }
+  if (req.body.endDate) {
+    editableTimeSheet.endDate = req.body.endDate;
+  }
+  if (req.body.description) {
+    editableTimeSheet.description = req.body.description;
+  }
 
   res.status(200).json({
     timeSheets,
@@ -113,7 +120,6 @@ const deleteTimeSheet = (req, res) => {
 
 module.exports = {
   getAllTimeSheets,
-  welcomeTimeSheets,
   filterTimeSheets,
   createTimeSheet,
   editTimeSheet,

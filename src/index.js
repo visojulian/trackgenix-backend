@@ -1,12 +1,9 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllTimeSheets, welcomeTimeSheets, filterTimeSheets, createTimeSheet, editTimeSheet,
+  getAllTimeSheets, filterTimeSheets, createTimeSheet, editTimeSheet,
   deleteTimeSheet, getTimeSheet,
 } from './resources/time-sheets';
-
-// use "require" to import JSON files
-const admins = require('./data/admins.json');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -17,13 +14,6 @@ app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/admins', (req, res) => {
-  res.status(200).json({
-    data: admins,
-  });
-});
-
-app.get('/time-sheets', welcomeTimeSheets);
 app.get('/time-sheets/getAll', getAllTimeSheets);
 app.get('/time-sheets/get/:id', getTimeSheet);
 app.get('/time-sheets/filter', filterTimeSheets);
