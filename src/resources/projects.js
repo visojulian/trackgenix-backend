@@ -49,6 +49,23 @@ const updateProjects = (req, res) => {
   }
 };
 
+// Delete
+const deleteProjects = (req, res) => {
+  const projectId = parseInt(req.params.id, 10);
+  const foundProject = projects.find((project) => project.id === projectId);
+  if (foundProject) {
+    foundProject.isDeleted = true;
+    fs.writeFile('src/data/projects.json', JSON.stringify(projects), (err) => {
+      if (err) {
+        res.status(500).json({ msg: `Cannot delete Project. ${err}`, error: true });
+      }
+    });
+    res.status(202).json({ msg: `Project deleted by id: ${projectId}`, error: false });
+  } else {
+    res.status(404).json({ msg: `Project not found by id: ${projectId}`, error: true });
+  }
+};
+
 module.exports = {
-  getAllProjects, getActiveProjects, getProjectById, updateProjects,
+  getAllProjects, getActiveProjects, getProjectById, updateProjects, deleteProjects,
 };
