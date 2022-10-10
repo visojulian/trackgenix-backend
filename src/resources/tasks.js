@@ -5,7 +5,7 @@ const getAllTasks = (req, res) => {
   res.status(200).json({ data: tasks });
 };
 
-const getTasks = (req, res) => {
+const getTask = (req, res) => {
   const taskId = parseInt(req.params.id, 10);
   const foundTask = tasks.find((task) => task.id === taskId);
   if (foundTask) {
@@ -63,12 +63,12 @@ const editTask = (req, res) => {
 
 const deleteTask = (req, res) => {
   const taskId = parseInt(req.params.id, 10);
-  const eliminateTask = tasks.find((task) => task.id === taskId);
-  if (eliminateTask === undefined) {
+  const taskToEliminate = tasks.find((task) => task.id === taskId);
+  if (taskToEliminate === undefined) {
     res.status(404).json({ error: `The task ${req.params.id} does not exist` });
   }
-  tasks.splice(tasks.indexOf(eliminateTask), 1);
-  res.status(200).json({ eliminateTask });
+  tasks.splice(tasks.indexOf(taskToEliminate), 1);
+  res.status(200).json({ taskToEliminate });
   fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
     if (err) {
       res.status(404).json({ error: `Cannot eliminate ${req.params.id} task` });
@@ -101,7 +101,7 @@ const filterTasks = (req, res) => {
 
 module.exports = {
   getAllTasks,
-  getTasks,
+  getTask,
   createTask,
   editTask,
   deleteTask,

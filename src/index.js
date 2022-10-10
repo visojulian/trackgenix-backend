@@ -2,7 +2,7 @@
 import express from 'express';
 import {
   getAllTasks,
-  getTasks,
+  getTask,
   createTask,
   editTask,
   deleteTask,
@@ -28,15 +28,10 @@ app.get('/admins', (req, res) => {
 });
 
 app.get('/tasks/getAll', getAllTasks);
-
-app.get('/tasks/filter/:id', getTasks);
-
+app.get('/tasks/filter/:id', getTask);
 app.post('/tasks/create', createTask);
-
 app.put('/tasks/edit/:id', editTask);
-
 app.delete('/tasks/delete/:id', deleteTask);
-
 app.get('/tasks/filter', filterTasks);
 
 app.listen(port, () => {
