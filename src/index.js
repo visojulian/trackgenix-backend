@@ -11,7 +11,6 @@ import {
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
-// const employees = require('./data/employees.json');
 
 const app = express();
 const port = process.env.PORT || 4000;
