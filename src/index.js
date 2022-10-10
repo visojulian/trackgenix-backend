@@ -8,15 +8,15 @@ import {
 const admins = require('./data/admins.json');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
 app.get('/projects/getAll', getAllProjects);
 app.get('projects/getActive', getActiveProjects);
 app.get('/projects/getById/:id', getProjectById);
-app.post('/projects/createProject', createProject);
-app.get('/projects/filterProjects', filterProjects);
+app.post('/projects/create', createProject);
+app.get('/projects/filter', filterProjects);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
