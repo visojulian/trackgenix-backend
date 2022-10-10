@@ -1,48 +1,57 @@
 const fs = require('fs');
 const admins = require('../data/admins.json');
 
+// GET ALL ADMINS
 const getAllAdmins = (req, res) => {
-  res.send((admins));
+  res.status(200).send(admins);
 };
 
+// GET ONLY ONE ADMIN FILTER BY ID
 const getAdminsById = (req, res) => {
   const adminId = req.params.id;
   const oneAdmin = admins.find((admin) => admin.id === Number(adminId));
   if (oneAdmin) {
-    res.send(oneAdmin);
+    res.status(200).send(oneAdmin);
   } else {
-    res.send(`There is no Admin with id ${req.params.id}`);
+    res.status(400).json({ msg: `There is no Admin with id ${req.params.id}` });
   }
 };
 
+// CREATE AN ADMIN
 const addAdmin = (req, res) => {
   const newAdmin = req.body;
-  admins.push(newAdmin);
+  if (JSON.stringify(newAdmin) === '{}') {
+    res.status(400).json({ msg: 'Error! Cannot create an empty Admin' });
+  } else {
+    admins.push(newAdmin);
+  }
   fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
     if (err) {
-      res.send('Error! Cannot create new Admin');
+      res.status(400).json({ msg: 'Error! Cannot create new Admin' });
     } else {
-      res.send(`Admin ${req.body.email} created successfully!`);
+      res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
     }
   });
 };
 
+// DELETE AN ADMIN
 const deleteAdmin = (req, res) => {
   const adminId = Number(req.params.id);
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   const oneAdmin = admins.find((admin) => admin.id === adminId);
   if (!oneAdmin) {
-    res.send(`Cannot delete Admin with id ${req.params.id}, because it doesent exist!`);
+    res.status(400).json({ msg: `Cannot delete Admin with id ${req.params.id}, because it doesent exist!` });
   }
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
-      res.send('An error has ocurred, please check!');
+      res.status(400).json({ msg: 'An error has ocurred, please check!' });
     } else {
-      res.send('Admin has been deleted!');
+      res.status(200).json({ msg: `Admin ${adminId} has been deleted!` });
     }
   });
 };
 
+// EDIT DATA ADMIN
 const editAdmin = (req, res) => {
   const adminId = Number(req.params.id);
   const oneAdmin = admins.find((admin) => admin.id === adminId);
@@ -59,13 +68,14 @@ const editAdmin = (req, res) => {
   }
   fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
     if (err) {
-      res.send('Error! Cannot update Admin');
+      res.status(400).json({ msg: 'Error! Cannot update Admin' });
     } else {
-      res.send(`Admin ${req.params.id} has been updated successfully!`);
+      res.status(200).json({ msg: `Admin ${req.params.id} has been updated successfully!` });
     }
   });
 };
 
+// SEARCH ADMINS BY FILTERS
 const filterAdmin = (req, res) => {
   let filterByParams = admins;
 
@@ -89,9 +99,7 @@ const filterAdmin = (req, res) => {
       (admin) => admin.email === req.query.email,
     );
   }
-  res.status(200).json({
-    filterByParams,
-  });
+  res.status(200).json({ filterByParams });
 };
 
 module.exports = {
