@@ -1,18 +1,22 @@
 // use "import" to import libraries
 import express from 'express';
-import { getAllProjects, getProjectsById, createProject } from './resources/projects';
+import {
+  getAllProjects, getActiveProjects, getProjectById, createProject, filterProjects,
+} from './resources/projects';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
-app.get('/projectsJuli/getAll', getAllProjects);
-app.get('/projectsJuli/getProjectsById/:id', getProjectsById);
-app.post('/projectsJuli/createProject', createProject);
+app.get('/projects/getAll', getAllProjects);
+app.get('projects/getActive', getActiveProjects);
+app.get('/projects/getById/:id', getProjectById);
+app.post('/projects/createProject', createProject);
+app.get('/projects/filterProjects', filterProjects);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
