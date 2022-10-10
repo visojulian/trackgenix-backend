@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllProjects,
+  getAllProjects, getActiveProjects,
 } from './resources/projects';
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
@@ -27,3 +27,4 @@ app.listen(port, () => {
 });
 
 app.get('/projects/getAll', getAllProjects);
+app.get('/projects/getActiveProjects', getActiveProjects);
