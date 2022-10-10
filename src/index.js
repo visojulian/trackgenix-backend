@@ -1,8 +1,12 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllTimeSheets, filterTimeSheets, createTimeSheet, editTimeSheet,
-  deleteTimeSheet, getTimeSheet,
+  getAllTimeSheets,
+  filterTimeSheets,
+  createTimeSheet,
+  editTimeSheet,
+  deleteTimeSheet,
+  getTimeSheet,
 } from './resources/time-sheets';
 
 const app = express();

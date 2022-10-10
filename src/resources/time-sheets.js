@@ -21,6 +21,15 @@ const getTimeSheet = (req, res) => {
 
 const filterTimeSheets = (req, res) => {
   let filteredArray = timeSheets;
+  const queriesArray = Object.keys(req.query);
+
+  queriesArray.forEach((query) => {
+    if (query !== 'id' && query !== 'startDate' && query !== 'endDate') {
+      res.status(400).json({
+        Error: 'One of the filters you applied does not exist',
+      });
+    }
+  });
 
   if (req.query.id) {
     filteredArray = filteredArray.filter(
@@ -37,12 +46,6 @@ const filterTimeSheets = (req, res) => {
   if (req.query.endDate) {
     filteredArray = filteredArray.filter(
       (element) => element.endDate === req.query.endDate,
-    );
-  }
-
-  if (req.query.description) {
-    filteredArray = filteredArray.filter(
-      (element) => element.description === req.query.description,
     );
   }
 
