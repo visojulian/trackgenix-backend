@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllTasks, filterTasks, createTask, editTask,
+  getAllTasks, getTasks, createTask, editTask, deleteTask,
 } from './resources/tasks';
 
 // use "require" to import JSON files
@@ -24,11 +24,15 @@ app.get('/admins', (req, res) => {
 
 app.get('/tasks/getAll', getAllTasks);
 
-app.get('/tasks/filter/:id', filterTasks);
+app.get('/tasks/filter/:id', getTasks);
 
 app.post('/tasks/create', createTask);
 
 app.put('/tasks/edit/:id', editTask);
+
+app.delete('/tasks/delete/:id', deleteTask);
+
+// app.get('/tasks/filter', filterTasks);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

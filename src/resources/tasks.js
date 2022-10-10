@@ -5,7 +5,7 @@ const getAllTasks = (req, res) => {
   res.status(200).json({ data: tasks });
 };
 
-const filterTasks = (req, res) => {
+const getTasks = (req, res) => {
   const taskId = parseInt(req.params.id, 10);
   const foundTask = tasks.find((task) => task.id === taskId);
   if (foundTask) {
@@ -36,7 +36,7 @@ const editTask = (req, res) => {
     tasks[index] = newTask;
     fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
       if (err) {
-        console.log(err);
+        res.send(err);
       }
     });
     res.status(200).json({ data: newTask });
@@ -45,9 +45,49 @@ const editTask = (req, res) => {
   }
 };
 
+const deleteTask = (req, res) => {
+  const taskId = parseInt(req.params.id, 10);
+  const eliminateTask = tasks.find((task) => task.id === taskId);
+
+  if (eliminateTask === undefined) {
+    res.status(404).json({ error: `The task ${req.params.id} does not exist` });
+  }
+
+  tasks.splice(tasks.indexOf(eliminateTask), 1);
+
+  res.status(200).json({ eliminateTask });
+
+  fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
+    if (err) {
+      res.status(404).json({ error: `Cannot eliminate ${req.params.id} task` });
+    } else {
+      res.status(200).json({ data: 'Task eliminated' });
+    }
+  });
+};
+
+// const filterTasks = (req, res) => {
+//   let filteredTasks = tasks;
+
+//   if (req.query.id) {
+//     filteredTasks = filteredTasks.filter((task) => task.id === req.query.id);
+//   }
+
+//   if (req.query.title) {
+//     filteredTasks = filteredTasks.filter((task) => task.title === req.query.title);
+//   }
+
+//   if (req.query.description) {
+//     filteredTasks = filteredTasks.filter((task) => task.description === req.query.description);
+//   }
+
+//   res.status(200).json({ filteredTasks });
+// };
+
 module.exports = {
   getAllTasks,
-  filterTasks,
+  getTasks,
   createTask,
   editTask,
+  deleteTask,
 };
