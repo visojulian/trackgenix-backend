@@ -11,6 +11,17 @@ const getActiveProjects = (req, res) => {
   res.status(200).json(foundProjects);
 };
 
+// getById projects
+const getProjectById = (req, res) => {
+  const projectId = parseInt(req.params.id, 10);
+  const foundProject = projects.find((project) => project.id === projectId);
+  if (foundProject) {
+    res.status(200).json(foundProject);
+  } else {
+    res.status(404).json({ msg: `Project not found by id: ${projectId}`, error: true });
+  }
+};
+
 module.exports = {
-  getAllProjects, getActiveProjects,
+  getAllProjects, getActiveProjects, getProjectById,
 };
