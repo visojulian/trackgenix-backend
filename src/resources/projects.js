@@ -29,14 +29,14 @@ const updateProjects = (req, res) => {
   const projectId = parseInt(req.params.id, 10);
   const foundProject = projects.find((project) => project.id === projectId);
   if (foundProject) {
-    if ((req.body.id)) { (foundProject.id = req.body.id); }
-    if ((req.body.name)) { (foundProject.name = req.body.name); }
-    if ((req.body.description)) { (foundProject.description = req.body.description); }
-    if ((req.body.startDate)) { (foundProject.startDate = req.body.startDate); }
-    if ((req.body.endDate)) { (foundProject.endDate = req.body.endDate); }
-    if ((req.body.clientName)) { (foundProject.clientName = req.body.clientName); }
-    if ((req.body.employees)) { (foundProject.employees = req.body.employees); }
-    if ((req.body.isDeleted)) { (foundProject.isDeleted = req.body.isDeleted); }
+    if (req.body.id) foundProject.id = req.body.id;
+    if (req.body.name) foundProject.name = req.body.name;
+    if (req.body.description) foundProject.description = req.body.description;
+    if (req.body.startDate) foundProject.startDate = req.body.startDate;
+    if (req.body.endDate) foundProject.endDate = req.body.endDate;
+    if (req.body.clientName) foundProject.clientName = req.body.clientName;
+    if (req.body.employees) foundProject.employees = req.body.employees;
+    if (req.body.isDeleted) foundProject.isDeleted = req.body.isDeleted;
 
     fs.writeFile('src/data/projects.json', JSON.stringify(projects), (err) => {
       if (err) {
@@ -72,13 +72,10 @@ const assignEmployee = (req, res) => {
   const projectId = parseInt(req.params.id, 10);
   const foundProject = projects.find((project) => project.id === projectId);
   if (foundProject) {
-    // validar si employee ya esta asignado
     const alreadyAssigned = (foundProject.employees.some(
       (employee) => employee.id === req.body.id,
     ));
-      // validar si body esta vacio
     const emptyBody = JSON.stringify(req.body) === '{}';
-    // validar si employee.id existe en employees.json
     const employeeExists = (employeesData.some(
       (employee) => employee.id === req.body.id,
     ));
