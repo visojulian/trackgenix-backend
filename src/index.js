@@ -1,7 +1,12 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllEmployees, getEmployeeById, createNewEmployee, editAnEmployee, deleteAnEmployee,
+  getAllEmployees,
+  getEmployeeById,
+  createNewEmployee,
+  editAnEmployee,
+  deleteAnEmployee,
+  fillterAllEmployees,
 } from './resources/employees';
 
 // use "require" to import JSON files
@@ -25,9 +30,10 @@ app.get('/admins', (req, res) => {
 
 app.get('/getAllEmployees', getAllEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
-app.post('/createNewEmployee', createNewEmployee);
+app.post('/createNewEmployee/:id', createNewEmployee);
 app.put('/editAnEmployee/:id', editAnEmployee);
 app.delete('/deleteAnEmployee/:id', deleteAnEmployee);
+app.get('/fillterAllEmployees', fillterAllEmployees);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

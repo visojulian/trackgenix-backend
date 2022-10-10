@@ -19,14 +19,23 @@ const getEmployeeById = (req, res) => {
 
 // function create employee
 const createNewEmployee = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const employee = employees.find((element) => element.id === id);
   const newEmployee = req.body;
-  employees.push(newEmployee);
-  res.status(201).json({ newEmployee });
-  fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  if (JSON.stringify(newEmployee) === '{}') {
+    res.status(404).json({ error: 'Please provide employee data' });
+  } else if (employee) {
+    res.status(404).json({ error: 'Employee already exists' });
+  } else {
+    employees.push(newEmployee);
+    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
+      if (err) {
+        res.status(500).json({ error: 'Error writing file' });
+      } else {
+        res.status(201).json({ newEmployee });
+      }
+    });
+  }
 };
 
 // function edit an existing employee
@@ -37,12 +46,12 @@ const editAnEmployee = (req, res) => {
     const index = employees.indexOf(employee);
     const newEmployee = req.body;
     employees[index] = newEmployee;
-    res.status(200).json({ data: employees });
     fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
       if (err) {
-        console.log(err);
+        res.status(500).json({ error: 'Error writing file' });
       }
     });
+    res.status(200).json({ data: newEmployee });
   } else {
     res.status(404).json({ error: 'Employee not found' });
   }
@@ -53,12 +62,11 @@ const deleteAnEmployee = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const employee = employees.find((element) => element.id === id);
   if (employee) {
-    const deleteEmployee = req.body;
-    employees.push(deleteEmployee);
-    res.status(201).json({ deleteEmployee });
+    employees.splice(employees.indexOf(employee), 1);
+    res.status(201).json({ data: 'Deleted employee' });
     fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
       if (err) {
-        console.log(err);
+        res.status(500).json({ error: 'Error writing file' });
       }
     });
   } else {
@@ -66,8 +74,32 @@ const deleteAnEmployee = (req, res) => {
   }
 };
 
-// function to fillter all employees and get all employees by
+// function that gets all employees and then filters by query parameters
+const fillterAllEmployees = (req, res) => {
+  let filterAll = employees;
+  if (req.query.id) {
+    filterAll = filterAll.filter((employee) => employee.id === parseInt(req.query.id, 10));
+  }
+  if (req.query.email) {
+    filterAll = filterAll.filter((employee) => employee.email === req.query.email);
+  }
+  if (req.query.name) {
+    filterAll = filterAll.filter((employee) => employee.name === req.query.name);
+  }
+  if (req.query.lastName) {
+    filterAll = filterAll.filter((employee) => employee.lastName === req.query.lastName);
+  }
+  if (req.query.phone) {
+    filterAll = filterAll.filter((employee) => employee.phone === req.query.phone);
+  }
+  res.status(200).json({ data: filterAll });
+};
 
 module.exports = {
-  getAllEmployees, getEmployeeById, createNewEmployee, editAnEmployee, deleteAnEmployee,
+  getAllEmployees,
+  getEmployeeById,
+  createNewEmployee,
+  editAnEmployee,
+  deleteAnEmployee,
+  fillterAllEmployees,
 };
