@@ -1,7 +1,12 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllTasks, getTasks, createTask, editTask, deleteTask, filterTasks,
+  getAllTasks,
+  getTasks,
+  createTask,
+  editTask,
+  deleteTask,
+  filterTasks,
 } from './resources/tasks';
 
 // use "require" to import JSON files

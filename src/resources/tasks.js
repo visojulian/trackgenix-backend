@@ -17,46 +17,58 @@ const getTasks = (req, res) => {
 
 const createTask = (req, res) => {
   const newTask = req.body;
-  tasks.push(newTask);
-  fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
-    if (err) {
-      res.status(404).json({ error: 'Cannot create new task' });
-    } else {
-      res.status(200).json({ data: 'Task created' });
-    }
-  });
+  const isEmpty = JSON.stringify(newTask) === '{}';
+  if (isEmpty) {
+    res.status(404).json({ error: 'Cannot create new task' });
+  } else {
+    tasks.push(newTask);
+    fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
+      if (err) {
+        res.status(404).json({ error: 'Cannot create new task' });
+      } else {
+        res.status(200).json({ data: 'Task created' });
+      }
+    });
+  }
 };
 
 const editTask = (req, res) => {
   const taskId = parseInt(req.params.id, 10);
   const putTask = tasks.find((task) => task.id === taskId);
-  if (putTask) {
-    const index = tasks.indexOf(putTask);
-    const newTask = req.body;
-    tasks[index] = newTask;
+  if (!putTask) {
+    res.status(404).json({ error: 'Task not found' });
+  } else {
+    if (req.body.id) {
+      putTask.id = req.body.id;
+    }
+
+    if (req.body.title) {
+      putTask.title = req.body.title;
+    }
+
+    if (req.body.description) {
+      putTask.description = req.body.description;
+    }
+
+    res.status(200).json({ putTask });
     fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
       if (err) {
-        res.send(err);
+        res.status(404).json({ error: 'Task not found' });
+      } else {
+        res.status(200).json({ data: putTask });
       }
     });
-    res.status(200).json({ data: newTask });
-  } else {
-    res.status(404).json({ error: 'Task not found' });
   }
 };
 
 const deleteTask = (req, res) => {
   const taskId = parseInt(req.params.id, 10);
   const eliminateTask = tasks.find((task) => task.id === taskId);
-
   if (eliminateTask === undefined) {
     res.status(404).json({ error: `The task ${req.params.id} does not exist` });
   }
-
   tasks.splice(tasks.indexOf(eliminateTask), 1);
-
   res.status(200).json({ eliminateTask });
-
   fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
     if (err) {
       res.status(404).json({ error: `Cannot eliminate ${req.params.id} task` });
@@ -68,17 +80,20 @@ const deleteTask = (req, res) => {
 
 const filterTasks = (req, res) => {
   let filteredTasks = tasks;
+  const queriesArray = Object.keys(req.query);
+
+  queriesArray.forEach((query) => {
+    if (query !== 'id' && query !== 'title') {
+      res.status(400).json({ error: 'The filter does not exist' });
+    }
+  });
 
   if (req.query.id) {
-    filteredTasks = filteredTasks.filter((task) => task.id === req.query.id);
+    filteredTasks = filteredTasks.filter((task) => task.id === parseInt(req.query.id, 10));
   }
 
   if (req.query.title) {
     filteredTasks = filteredTasks.filter((task) => task.title === req.query.title);
-  }
-
-  if (req.query.description) {
-    filteredTasks = filteredTasks.filter((task) => task.description === req.query.description);
   }
 
   res.status(200).json({ filteredTasks });
