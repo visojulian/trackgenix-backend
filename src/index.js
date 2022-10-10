@@ -15,7 +15,7 @@ app.get('/', async (req, res) => {
 
 app.get('/admins', getAllAdmins);
 app.get('/admins/:id', getAdminsById);
-app.get('/admins/filter/search', filterAdmin);
+app.get('/admins/search/filter', filterAdmin);
 app.post('/admins/add', addAdmin);
 app.put('/admins/edit/:id', editAdmin);
 app.delete('/admins/delete/:id', deleteAdmin);
