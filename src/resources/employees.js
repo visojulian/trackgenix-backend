@@ -16,15 +16,23 @@ const getEmployeeById = (req, res) => {
 };
 
 const createNewEmployee = (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = parseInt(req.body.id, 10);
   const employee = employees.find((element) => element.id === id);
   const newEmployee = req.body;
+  const saveEmployee = {
+    id: newEmployee.id = Number(new Date().getTime().toString().substring(6)),
+    email: newEmployee.email,
+    password: newEmployee.password,
+    name: newEmployee.name,
+    lastName: newEmployee.lastName,
+    phone: newEmployee.phone,
+  };
   if (JSON.stringify(newEmployee) === '{}') {
     res.status(404).json({ error: 'Please provide employee data' });
   } else if (employee) {
     res.status(404).json({ error: 'Employee already exists' });
   } else {
-    employees.push(newEmployee);
+    employees.push(saveEmployee);
     fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
       if (err) {
         res.status(500).json({ error: 'Error writing file' });

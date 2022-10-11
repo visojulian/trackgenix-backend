@@ -37,7 +37,7 @@ app.get('/admins', (req, res) => {
 
 app.get('/getAllEmployees', getAllEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
-app.post('/createNewEmployee/:id', createNewEmployee);
+app.post('/createNewEmployee', createNewEmployee);
 app.put('/editAnEmployee/:id', editAnEmployee);
 app.delete('/deleteAnEmployee/:id', deleteAnEmployee);
 app.get('/fillterAllEmployees', fillterAllEmployees);
