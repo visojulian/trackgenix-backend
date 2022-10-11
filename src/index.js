@@ -1,6 +1,14 @@
 // use "import" to import libraries
 import express from 'express';
 import {
+  getAllAdmins,
+  getAdminsById,
+  addAdmin,
+  deleteAdmin,
+  editAdmin,
+  filterAdmin,
+} from './resources/admins';
+import {
   getAllEmployees,
   getEmployeeById,
   createNewEmployee,
@@ -17,9 +25,6 @@ import {
   filterTasks,
 } from './resources/tasks';
 
-// use "require" to import JSON files
-const admins = require('./data/admins.json');
-
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -29,11 +34,12 @@ app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/admins', (req, res) => {
-  res.status(200).json({
-    data: admins,
-  });
-});
+app.get('/admins', getAllAdmins);
+app.get('/admins/:id', getAdminsById);
+app.get('/admins/search/filter', filterAdmin);
+app.post('/admins/add', addAdmin);
+app.put('/admins/edit/:id', editAdmin);
+app.delete('/admins/delete/:id', deleteAdmin);
 
 app.get('/getAllEmployees', getAllEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
