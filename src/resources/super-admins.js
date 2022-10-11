@@ -81,8 +81,8 @@ const editSuperAdmin = (req, res) => {
   });
 };
 
-const filterAdmin = (req, res) => {
-  let filterSuperAdmin = superAdmins;
+const filterSuperAdmin = (req, res) => {
+  let filterSA = superAdmins;
   const queriesArray = Object.keys(req.query);
 
   queriesArray.forEach((query) => {
@@ -94,26 +94,26 @@ const filterAdmin = (req, res) => {
   });
 
   if (req.query.id) {
-    filterSuperAdmin = filterSuperAdmin.filter(
+    filterSA = filterSA.filter(
       (superAdmin) => superAdmin.id === Number(req.query.id),
     );
   }
   if (req.query.name) {
-    filterSuperAdmin = filterSuperAdmin.filter(
+    filterSA = filterSA.filter(
       (superAdmin) => superAdmin.name === req.query.name,
     );
   }
   if (req.query.lastName) {
-    filterSuperAdmin = filterSuperAdmin.filter(
+    filterSA = filterSA.filter(
       (superAdmin) => superAdmin.lastName === req.query.lastName,
     );
   }
   if (req.query.email) {
-    filterSuperAdmin = filterSuperAdmin.filter(
+    filterSA = filterSA.filter(
       (superAdmin) => superAdmin.email === req.query.email,
     );
   }
-  res.status(200).json({ filterSuperAdmin });
+  res.status(200).json({ filterSA });
 };
 
 module.exports = {
@@ -122,5 +122,5 @@ module.exports = {
   superAdminCreate,
   deleteSuperAdmin,
   editSuperAdmin,
-  filterAdmin,
+  filterSuperAdmin,
 };
