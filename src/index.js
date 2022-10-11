@@ -1,5 +1,6 @@
 // use "import" to import libraries
 import express from 'express';
+
 import {
   getAllAdmins,
   getAdminsById,
@@ -8,6 +9,7 @@ import {
   editAdmin,
   filterAdmin,
 } from './resources/admins';
+
 import {
   getAllEmployees,
   getEmployeeById,
@@ -16,6 +18,16 @@ import {
   deleteAnEmployee,
   fillterAllEmployees,
 } from './resources/employees';
+
+import {
+  getAllProjects,
+  getActiveProjects,
+  getProjectById,
+  updateProjects,
+  deleteProjects,
+  assignEmployee,
+} from './resources/projects';
+
 import {
   getAllTasks,
   getTask,
@@ -34,6 +46,7 @@ app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
+// Admins
 app.get('/admins', getAllAdmins);
 app.get('/admins/:id', getAdminsById);
 app.get('/admins/search/filter', filterAdmin);
@@ -41,6 +54,7 @@ app.post('/admins/add', addAdmin);
 app.put('/admins/edit/:id', editAdmin);
 app.delete('/admins/delete/:id', deleteAdmin);
 
+// Employees
 app.get('/getAllEmployees', getAllEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
 app.post('/createNewEmployee', createNewEmployee);
@@ -48,6 +62,15 @@ app.put('/editAnEmployee/:id', editAnEmployee);
 app.delete('/deleteAnEmployee/:id', deleteAnEmployee);
 app.get('/fillterAllEmployees', fillterAllEmployees);
 
+// Projects
+app.get('/projects/getAll', getAllProjects);
+app.get('/projects/getActiveProjects', getActiveProjects);
+app.get('/projects/getById/:id', getProjectById);
+app.put('/projects/update/:id', updateProjects);
+app.delete('/projects/delete/:id', deleteProjects);
+app.put('/projects/assignEmployee/:id', assignEmployee);
+
+// Tasks
 app.get('/tasks/getAll', getAllTasks);
 app.get('/tasks/filter/:id', getTask);
 app.post('/tasks/create', createTask);
