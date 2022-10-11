@@ -1,7 +1,11 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  superAdminAlls, getSuperAdminById, superAdminCreate, deleteSuperAdmin, editSuperAdmin,
+  superAdminAlls,
+  getSuperAdminById,
+  superAdminCreate,
+  deleteSuperAdmin,
+  editSuperAdmin,
   filterAdmin,
 } from './resources/super-admins';
 
@@ -24,15 +28,10 @@ app.get('/admins', (req, res) => {
 });
 
 app.get('/superAdminAlls', superAdminAlls);
-
 app.get('/getSuperAdminById/:id', getSuperAdminById);
-
 app.post('/superAdminCreate', superAdminCreate);
-
 app.delete('/deleteSuperAdmin/:id', deleteSuperAdmin);
-
 app.put('/editSuperAdmin/:id', editSuperAdmin);
-
 app.post('/filterAdmin', filterAdmin);
 
 app.listen(port, () => {

@@ -7,9 +7,9 @@ const superAdminAlls = (req, res) => {
 
 const getSuperAdminById = (req, res) => {
   const id = parseInt(req.params.id, 10);
-  const SuperAdminFound = superAdmins.find((superAdmin) => superAdmin.id === id);
-  if (SuperAdminFound) {
-    res.status(200).json({ data: SuperAdminFound });
+  const superAdminFound = superAdmins.find((superAdmin) => superAdmin.id === id);
+  if (superAdminFound) {
+    res.status(200).json({ data: superAdminFound });
   } else {
     res.status(404).json({ error: 'super admin not found' });
   }
@@ -17,19 +17,32 @@ const getSuperAdminById = (req, res) => {
 
 const superAdminCreate = (req, res) => {
   const newSA = req.body;
+  const isEmpty = JSON.stringify(newSA) === '{}';
+  const saveSuperAdmin = {
+    id: newSA.id = Number(new Date().getTime().toString().substring(6)),
+    name: newSA.name,
+    lastName: newSA.lastName,
+    email: newSA.email,
+    password: newSA.password,
+  };
+  if (JSON.stringify(newSA) === isEmpty) {
+    res.status(400).json({ msg: 'Error! Cannot create an empty Admin' });
+  } else {
+    superAdmins.push(saveSuperAdmin);
+  }
   superAdmins.push(newSA);
   fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
     if (err) {
-      res.send('Cannot save New super admin');
+      res.status(404).send('Cannot save New super admin');
     } else {
-      res.send('super admin created');
+      res.status(200).send('super admin created');
     }
   });
 };
 
 const deleteSuperAdmin = (req, res) => {
-  const element = parseInt(req.params.id, 10);
-  const deleted = superAdmins.filter((superAdmin) => superAdmin.id !== element);
+  const superAdminId = parseInt(req.params.id, 10);
+  const deleted = superAdmins.filter((superAdmin) => superAdmin.id !== superAdminId);
   fs.writeFile('src/data/super-admins.json', JSON.stringify(deleted, null, 2), () => {
     if (!deleted) {
       res.status(404).json({ error: 'Cannot delete super admin' });
@@ -40,14 +53,24 @@ const deleteSuperAdmin = (req, res) => {
 };
 
 const editSuperAdmin = (req, res) => {
-  const element = parseInt(req.params.id, 10);
-  const editSA = superAdmins.find((superAdmin) => superAdmin.id === element);
+  const superAdminId = parseInt(req.params.id, 10);
+  const sAEdited = superAdmins.find((superAdmin) => superAdmin.id === superAdminId);
 
-  editSA.id = req.body.id;
-  editSA.name = req.body.name;
-  editSA.lastName = req.body.lastName;
-  editSA.email = req.body.email;
-  editSA.password = req.body.password;
+  if (req.body.id) {
+    sAEdited.id = req.body.id;
+  }
+  if (req.body.name) {
+    sAEdited.name = req.body.name;
+  }
+  if (req.body.lastName) {
+    sAEdited.lastName = req.body.lastName;
+  }
+  if (req.body.email) {
+    sAEdited.email = req.body.email;
+  }
+  if (req.body.password) {
+    sAEdited.password = req.body.password;
+  }
 
   fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
     if (err) {
