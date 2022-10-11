@@ -23,6 +23,8 @@ import {
   getAllProjects,
   getActiveProjects,
   getProjectById,
+  createProject,
+  filterProjects,
   updateProjects,
   deleteProjects,
   assignEmployee,
@@ -66,6 +68,8 @@ app.get('/fillterAllEmployees', fillterAllEmployees);
 app.get('/projects/getAll', getAllProjects);
 app.get('/projects/getActiveProjects', getActiveProjects);
 app.get('/projects/getById/:id', getProjectById);
+app.post('/projects/create', createProject);
+app.get('/projects/filter', filterProjects);
 app.put('/projects/update/:id', updateProjects);
 app.delete('/projects/delete/:id', deleteProjects);
 app.put('/projects/assignEmployee/:id', assignEmployee);
