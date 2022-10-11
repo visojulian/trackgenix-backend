@@ -31,6 +31,15 @@ import {
 } from './resources/projects';
 
 import {
+  superAdminAlls,
+  getSuperAdminById,
+  superAdminCreate,
+  deleteSuperAdmin,
+  editSuperAdmin,
+  filterSuperAdmin,
+} from './resources/super-admins';
+
+import {
   getAllTasks,
   getTask,
   createTask,
@@ -73,6 +82,14 @@ app.get('/projects/filter', filterProjects);
 app.put('/projects/update/:id', updateProjects);
 app.delete('/projects/delete/:id', deleteProjects);
 app.put('/projects/assignEmployee/:id', assignEmployee);
+
+// Super-admin
+app.get('/superAdminAlls', superAdminAlls);
+app.get('/getSuperAdminById/:id', getSuperAdminById);
+app.post('/superAdminCreate', superAdminCreate);
+app.delete('/deleteSuperAdmin/:id', deleteSuperAdmin);
+app.put('/editSuperAdmin/:id', editSuperAdmin);
+app.post('/filterSuperAdmin', filterSuperAdmin);
 
 // Tasks
 app.get('/tasks/getAll', getAllTasks);
