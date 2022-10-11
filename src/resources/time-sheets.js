@@ -57,14 +57,14 @@ const filterTimeSheets = (req, res) => {
 const createTimeSheet = (req, res) => {
   const newTimeSheet = req.body;
   if (JSON.stringify(newTimeSheet) === '{}') {
-    res.status(404).send('Cannot save New Project because its empty');
+    res.status(404).send('Cannot create new Timesheet because its empty');
   } else {
     timeSheets.push(newTimeSheet);
     fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
       if (err) {
-        res.send('Cannot save New Project');
+        res.send('Cannot create new Project');
       } else {
-        res.send('Project Created');
+        res.send('Timesheet Created');
       }
     });
   }
@@ -92,9 +92,9 @@ const editTimeSheet = (req, res) => {
   });
   fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
     if (err) {
-      res.send('Cannot save New Project');
+      res.send('Cannot edit Timesheet');
     } else {
-      res.send('Project Created');
+      res.send('Timesheet edited successfully');
     }
   });
 };
@@ -114,9 +114,9 @@ const deleteTimeSheet = (req, res) => {
   });
   fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
     if (err) {
-      res.send('Created New Project');
+      res.send('Cannot delete time sheet.');
     } else {
-      res.send('Cannot delete');
+      res.send('Time sheet deleted successfully');
     }
   });
 };
