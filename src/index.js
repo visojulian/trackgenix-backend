@@ -1,6 +1,14 @@
 // use "import" to import libraries
 import express from 'express';
 import {
+  getAllEmployees,
+  getEmployeeById,
+  createNewEmployee,
+  editAnEmployee,
+  deleteAnEmployee,
+  fillterAllEmployees,
+} from './resources/employees';
+import {
   getAllTasks,
   getTask,
   createTask,
@@ -26,6 +34,13 @@ app.get('/admins', (req, res) => {
     data: admins,
   });
 });
+
+app.get('/getAllEmployees', getAllEmployees);
+app.get('/getEmployeeById/:id', getEmployeeById);
+app.post('/createNewEmployee', createNewEmployee);
+app.put('/editAnEmployee/:id', editAnEmployee);
+app.delete('/deleteAnEmployee/:id', deleteAnEmployee);
+app.get('/fillterAllEmployees', fillterAllEmployees);
 
 app.get('/tasks/getAll', getAllTasks);
 app.get('/tasks/filter/:id', getTask);

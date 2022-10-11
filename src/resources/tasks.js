@@ -16,12 +16,21 @@ const getTask = (req, res) => {
 };
 
 const createTask = (req, res) => {
+  const taskId = parseInt(req.params.id, 10);
+  const foundTask = tasks.find((task) => task.id === taskId);
   const newTask = req.body;
   const isEmpty = JSON.stringify(newTask) === '{}';
+  const saveTask = {
+    id: newTask.id = Number(new Date().getTime().toString().substring(6)),
+    title: newTask.title,
+    description: newTask.description,
+  };
   if (isEmpty) {
     res.status(404).json({ error: 'Cannot create new task' });
+  } else if (foundTask) {
+    res.status(404).json({ msg: 'Task already exists!' });
   } else {
-    tasks.push(newTask);
+    tasks.push(saveTask);
     fs.writeFile('./src/data/tasks.json', JSON.stringify(tasks), (err) => {
       if (err) {
         res.status(404).json({ error: 'Cannot create new task' });
