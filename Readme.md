@@ -20,7 +20,7 @@ Start the server:
  npm start
 ```
 
- View the server at: http://localhost:3000
+ View the server at: http://localhost:4000
 
 <br>
 

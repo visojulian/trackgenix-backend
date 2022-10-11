@@ -1,7 +1,11 @@
 // use "import" to import libraries
 import express from 'express';
 import {
-  getAllProjects, getActiveProjects, getProjectById, createProject, filterProjects,
+  getAllProjects,
+  getActiveProjects,
+  getProjectById,
+  createProject,
+  filterProjects,
 } from './resources/projects';
 
 // use "require" to import JSON files

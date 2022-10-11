@@ -25,19 +25,30 @@ const getProjectById = (req, res) => {
 
 // create projects
 const createProject = (req, res) => {
+  const projectId = Number(req.body.id);
+  const oneProject = projectsData.find((project) => project.id === projectId);
   const newProject = req.body;
+  const saveProject = {
+    id: newProject.id = Number(new Date().getTime().toString().substring(6)),
+    name: newProject.name,
+    lastName: newProject.lastName,
+    email: newProject.email,
+    password: newProject.password,
+  };
   if (JSON.stringify(newProject) === '{}') {
-    res.status(404).send('New Project is empty');
+    res.status(400).send('New Project is empty');
+  } else if (oneProject) {
+    res.status(400).json({ msg: 'Project already exists!' });
   } else {
-    projectsData.push(newProject);
-    fs.writeFile('src/data/projects.json', JSON.stringify(projectsData), (err) => {
-      if (err) {
-        res.send('Cannot save New Project');
-      } else {
-        res.send('Project Created');
-      }
-    });
+    projectsData.push(saveProject);
   }
+  fs.writeFile('src/data/projects.json', JSON.stringify(projectsData), (err) => {
+    if (err) {
+      res.send('Cannot save New Project');
+    } else {
+      res.status(201).json('Project Created');
+    }
+  });
 };
 
 // filter projects
@@ -86,5 +97,9 @@ const filterProjects = (req, res) => {
 };
 
 module.exports = {
-  getAllProjects, getActiveProjects, getProjectById, createProject, filterProjects,
+  getAllProjects,
+  getActiveProjects,
+  getProjectById,
+  createProject,
+  filterProjects,
 };
