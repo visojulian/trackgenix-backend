@@ -22,20 +22,27 @@ const addAdmin = (req, res) => {
   const adminId = Number(req.body.id);
   const oneAdmin = admins.find((admin) => admin.id === adminId);
   const newAdmin = req.body;
+  const saveAdmin = {
+    id: newAdmin.id = Number(new Date().getTime().toString().substring(6)),
+    name: newAdmin.name,
+    lastName: newAdmin.lastName,
+    email: newAdmin.email,
+    password: newAdmin.password,
+  };
   if (JSON.stringify(newAdmin) === '{}') {
     res.status(400).json({ msg: 'Error! Cannot create an empty Admin' });
   } else if (oneAdmin) {
     res.status(400).json({ msg: 'Admin already exists!' });
   } else {
-    admins.push(newAdmin);
-    fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-      if (err) {
-        res.status(400).json({ msg: 'Error! Cannot create new Admin' });
-      } else {
-        res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
-      }
-    });
+    admins.push(saveAdmin);
   }
+  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
+    if (err) {
+      res.status(400).json({ msg: 'Error! Cannot create new Admin' });
+    } else {
+      res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
+    }
+  });
 };
 
 // DELETE AN ADMIN
