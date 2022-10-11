@@ -56,6 +56,7 @@ const filterTimeSheets = (req, res) => {
 
 const createTimeSheet = (req, res) => {
   const newTimeSheet = req.body;
+  newTimeSheet.id = Number(new Date().getTime().toString().substring(6));
   if (JSON.stringify(newTimeSheet) === '{}') {
     res.status(404).send('Cannot create new Timesheet because its empty');
   } else {
