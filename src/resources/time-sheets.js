@@ -63,7 +63,7 @@ const createTimeSheet = (req, res) => {
     timeSheets.push(newTimeSheet);
     fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
       if (err) {
-        res.send('Cannot create new Project');
+        res.send('Cannot create new Timesheet');
       } else {
         res.send('Timesheet Created');
       }
