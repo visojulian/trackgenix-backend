@@ -1,6 +1,8 @@
 # BaSP 2022 - Trackgenix server
 
-Trackgenix is a system that provides Human Resources services to companies.
+Trackgenix is a system that provides Human Resources services to companies,
+facilitating the recording of hours worked by employee in each project and work team,
+providing the possibility of tracking in an easy and simple way and helping companies to make better decisions.
 
 <br>
 
@@ -18,7 +20,7 @@ Start the server:
  npm start
 ```
 
- View the server at: http://localhost:3000
+ View the server at: http://localhost:4000
 
 <br>
 
@@ -40,10 +42,13 @@ npm run lint:fix
 
 ### Members
 
-(example)
-|Photo | Name  | Mail | Github
-| :-----: | :-----: | :-----: | :-----: |
-<img src="https://avatars.githubusercontent.com/u/20587232?v=4" height="50" width="50">| Esteban Frare | esteban.frare@radiumrocket.com | [@estefrare](https://github.com/estefrare)
+Daniel Vinzia | danielvinzia@gmail.com |[@kolodani](https://github.com/kolodani)
+Dario Marañes | dario.sjs@gmail.com |[@mara666](https://github.com/mara666)
+Julian Piaggio| julianpiaggio@gmail.com |[@julianpiaggio](https://github.com/julianpiaggio)
+Julieta Balcaza | julibalcaza15@gmail.com |[@julibalcaza](https://github.com/julibalcaza)
+Mateo Scarabino | matescarabino@gmail.com |[@matescarabino](https://github.com/matescarabino)
+Tomas Bettini | tomas.bettini98@gmail.com |[@tomasbettini](https://github.com/tomasbettini)
+Valentin Sanabria | valensanabria21@gmail.com |[@valentin-sanabria](https://github.com/valentin-sanabria)
 
 
 
