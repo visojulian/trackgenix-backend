@@ -1,5 +1,6 @@
 // use "import" to import libraries
 import express from 'express';
+import mongoose from 'mongoose';
 
 import {
   getAllAdmins,
@@ -8,7 +9,7 @@ import {
   deleteAdmin,
   editAdmin,
   filterAdmin,
-} from './resources/admins';
+} from './controllers/admins';
 
 import {
   getAllEmployees,
@@ -17,7 +18,7 @@ import {
   editAnEmployee,
   deleteAnEmployee,
   fillterAllEmployees,
-} from './resources/employees';
+} from './controllers/employees';
 
 import {
   getAllProjects,
@@ -28,7 +29,7 @@ import {
   updateProjects,
   deleteProjects,
   assignEmployee,
-} from './resources/projects';
+} from './controllers/projects';
 
 import {
   superAdminAlls,
@@ -37,7 +38,7 @@ import {
   deleteSuperAdmin,
   editSuperAdmin,
   filterSuperAdmin,
-} from './resources/super-admins';
+} from './controllers/super-admins';
 
 import {
   getAllTasks,
@@ -46,7 +47,7 @@ import {
   editTask,
   deleteTask,
   filterTasks,
-} from './resources/tasks';
+} from './controllers/tasks';
 
 import {
   getAllTimeSheets,
@@ -55,16 +56,29 @@ import {
   editTimeSheet,
   deleteTimeSheet,
   getTimeSheet,
-} from './resources/time-sheets';
+} from './controllers/time-sheets';
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = 5000;
 
 app.use(express.json());
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
+
+const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.2ktcmjk.mongodb.net/BaSP-database-Lucas-a?retryWrites=true&w=majority';
+
+mongoose.connect(
+  MONGO_URL,
+  (error) => {
+    if (error) {
+      console.log('Failed connection to database', error);
+    } else {
+      console.log('Connected to db');
+    }
+  },
+);
 
 // Admins
 app.get('/admins', getAllAdmins);
