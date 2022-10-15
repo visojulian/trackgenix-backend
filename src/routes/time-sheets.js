@@ -1,4 +1,6 @@
 import express from 'express';
+import validateCreation from '../validations/time-sheets';
+
 import {
   getAllTimeSheets,
   getTimeSheetById,
@@ -10,6 +12,6 @@ const router = express.Router();
 router
   .get('/', getAllTimeSheets)
   .get('/:id', getTimeSheetById)
-  .post('/', createTimeSheet);
+  .post('/', validateCreation, createTimeSheet);
 
 export default router;
