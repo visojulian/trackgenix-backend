@@ -1,4 +1,4 @@
-const Projects = require('../models/Projects');
+import Projects from '../models/Projects';
 
 // GetAll
 const getAll = async (req, res) => {
