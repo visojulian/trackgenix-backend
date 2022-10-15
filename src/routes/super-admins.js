@@ -5,7 +5,7 @@ import superAdminControllers from '../controllers/super-admins';
 const router = express.Router();
 
 router
-  // .get('/', superAdminControllers.getAllSuperAdmins)
+  .get('/', superAdminControllers.getAllSuperAdmins)
   // .get('/:id', superAdminControllers.getSuperAdminById)
   .post('/', superAdminControllers.createSuperAdmin);
 
