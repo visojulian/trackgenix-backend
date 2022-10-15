@@ -33,7 +33,27 @@ const getTasksById = async (req, res) => {
   }
 };
 
+const createTask = async (req, res) => {
+  try {
+    const newTask = new Tasks({
+      description: req.body.description,
+    });
+    const resultTask = await newTask.save();
+    return res.status(201).json({
+      message: 'Task create succesfully',
+      data: resultTask,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      error: true,
+    });
+  }
+};
+
 export default {
   getAllTasks,
   getTasksById,
+  createTask,
 };
