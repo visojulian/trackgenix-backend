@@ -23,10 +23,73 @@
 			"name": "Time sheets",
 			"item": [
 				{
-					"name": "Get timesheet",
+					"name": "getTimeSheets",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/time-sheets",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTimeSheetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/time-sheets/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTimeSheet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"description\": \"I create employee scheme html and css files in Trackgenix\",\n        \"date\": \"2022-01-06\",\n        \"hours\": 10,\n        \"tasks\": \"5\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/time-sheets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets"
+							]
+						}
 					},
 					"response": []
 				}
