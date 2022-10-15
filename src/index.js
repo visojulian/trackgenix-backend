@@ -1,6 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import mongoose from 'mongoose';
+import routes from './routes/index';
 
 const app = express();
 const port = 5000;
@@ -10,6 +11,8 @@ app.use(express.json());
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
+
+app.use('/', routes);
 
 const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.2ktcmjk.mongodb.net/BaSP-database-Lucas-a?retryWrites=true&w=majority';
 
