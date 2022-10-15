@@ -17,6 +17,24 @@ const getAllSuperAdmins = async (req, res) => {
   }
 };
 
+const getSuperAdminById = async (req, res) => {
+  try {
+    const idNumber = req.params.id;
+    const superAdmin = await SuperAdmins.findById(idNumber);
+
+    return res.status(200).json({
+      message: 'Super admin found',
+      data: superAdmin,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred! ${error.message}`,
+      error: true,
+    });
+  }
+};
+
 const createSuperAdmin = async (req, res) => {
   try {
     const superAdmin = new SuperAdmins({
@@ -42,5 +60,6 @@ const createSuperAdmin = async (req, res) => {
 
 export default {
   getAllSuperAdmins,
+  getSuperAdminById,
   createSuperAdmin,
 };

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .get('/', superAdminControllers.getAllSuperAdmins)
-  // .get('/:id', superAdminControllers.getSuperAdminById)
+  .get('/:id', superAdminControllers.getSuperAdminById)
   .post('/', superAdminControllers.createSuperAdmin);
 
 export default router;
