@@ -18,19 +18,17 @@ const getAllEmployees = async (req, res) => {
 
 const getEmployeesById = async (req, res) => {
   try {
-    // eslint-disable-next-line prefer-destructuring
-    const id = req.params.id;
-    const employees = await Employees.findById(id);
-
+    const { id } = req.params;
+    const employee = await Employees.findById(id);
     return res.status(200).json({
       message: 'Employee found',
-      data: employees,
+      data: employee,
       error: false,
     });
   } catch (error) {
     return res.json({
-      message: 'Something went wrong',
-      error: true,
+      message: 'Something went wrong, this employee does not exists ',
+      error: error.message,
     });
   }
 };
