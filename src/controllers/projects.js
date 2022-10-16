@@ -18,6 +18,25 @@ const getAll = async (req, res) => {
   }
 };
 
+// GetById
+const getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const projects = await Projects.findById(id);
+
+    return res.status(200).json({
+      message: `Project ${id} found`,
+      data: projects,
+      error: false,
+    });
+  } catch (err) {
+    return res.json({
+      message: 'An error occurred',
+      error: err,
+    });
+  }
+};
+
 // Post
 const createProject = async (req, res) => {
   try {
@@ -47,5 +66,6 @@ const createProject = async (req, res) => {
 // Exports
 export default {
   getAll,
+  getById,
   createProject,
 };
