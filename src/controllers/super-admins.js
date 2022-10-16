@@ -1,8 +1,15 @@
 import SuperAdmins from '../models/Super-admins';
 
-const getAllSuperAdmins = async (req, res) => {
+export const getAllSuperAdmins = async (req, res) => {
   try {
-    const superAdmins = await SuperAdmins.find();
+    const superAdmins = await SuperAdmins.find(req.query);
+
+    if (!superAdmins.length) {
+      return res.status(404).json({
+        message: 'The super admin does not exist',
+        error: true,
+      });
+    }
 
     return res.status(200).json({
       message: 'Super admins found',
@@ -17,10 +24,16 @@ const getAllSuperAdmins = async (req, res) => {
   }
 };
 
-const getSuperAdminById = async (req, res) => {
+export const getSuperAdminById = async (req, res) => {
   try {
-    const idNumber = req.params.id;
-    const superAdmin = await SuperAdmins.findById(idNumber);
+    const superAdmin = await SuperAdmins.findById(req.params.id);
+
+    if (!superAdmin) {
+      return res.status(404).json({
+        message: `The super admin with id: ${req.params.id} does not exist`,
+        error: true,
+      });
+    }
 
     return res.status(200).json({
       message: 'Super admin found',
@@ -35,7 +48,7 @@ const getSuperAdminById = async (req, res) => {
   }
 };
 
-const createSuperAdmin = async (req, res) => {
+export const createSuperAdmin = async (req, res) => {
   try {
     const superAdmin = new SuperAdmins({
       name: req.body.name,
@@ -56,10 +69,4 @@ const createSuperAdmin = async (req, res) => {
       error: true,
     });
   }
-};
-
-export default {
-  getAllSuperAdmins,
-  getSuperAdminById,
-  createSuperAdmin,
 };
