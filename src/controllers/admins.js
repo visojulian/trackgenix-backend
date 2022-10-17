@@ -65,6 +65,30 @@ export const createAdmin = async (req, res) => {
     });
   }
 };
+
+export const updateAdmin = async (req, res) => {
+  try {
+    const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!admin) {
+      return res.status(400).json({
+        message: 'No admin found',
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Admin updated',
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Error while updating admin',
+      error: error.message,
+    });
+  }
+};
 /*
 
 // DELETE AN ADMIN
@@ -81,30 +105,6 @@ const deleteAdmin = (req, res) => {
       res.status(400).json({ msg: 'An error has ocurred, please check!' });
     } else {
       res.status(200).json({ msg: `Admin ${adminId} has been deleted!` });
-    }
-  });
-};
-
-// EDIT DATA ADMIN
-const editAdmin = (req, res) => {
-  const adminId = Number(req.params.id);
-  const oneAdmin = admins.find((admin) => admin.id === adminId);
-  if (oneAdmin) {
-    const updateAdmin = req.body;
-    admins.forEach((admin) => {
-      if (admin.id === adminId) {
-        oneAdmin.name = updateAdmin.name ? updateAdmin.name : oneAdmin.name;
-        oneAdmin.lastName = updateAdmin.lastName ? updateAdmin.lastName : oneAdmin.lastName;
-        oneAdmin.email = updateAdmin.email ? updateAdmin.email : oneAdmin.email;
-        oneAdmin.password = updateAdmin.password ? updateAdmin.password : oneAdmin.password;
-      }
-    });
-  }
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-    if (err) {
-      res.status(400).json({ msg: 'Error! Cannot update Admin' });
-    } else {
-      res.status(200).json({ msg: `Admin ${req.params.id} has been updated successfully!` });
     }
   });
 };
