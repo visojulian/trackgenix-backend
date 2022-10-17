@@ -1,14 +1,14 @@
 import Admins from '../models/Admins';
 
 export const getAllAdmins = async (req, res) => {
-  const admins = await Admins.find(req.query);
-  if (admins.length === 0) {
-    return res.json({
-      message: 'No admins found',
-      error: false,
-    });
-  }
   try {
+    const admins = await Admins.find(req.query);
+    if (!admins.length) {
+      return res.status(404).json({
+        message: 'No admins found',
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: 'Admins found',
       data: admins,
@@ -16,8 +16,8 @@ export const getAllAdmins = async (req, res) => {
     });
   } catch (error) {
     return res.json({
-      message: 'Error while getting all admins',
-      error: error.message,
+      message: `Error while getting all admins ${error}`,
+      error: true,
     });
   }
 };
