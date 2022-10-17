@@ -27,6 +27,4 @@ const validateProjectBody = (req, res, next) => {
   return next();
 };
 
-export default {
-  validateProjectBody,
-};
+export default validateProjectBody;
