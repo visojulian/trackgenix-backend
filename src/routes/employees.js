@@ -4,6 +4,8 @@ import {
   getAllEmployees,
   getEmployeesById,
   createEmployees,
+  deleteEmployees,
+  editEmployees,
 } from '../controllers/employees';
 
 const router = express.Router();
@@ -11,6 +13,8 @@ const router = express.Router();
 router
   .get('/', getAllEmployees)
   .get('/:id', getEmployeesById)
-  .post('/', employeesValidations, createEmployees);
+  .post('/', employeesValidations, createEmployees)
+  .delete('/:id', deleteEmployees)
+  .put('/:id', editEmployees);
 
 export default router;
