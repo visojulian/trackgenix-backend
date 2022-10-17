@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAllTasks, getTasksById, createTask, deleteTask,
+  getAllTasks, getTasksById, createTask, deleteTask, editTask,
 } from '../controllers/tasks';
 import tasksValidations from '../validations/tasks';
 
@@ -10,5 +10,6 @@ router.get('/', getAllTasks);
 router.get('/:id', getTasksById);
 router.post('/', tasksValidations, createTask);
 router.delete('/:id', deleteTask);
+router.put('/:id', editTask);
 
 export default router;
