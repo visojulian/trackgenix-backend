@@ -85,12 +85,6 @@ export const editEmployees = async (req, res) => {
       req.body,
       { new: true },
     );
-    if (!result) {
-      return res.status(404).json({
-        message: `Employee id: ${req.params.id} does not exists`,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: `Employee id: ${req.params.id} edited`,
       data: result,
@@ -98,7 +92,7 @@ export const editEmployees = async (req, res) => {
     });
   } catch (error) {
     return res.json({
-      message: 'Something went wrong',
+      message: error.toString(),
       error: true,
     });
   }
