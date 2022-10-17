@@ -1,5 +1,8 @@
 import express from 'express';
-import validateProjectBody from '../validations/projects';
+import {
+  validateProjectBody,
+  validateEmployee,
+} from '../validations/projects';
 import {
   getProjects,
   getProjectById,
@@ -15,8 +18,8 @@ router
   .get('/', getProjects)
   .get('/:id', getProjectById)
   .post('/', validateProjectBody, createProject)
-  .delete('/:id/delete', deleteProject)
+  .delete('/:id', deleteProject)
   .put('/:id/update', validateProjectBody, updateProject)
-  .put('/:id/assignEmployee', assignEmployee);
+  .put('/:id/assignEmployee', validateEmployee, assignEmployee);
 
 export default router;

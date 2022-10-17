@@ -19,7 +19,8 @@ export const getProjects = async (req, res) => {
   } catch (err) {
     return res.json({
       message: 'An error occurred',
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
@@ -44,7 +45,8 @@ export const getProjectById = async (req, res) => {
   } catch (err) {
     return res.json({
       message: 'An error occurred',
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
@@ -69,7 +71,8 @@ export const createProject = async (req, res) => {
     return res.status(400).json({
       message: 'An error occurred',
       data: req.body,
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
@@ -93,7 +96,8 @@ export const deleteProject = async (req, res) => {
   } catch (err) {
     return res.status(400).json({
       message: 'An error occurred',
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
@@ -121,7 +125,8 @@ export const updateProject = async (req, res) => {
   } catch (err) {
     return res.status(400).json({
       message: 'An error occurred',
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
@@ -149,7 +154,8 @@ export const assignEmployee = async (req, res) => {
   } catch (err) {
     return res.status(400).json({
       message: 'An error occurred',
-      error: err,
+      errorMessage: err,
+      error: true,
     });
   }
 };
