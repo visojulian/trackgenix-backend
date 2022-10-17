@@ -22,36 +22,48 @@
 							"port": "4000",
 							"path": [
 								"super-admins"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mateo",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "tomasbettini@gmail.com",
+									"disabled": true
+								}
 							]
 						}
 					},
 					"response": []
 				},
-        {
-          "name": "Get super admin by id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:4000/super-admins/:id",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "634b0dd43f20adb5648d1ebe"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
+				{
+					"name": "Get super admin by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/super-admins/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634b1dbad7b2f47e083a460a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Create super admin",
 					"request": {
@@ -59,7 +71,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\n    \"name\": \"Mateo\",\n    \"lastName\": \"Scarabino\",\n    \"email\": \"mateoscarabino@gmail.com\",\n    \"password\": \"1234radium\"\n  }",
+							"raw": "  {\n    \"name\": \"Mateo\",\n    \"lastName\": \"Bettini\",\n    \"email\": \"mateosbettini@gmail.com\",\n    \"password\": \"1234radium\"\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,6 +86,65 @@
 							"port": "4000",
 							"path": [
 								"super-admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete super admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/super-admins/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634d5803354e41cd60b9e471"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit super admin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Daniel\",\n    \"lastName\": \"Vinzia\",\n    \"email\": \"danielvinzia@gmail.com\",\n    \"password\": \"radium123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/super-admins/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634b0d5bd9bbe67608e3ec64"
+								}
 							]
 						}
 					},
