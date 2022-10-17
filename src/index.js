@@ -1,15 +1,14 @@
 // use "import" to import libraries
 import express from 'express';
 import mongoose from 'mongoose';
-import employeesRoutes from './routes/employees';
+import routes from './routes/index';
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(express.json());
 
-// Entity Routes
-app.use('/employees', employeesRoutes);
+app.use('/', routes);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
