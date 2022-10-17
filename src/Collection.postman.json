@@ -49,26 +49,52 @@
 			"name": "Tasks",
 			"item": [
 				{
-					"name": "getAll",
+					"name": "get All tasks",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:5000/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"tasks"
+							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "create",
+					"name": "create tasks",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"montes nascetur ridiculus mus vivamus vestibulum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"tasks"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "getById",
+					"name": "get tasks By Id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -85,10 +111,26 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": null
+									"value": "634b2ba02d2192bcc5cb537c"
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete task",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update tasks",
+					"request": {
+						"method": "PUT",
+						"header": []
 					},
 					"response": []
 				}
