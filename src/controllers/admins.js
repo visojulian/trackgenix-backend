@@ -15,7 +15,7 @@ export const getAllAdmins = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: `Error while getting all admins ${error}`,
       error: true,
     });
@@ -37,7 +37,7 @@ export const getAdminById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: 'Error while getting admin by id',
       error: true,
     });
@@ -59,7 +59,7 @@ export const createAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: 'Error while creating admin',
       error: true,
     });
@@ -81,7 +81,7 @@ export const deleteAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: 'Error while deleting admin',
       error: true,
     });
@@ -107,7 +107,7 @@ export const updateAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: 'Error while updating admin',
       error: true,
     });
