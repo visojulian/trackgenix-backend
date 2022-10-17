@@ -61,3 +61,19 @@ export const createEmployees = async (req, res) => {
     });
   }
 };
+
+export const deleteEmployees = async (req, res) => {
+  try {
+    const result = await Employees.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+      message: `Employee with id: ${req.params.id} deleted`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Something went wrong',
+      error: true,
+    });
+  }
+};
