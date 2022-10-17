@@ -1,6 +1,6 @@
 import Tasks from '../models/Tasks';
 
-const getAllTasks = async (req, res) => {
+export const getAllTasks = async (req, res) => {
   try {
     const task = await Tasks.find(req.query);
     if (!task.length) {
@@ -22,9 +22,9 @@ const getAllTasks = async (req, res) => {
   }
 };
 
-const getTasksById = async (req, res) => {
+export const getTasksById = async (req, res) => {
   try {
-    const task = await Tasks.findById(req.params.id);
+    const task = await Tasks.findById(req.id);
     if (!task) {
       return res.status(404).json({
         message: 'no task found',
@@ -44,7 +44,7 @@ const getTasksById = async (req, res) => {
   }
 };
 
-const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
   try {
     const newTask = new Tasks({
       description: req.body.description,
@@ -61,10 +61,4 @@ const createTask = async (req, res) => {
       error: true,
     });
   }
-};
-
-export default {
-  getAllTasks,
-  getTasksById,
-  createTask,
 };
