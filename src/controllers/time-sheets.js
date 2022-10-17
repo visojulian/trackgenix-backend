@@ -87,3 +87,24 @@ export const deleteTimeSheet = async (req, res) => {
     });
   }
 };
+
+export const editTimeSheet = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await TimeSheets.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true },
+    );
+    return res.status(200).json({
+      message: `Time sheet with id ${id} has been updated`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      error: true,
+    });
+  }
+};
