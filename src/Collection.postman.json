@@ -186,6 +186,22 @@
 						"header": []
 					},
 					"response": []
+				},
+        {
+					"name": "Delete Employee",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Employees",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
