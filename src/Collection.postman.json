@@ -10,10 +10,72 @@
 			"name": "Super admins",
 			"item": [
 				{
-					"name": "Get super admin",
+					"name": "Get super admins",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/super-admins",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins"
+							]
+						}
+					},
+					"response": []
+				},
+        {
+          "name": "Get super admin by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/super-admins/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "super-admins",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "634b0dd43f20adb5648d1ebe"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+				{
+					"name": "Create super admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"name\": \"Mateo\",\n    \"lastName\": \"Scarabino\",\n    \"email\": \"mateoscarabino@gmail.com\",\n    \"password\": \"1234radium\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/super-admins",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins"
+							]
+						}
 					},
 					"response": []
 				}
