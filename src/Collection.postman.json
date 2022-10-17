@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5c379664-3705-4f72-8c09-75e01c3b6d75",
+		"_postman_id": "c5b13b66-97f4-4e44-8a99-75c032d2135d",
 		"name": "Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23769775"
+		"_exporter_id": "23759262"
 	},
 	"item": [
 		{
@@ -164,6 +164,25 @@
 					"name": "Get employees",
 					"request": {
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee By Id",
+					"request": {
+						"method": "GET",
 						"header": []
 					},
 					"response": []
@@ -177,7 +196,10 @@
 					"name": "Get tasks",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -209,7 +231,10 @@
 					"name": "getById",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
