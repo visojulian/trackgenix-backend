@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"name\": \"Mateo\", \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,6 +111,92 @@
 							"port": "4000",
 							"path": [
 								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "id",
+								"value": "634b3db506cf277df1258900",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/projects/634d4e78f6b5e1e6f86d5e82",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects",
+								"634d4e78f6b5e1e6f86d5e82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"name\": \"mateo\", \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/projects/634b3db506cf277df1258900/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects",
+								"634b3db506cf277df1258900",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assignEmployee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\":\"634cd4f71d78338392747b63\", \r\n    \"role\": \"QA\" , \r\n    \"rate\": 68\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/projects/634b8b3e50e45febbfca8de9/assignEmployee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects",
+								"634b8b3e50e45febbfca8de9",
+								"assignEmployee"
 							]
 						}
 					},
