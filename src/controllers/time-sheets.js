@@ -72,10 +72,16 @@ export const createTimeSheet = async (req, res) => {
 
 export const deleteTimeSheet = async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await TimeSheets.findByIdAndDelete(id);
+    const result = await TimeSheets.findByIdAndDelete(req.params.id);
+    if (!result) {
+      return res.status(404).json({
+        message: `There are no timesheet with id: ${req.params.id}`,
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
-      message: `Time sheet with id ${id} has been deleted`,
+      message: `Time sheet with id ${req.params.id} has been deleted`,
       data: result,
       error: false,
     });
@@ -90,14 +96,20 @@ export const deleteTimeSheet = async (req, res) => {
 
 export const editTimeSheet = async (req, res) => {
   try {
-    const { id } = req.params;
     const result = await TimeSheets.findByIdAndUpdate(
-      id,
+      req.params.id,
       req.body,
       { new: true },
     );
+    if (!result) {
+      return res.status(404).json({
+        message: `There are no timesheet with id: ${req.params.id}`,
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
-      message: `Time sheet with id ${id} has been updated`,
+      message: `Time sheet with id ${req.params.id} has been updated`,
       data: result,
       error: false,
     });
