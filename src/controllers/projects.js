@@ -1,9 +1,8 @@
 import Projects from '../models/Projects';
 
-// GetAll
-const getAll = async (req, res) => {
+export const getProjects = async (req, res) => {
   try {
-    const projects = await Projects.find();
+    const projects = await Projects.find(req.query);
 
     return res.status(200).json({
       message: 'All Projects',
@@ -18,8 +17,7 @@ const getAll = async (req, res) => {
   }
 };
 
-// GetById
-const getById = async (req, res) => {
+export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
     const projects = await Projects.findById(id);
@@ -37,8 +35,7 @@ const getById = async (req, res) => {
   }
 };
 
-// Post
-const createProject = async (req, res) => {
+export const createProject = async (req, res) => {
   try {
     const project = new Projects({
       name: req.body.name,
@@ -61,11 +58,4 @@ const createProject = async (req, res) => {
       error: err,
     });
   }
-};
-
-// Exports
-export default {
-  getAll,
-  getById,
-  createProject,
 };

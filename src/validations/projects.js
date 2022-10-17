@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreation = (req, res, next) => {
+const validateProjectBody = (req, res, next) => {
   const employeeValidation = Joi.object({
     name: Joi.string().min(3).max(50).required(),
     role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
@@ -29,5 +29,5 @@ const validateCreation = (req, res, next) => {
 };
 
 export default {
-  validateCreation,
+  validateProjectBody,
 };
