@@ -21,7 +21,7 @@ export const getEmployeesById = async (req, res) => {
     const employee = await Employees.findById(req.params.id);
     if (!employee) {
       return res.status(404).json({
-        meesage: `This employee id: ${req.params.id} does not exists`,
+        message: `This employee id: ${req.params.id} does not exists`,
       });
     }
     return res.status(200).json({
@@ -67,6 +67,32 @@ export const deleteEmployees = async (req, res) => {
     const result = await Employees.findByIdAndDelete(req.params.id);
     return res.status(200).json({
       message: `Employee with id: ${req.params.id} deleted`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Something went wrong',
+      error: true,
+    });
+  }
+};
+
+export const editEmployees = async (req, res) => {
+  try {
+    const result = await Employees.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!result) {
+      return res.status(404).json({
+        message: `Employee id: ${req.params.id} does not exists`,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Employee id: ${req.params.id} edited`,
       data: result,
       error: false,
     });
