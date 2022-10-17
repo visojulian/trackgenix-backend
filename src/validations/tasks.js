@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreationTask = (req, res, next) => {
+const validateTaskBody = (req, res, next) => {
   const taskValidation = Joi.object({
     description: Joi.string().max(150).required(),
   });
@@ -16,6 +16,4 @@ const validateCreationTask = (req, res, next) => {
   }
   return next();
 };
-export default {
-  validateCreationTask,
-};
+export default validateTaskBody;
