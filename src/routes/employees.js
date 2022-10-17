@@ -1,5 +1,4 @@
 import express from 'express';
-// import employeesControllers from '../controllers/employees';
 import employeesValidations from '../validations/employees';
 import {
   getAllEmployees,

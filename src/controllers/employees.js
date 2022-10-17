@@ -61,9 +61,3 @@ export const createEmployees = async (req, res) => {
     });
   }
 };
-
-// export default {
-//   getAllEmployees,
-//   getEmployeesById,
-//   createEmployees,
-// };
