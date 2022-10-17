@@ -83,8 +83,32 @@ export const deleteSuperAdmin = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: 'Super admin deleted',
+      message: `Super admin with ${req.params.id} deleted`,
       data: superAdminDeleted,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred! ${error.message}`,
+      error: true,
+    });
+  }
+};
+
+export const editSuperAdmin = async (req, res) => {
+  try {
+    const result = await SuperAdmins.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+    if (!result) {
+      return res.status(404).json({
+        message: `The super admin with id: ${req.params.id} you want to edit does not exist`,
+        error: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Super admin with ${req.params.id} edited`,
+      data: result,
       error: false,
     });
   } catch (error) {
