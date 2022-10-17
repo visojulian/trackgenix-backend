@@ -28,7 +28,7 @@ export const getAdminById = async (req, res) => {
     if (!admin) {
       return res.status(400).json({
         message: 'No admin found',
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
