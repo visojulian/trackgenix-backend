@@ -1,132 +1,71 @@
-const fs = require('fs');
-const timeSheets = require('../data/time-sheets.json');
+import TimeSheets from '../models/Time-sheets';
 
-const getAllTimeSheets = (req, res) => {
-  res.status(200).json({
-    data: timeSheets,
-  });
-};
-
-const getTimeSheet = (req, res) => {
-  const idValue = parseInt(req.params.id, 10);
-  timeSheets.forEach((element) => {
-    if (element.id === idValue) {
-      res.status(200).json({
-        element,
+export const getAllTimeSheets = async (req, res) => {
+  try {
+    const timeSheets = await TimeSheets.find(req.query);
+    if (!timeSheets.length) {
+      return res.status(404).json({
+        message: 'There are no timesheets',
+        data: undefined,
+        error: true,
       });
     }
-  });
-  res.status(404).send('There is no element with that id.');
-};
-
-const filterTimeSheets = (req, res) => {
-  let filteredArray = timeSheets;
-  const queriesArray = Object.keys(req.query);
-
-  queriesArray.forEach((query) => {
-    if (query !== 'id' && query !== 'startDate' && query !== 'endDate') {
-      res.status(400).json({
-        Error: 'One of the filters you applied does not exist',
-      });
-    }
-  });
-
-  if (req.query.id) {
-    filteredArray = filteredArray.filter(
-      (element) => element.id === parseInt(req.query.id, 10),
-    );
-  }
-
-  if (req.query.startDate) {
-    filteredArray = filteredArray.filter(
-      (element) => element.startDate === req.query.startDate,
-    );
-  }
-
-  if (req.query.endDate) {
-    filteredArray = filteredArray.filter(
-      (element) => element.endDate === req.query.endDate,
-    );
-  }
-
-  res.status(200).json({
-    filteredArray,
-  });
-};
-
-const createTimeSheet = (req, res) => {
-  const newTimeSheet = req.body;
-  newTimeSheet.id = Number(new Date().getTime().toString().substring(6));
-  if (JSON.stringify(newTimeSheet) === '{}') {
-    res.status(404).send('Cannot create new Timesheet because its empty');
-  } else {
-    timeSheets.push(newTimeSheet);
-    fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
-      if (err) {
-        res.send('Cannot create new Timesheet');
-      } else {
-        res.send('Timesheet Created');
-      }
+    return res.status(200).json({
+      message: 'Time sheets found',
+      data: timeSheets,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      data: undefined,
+      error: true,
     });
   }
 };
 
-const editTimeSheet = (req, res) => {
-  const idValue = parseInt(req.params.id, 10);
-  const editableTimeSheet = timeSheets.find((element) => element.id === idValue);
-
-  if (req.body.id) {
-    editableTimeSheet.id = req.body.id;
-  }
-  if (req.body.startDate) {
-    editableTimeSheet.startDate = req.body.startDate;
-  }
-  if (req.body.endDate) {
-    editableTimeSheet.endDate = req.body.endDate;
-  }
-  if (req.body.description) {
-    editableTimeSheet.description = req.body.description;
-  }
-
-  res.status(200).json({
-    timeSheets,
-  });
-  fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
-    if (err) {
-      res.send('Cannot edit Timesheet');
-    } else {
-      res.send('Timesheet edited successfully');
+export const getTimeSheetById = async (req, res) => {
+  try {
+    const timeSheet = await TimeSheets.findById(req.params.id);
+    if (!timeSheet) {
+      return res.status(404).json({
+        message: `There are no timesheet with id: ${req.params.id}`,
+        data: undefined,
+        error: true,
+      });
     }
-  });
+    return res.status(200).json({
+      message: 'Time sheet found',
+      data: timeSheet,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
 };
 
-const deleteTimeSheet = (req, res) => {
-  const idValue = parseInt(req.params.id, 10);
-  const removeThisTimesheet = timeSheets.find((element) => element.id === idValue);
-
-  if (removeThisTimesheet === undefined) {
-    res.send('The timesheet you are trying to delete does not exist.');
+export const createTimeSheet = async (req, res) => {
+  try {
+    const timeSheet = new TimeSheets({
+      description: req.body.description,
+      date: req.body.date,
+      hours: req.body.hours,
+      tasks: req.body.tasks,
+    });
+    const result = await timeSheet.save();
+    return res.status(201).json({
+      message: 'Time sheet created successfully',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      error: true,
+    });
   }
-
-  timeSheets.splice(timeSheets.indexOf(removeThisTimesheet), 1);
-
-  res.status(200).json({
-    timeSheets,
-  });
-  fs.writeFile('./src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
-    if (err) {
-      res.send('Cannot delete time sheet.');
-    } else {
-      res.send('Time sheet deleted successfully');
-    }
-  });
-};
-
-module.exports = {
-  getAllTimeSheets,
-  filterTimeSheets,
-  createTimeSheet,
-  editTimeSheet,
-  deleteTimeSheet,
-  getTimeSheet,
 };
