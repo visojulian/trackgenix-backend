@@ -1,49 +1,71 @@
-const fs = require('fs');
-const admins = require('../data/admins.json');
+import Admins from '../models/Admins';
 
-// GET ALL ADMINS
-const getAllAdmins = (req, res) => {
-  res.status(200).send(admins);
-};
-
-// GET ONLY ONE ADMIN FILTER BY ID
-const getAdminsById = (req, res) => {
-  const adminId = req.params.id;
-  const oneAdmin = admins.find((admin) => admin.id === Number(adminId));
-  if (oneAdmin) {
-    res.status(200).send(oneAdmin);
-  } else {
-    res.status(400).json({ msg: `There is no Admin with id ${req.params.id}` });
-  }
-};
-
-// CREATE AN ADMIN
-const addAdmin = (req, res) => {
-  const adminId = Number(req.body.id);
-  const oneAdmin = admins.find((admin) => admin.id === adminId);
-  const newAdmin = req.body;
-  const saveAdmin = {
-    id: newAdmin.id = Number(new Date().getTime().toString().substring(6)),
-    name: newAdmin.name,
-    lastName: newAdmin.lastName,
-    email: newAdmin.email,
-    password: newAdmin.password,
-  };
-  if (JSON.stringify(newAdmin) === '{}') {
-    res.status(400).json({ msg: 'Error! Cannot create an empty Admin' });
-  } else if (oneAdmin) {
-    res.status(400).json({ msg: 'Admin already exists!' });
-  } else {
-    admins.push(saveAdmin);
-  }
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-    if (err) {
-      res.status(400).json({ msg: 'Error! Cannot create new Admin' });
-    } else {
-      res.status(200).json({ msg: `Admin ${req.body.email} created successfully!` });
+export const getAllAdmins = async (req, res) => {
+  try {
+    const admins = await Admins.find(req.query);
+    if (!admins.length) {
+      return res.status(404).json({
+        message: 'No admins found',
+        error: true,
+      });
     }
-  });
+    return res.status(200).json({
+      message: 'Admins found',
+      data: admins,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: `Error while getting all admins ${error}`,
+      error: true,
+    });
+  }
 };
+
+export const getAdminById = async (req, res) => {
+  try {
+    const admin = await Admins.findById(req.params.id);
+    if (!admin) {
+      return res.status(400).json({
+        message: 'No admin found',
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Admin found',
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Error while getting admin by id',
+      error: error.message,
+    });
+  }
+};
+
+export const createAdmin = async (req, res) => {
+  try {
+    const newAdmin = new Admins({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    const admin = await newAdmin.save();
+    return res.status(201).json({
+      message: 'Admin created',
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Error while creating admin',
+      error: error.message,
+    });
+  }
+};
+/*
 
 // DELETE AN ADMIN
 const deleteAdmin = (req, res) => {
@@ -51,7 +73,8 @@ const deleteAdmin = (req, res) => {
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   const oneAdmin = admins.find((admin) => admin.id === adminId);
   if (!oneAdmin) {
-    res.status(400).json({ msg: `Cannot delete Admin with id ${req.params.id}, because it does not exist!` });
+    res.status(400).json({ msg:
+      `Cannot delete Admin with id ${req.params.id}, because it does not exist!` });
   }
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
@@ -128,3 +151,4 @@ module.exports = {
   editAdmin,
   filterAdmin,
 };
+*/
