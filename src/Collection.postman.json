@@ -10,12 +10,71 @@
 			"name": "Super admins",
 			"item": [
 				{
-					"name": "Get super admin",
+					"name": "Get super admins",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:4000/super-admins",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins"
+							]
+						}
+					},
+					"response": []
+				},
+        {
+          "name": "Get super admin by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/super-admins/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "super-admins",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "634b0dd43f20adb5648d1ebe"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+				{
+					"name": "Create super admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"name\": \"Mateo\",\n    \"lastName\": \"Scarabino\",\n    \"email\": \"mateoscarabino@gmail.com\",\n    \"password\": \"1234radium\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/super-admins",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"super-admins"
+							]
 						}
 					},
 					"response": []
@@ -26,12 +85,72 @@
 			"name": "Time sheets",
 			"item": [
 				{
-					"name": "Get timesheet",
+					"name": "getTimeSheets",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:3000/time-sheets",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTimeSheetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/time-sheets/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTimeSheet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"description\": \"I create employee scheme html and css files in Trackgenix\",\n        \"date\": \"2022-01-06\",\n        \"hours\": 10,\n        \"tasks\": \"5\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/time-sheets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"time-sheets"
+							]
 						}
 					},
 					"response": []
@@ -90,12 +209,59 @@
 			"name": "Projects",
 			"item": [
 				{
-					"name": "Get project",
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{\"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects"
+							]
 						}
 					},
 					"response": []
@@ -103,20 +269,76 @@
 			]
 		},
 		{
-			"name": "Admins",
-			"item": [
-				{
-					"name": "Get admin",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				}
-			]
-		}
+      "name": "Admins",
+      "item": [
+        {
+          "name": "Get All Admins",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/admins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Admins",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Dario\",\n    \"lastName\": \"mara\",\n    \"email\": \"genio@sohu.com\",\n    \"password\": \"202dssdfasds\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/admins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Admis By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/admins/634b3d80190ec399997cb676",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins",
+                "634b3d80190ec399997cb676"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
 	]
 }
