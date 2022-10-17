@@ -1,6 +1,6 @@
 import Tasks from '../models/Tasks';
 
-const getAllTasks = async (req, res) => {
+export const getAllTasks = async (req, res) => {
   try {
     const task = await Tasks.find(req.query);
     if (!task.length) {
@@ -22,7 +22,7 @@ const getAllTasks = async (req, res) => {
   }
 };
 
-const getTasksById = async (req, res) => {
+export const getTasksById = async (req, res) => {
   try {
     const task = await Tasks.findById(req.params.id);
     if (!task) {
@@ -44,7 +44,7 @@ const getTasksById = async (req, res) => {
   }
 };
 
-const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
   try {
     const newTask = new Tasks({
       description: req.body.description,
@@ -63,8 +63,24 @@ const createTask = async (req, res) => {
   }
 };
 
-export default {
-  getAllTasks,
-  getTasksById,
-  createTask,
+export const deleteTask = async (req, res) => {
+  try {
+    const task = await Tasks.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(404).json({
+        message: 'no task found',
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Task deleted',
+      data: task,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      error,
+    });
+  }
 };
