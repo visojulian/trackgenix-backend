@@ -1,5 +1,5 @@
 import express from 'express';
-import projectValidation from '../validations/projects';
+import validateProjectBody from '../validations/projects';
 import {
   getProjects,
   getProjectById,
@@ -11,6 +11,6 @@ const router = express.Router();
 router
   .get('/', getProjects)
   .get('/:id', getProjectById)
-  .post('/', projectValidation.validateProjectBody, createProject);
+  .post('/', validateProjectBody, createProject);
 
 export default router;

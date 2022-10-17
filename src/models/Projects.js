@@ -10,7 +10,6 @@ const ProjectSchemas = new Schema({
   clientName: { type: String, required: true },
   employees: [
     {
-      name: { type: String, required: true },
       role: { type: String, required: true, enum: ['DEV', 'QA', 'TL', 'PM'] },
       rate: { type: Number, required: true },
     }],

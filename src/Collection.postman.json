@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"name\": \"Mateo\", \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{\"role\": \"QA\" , \"rate\": 52}]\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
