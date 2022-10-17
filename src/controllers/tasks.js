@@ -65,11 +65,16 @@ export const createTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await Tasks.findByIdAndDelete(id);
+    const task = await Tasks.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(404).json({
+        message: 'no task found',
+        error: true,
+      });
+    }
     return res.status(200).json({
-      message: `Task with id ${id} deleted`,
-      data: result,
+      message: `Task with id ${req.params.id} deleted `,
+      data: task,
       error: false,
     });
   } catch (error) {
@@ -82,15 +87,19 @@ export const deleteTask = async (req, res) => {
 
 export const editTask = async (req, res) => {
   try {
-    const { id } = req.params;
     const task = await Tasks.findByIdAndUpdate(
-      { _id: id },
+      { _id: req.params.id },
       { ...req.body },
       { new: true },
     );
-
+    if (!task) {
+      return res.status(404).json({
+        message: 'no task found',
+        error: true,
+      });
+    }
     return res.status(200).json({
-      message: `Task with id ${id} updated `,
+      message: `Task with id ${req.params.id} updated `,
       data: task,
       error: false,
     });
