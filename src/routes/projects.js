@@ -5,6 +5,7 @@ import {
   getProjectById,
   createProject,
   deleteProject,
+  updateProject,
 } from '../controllers/projects';
 
 const router = express.Router();
@@ -13,6 +14,7 @@ router
   .get('/', getProjects)
   .get('/:id', getProjectById)
   .post('/', projectValidation.validateProjectBody, createProject)
-  .delete('/:id/delete', deleteProject);
+  .delete('/:id/delete', deleteProject)
+  .put('/:id/update', updateProject);
 
 export default router;
