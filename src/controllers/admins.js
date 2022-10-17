@@ -1,8 +1,14 @@
 import Admins from '../models/Admins';
 
-const getAllAdmins = async (req, res) => {
+export const getAllAdmins = async (req, res) => {
+  const admins = await Admins.find(req.query);
+  if (admins.length === 0) {
+    return res.json({
+      message: 'No admins found',
+      error: false,
+    });
+  }
   try {
-    const admins = await Admins.find();
     return res.status(200).json({
       message: 'Admins found',
       data: admins,
@@ -16,10 +22,15 @@ const getAllAdmins = async (req, res) => {
   }
 };
 
-const getAdminById = async (req, res) => {
+export const getAdminById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const admin = await Admins.findById(id);
+    const admin = await Admins.findById(req.params.id);
+    if (!admin) {
+      return res.status(400).json({
+        message: 'No admin found',
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Admin found',
       data: admin,
@@ -33,7 +44,7 @@ const getAdminById = async (req, res) => {
   }
 };
 
-const createAdmin = async (req, res) => {
+export const createAdmin = async (req, res) => {
   try {
     const newAdmin = new Admins({
       name: req.body.name,
@@ -141,9 +152,3 @@ module.exports = {
   filterAdmin,
 };
 */
-
-export default {
-  getAllAdmins,
-  getAdminById,
-  createAdmin,
-};
