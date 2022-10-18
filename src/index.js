@@ -9,8 +9,6 @@ const port = 4000;
 app.use(express.json());
 app.use('/', routes);
 
-app.use('/', routes);
-
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });

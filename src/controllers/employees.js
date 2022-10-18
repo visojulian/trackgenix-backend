@@ -3,6 +3,11 @@ import Employees from '../models/Employees';
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employees.find(req.query);
+    if (!employees.length) {
+      return res.status(404).json({
+        message: `This employee id: ${req.params.id} does not exists`,
+      });
+    }
     return res.status(200).json({
       message: 'Employees found',
       data: employees,
@@ -65,6 +70,12 @@ export const createEmployees = async (req, res) => {
 export const deleteEmployees = async (req, res) => {
   try {
     const result = await Employees.findByIdAndDelete(req.params.id);
+    if (!result) {
+      return res.status(404).json({
+        message: `Employee id: ${req.params.id} does not exists`,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: `Employee with id: ${req.params.id} deleted`,
       data: result,
@@ -85,6 +96,12 @@ export const editEmployees = async (req, res) => {
       req.body,
       { new: true },
     );
+    if (!result) {
+      return res.status(404).json({
+        message: `Employee id: ${req.params.id} does not exists`,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: `Employee id: ${req.params.id} edited`,
       data: result,
@@ -92,7 +109,7 @@ export const editEmployees = async (req, res) => {
     });
   } catch (error) {
     return res.json({
-      message: error.toString(),
+      message: 'Something went wrong',
       error: true,
     });
   }

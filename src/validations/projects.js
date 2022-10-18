@@ -1,7 +1,8 @@
 import Joi from 'joi';
 
-const validateProjectBody = (req, res, next) => {
+export const validateProjectBody = (req, res, next) => {
   const employeeValidation = Joi.object({
+    _id: Joi.string().length(24).required(),
     role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
     rate: Joi.number().required(),
   });
@@ -16,6 +17,25 @@ const validateProjectBody = (req, res, next) => {
   });
 
   const validation = projectValidation.validate(req.body);
+
+  if (validation.error) {
+    return res.status(400).json({
+      message: `There was an error: ${validation.error.details[0].message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+  return next();
+};
+
+export const validateEmployee = (req, res, next) => {
+  const employeeValidation = Joi.object({
+    _id: Joi.string().length(24).required(),
+    role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
+    rate: Joi.number().required(),
+  });
+
+  const validation = employeeValidation.validate(req.body);
 
   if (validation.error) {
     return res.status(400).json({
