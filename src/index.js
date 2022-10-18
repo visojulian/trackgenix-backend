@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import routes from './routes/index';
 
 const app = express();
-
 const port = 4000;
 
 app.use(express.json());
