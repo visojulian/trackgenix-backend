@@ -69,3 +69,54 @@ export const createTimeSheet = async (req, res) => {
     });
   }
 };
+
+export const deleteTimeSheet = async (req, res) => {
+  try {
+    const timeSheet = await TimeSheets.findByIdAndDelete(req.params.id);
+    if (!timeSheet) {
+      return res.status(404).json({
+        message: `There are no timesheet with id: ${req.params.id}`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Time sheet with id ${req.params.id} has been deleted`,
+      data: timeSheet,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const editTimeSheet = async (req, res) => {
+  try {
+    const timeSheet = await TimeSheets.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!timeSheet) {
+      return res.status(404).json({
+        message: `There are no timesheet with id: ${req.params.id}`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Time sheet with id ${req.params.id} has been updated`,
+      data: timeSheet,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error ocurred: ${error.message}`,
+      error: true,
+    });
+  }
+};
