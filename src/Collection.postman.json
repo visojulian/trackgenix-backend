@@ -326,11 +326,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:5000/tasks",
+							"raw": "localhost:4000/tasks",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "4000",
 							"path": [
 								"tasks"
 							]
@@ -353,11 +353,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:5000/tasks",
+							"raw": "localhost:4000/tasks",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "4000",
 							"path": [
 								"tasks"
 							]
@@ -371,11 +371,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:5000/tasks/:id",
+							"raw": "localhost:4000/tasks/:id",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "4000",
 							"path": [
 								"tasks",
 								":id"
@@ -387,6 +387,22 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete task",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update tasks",
+					"request": {
+						"method": "PUT",
+						"header": []
 					},
 					"response": []
 				}
@@ -551,12 +567,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admins",
+              "raw": "http://localhost:4000/admins",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "4000",
               "path": [
                 "admins"
               ]
@@ -579,12 +595,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:5000/admins",
+              "raw": "http://localhost:4000/admins",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "4000",
               "path": [
                 "admins"
               ]
@@ -598,12 +614,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admins/634b3d80190ec399997cb676",
+              "raw": "http://localhost:4000/admins/634b3d80190ec399997cb676",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "4000",
               "path": [
                 "admins",
                 "634b3d80190ec399997cb676"
