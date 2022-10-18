@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"raw": "  {\r\n    \"name\": \"Prueba 7\",\r\n    \"description\": \"Prueba 7\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{\"_id\":\"634cd4f71d78338392747b67\",  \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -149,7 +149,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"name\": \"Prueba 1\",\r\n    \"description\": \"Prueba 1\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"name\": \"mateo\", \"role\": \"QA\" , \"rate\": 52}]\r\n  }",
+							"raw": "  {\r\n    \"name\": \"Prueba 6\",\r\n    \"description\": \"Prueba 6\",\r\n    \"startDate\": \"2022-12-10\",\r\n    \"endDate\": \"2022-12-11\",\r\n    \"clientName\": \"Timothy Blackah\",\r\n    \"employees\": [{ \"_id\":\"634cd4f71d78338392747b67\", \"role\": \"QA\" , \"rate\": 5.2}]\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -157,7 +157,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4000/projects/634b3db506cf277df1258900/update",
+							"raw": "http://localhost:4000/projects/634cd1442598ab36d96cca8b/update",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -165,7 +165,7 @@
 							"port": "4000",
 							"path": [
 								"projects",
-								"634b3db506cf277df1258900",
+								"634cd1442598ab36d96cca8b",
 								"update"
 							]
 						}
