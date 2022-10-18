@@ -90,11 +90,7 @@ export const deleteAdmin = async (req, res) => {
 
 export const updateAdmin = async (req, res) => {
   try {
-    const admin = await Admins.findByIdAndUpdate({
-      _id: req.params.id,
-    }, req.body, {
-      new: true,
-    });
+    const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!admin) {
       return res.status(400).json({
         message: 'No admin found, there is not admin with that id',
