@@ -1,129 +1,99 @@
-const fs = require('fs');
-const employees = require('../data/employees.json');
+import Employees from '../models/Employees';
 
-const getAllEmployees = (req, res) => {
-  res.status(200).json({ data: employees });
-};
-
-const getEmployeeById = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const employee = employees.find((element) => element.id === id);
-  if (employee) {
-    res.status(200).json({ data: employee });
-  } else {
-    res.status(404).json({ error: 'Employee not found' });
-  }
-};
-
-const createNewEmployee = (req, res) => {
-  const id = parseInt(req.body.id, 10);
-  const employee = employees.find((element) => element.id === id);
-  const newEmployee = req.body;
-  const saveEmployee = {
-    id: newEmployee.id = Number(new Date().getTime().toString().substring(6)),
-    email: newEmployee.email,
-    password: newEmployee.password,
-    name: newEmployee.name,
-    lastName: newEmployee.lastName,
-    phone: newEmployee.phone,
-  };
-  if (JSON.stringify(newEmployee) === '{}') {
-    res.status(404).json({ error: 'Please provide employee data' });
-  } else if (employee) {
-    res.status(404).json({ error: 'Employee already exists' });
-  } else {
-    employees.push(saveEmployee);
-    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
-      if (err) {
-        res.status(500).json({ error: 'Error writing file' });
-      } else {
-        res.status(201).json({ newEmployee });
-      }
+export const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await Employees.find(req.query);
+    return res.status(200).json({
+      message: 'Employees found',
+      data: employees,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Something went wrong',
+      error: true,
     });
   }
 };
 
-const editAnEmployee = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const employee = employees.find((element) => element.id === id);
-  if (employee) {
-    const newEmployee = req.body;
-    employees.forEach((element) => {
-      if (element.id === id) {
-        employee.email = newEmployee.email ? newEmployee.email : employee.email;
-        employee.password = newEmployee.password ? newEmployee.password : employee.password;
-        employee.name = newEmployee.name ? newEmployee.name : employee.name;
-        employee.lastName = newEmployee.lastName ? newEmployee.lastName : employee.lastName;
-        employee.phone = newEmployee.phone ? newEmployee.phone : employee.phone;
-      }
-    });
-    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
-      if (err) {
-        res.status(400).json({ error: 'Error writing file' });
-      } else {
-        res.status(200).json({ data: 'Updated employee' });
-      }
-    });
-  } else {
-    res.status(404).json({ error: 'Employee not found' });
-  }
-};
-
-const deleteAnEmployee = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const employee = employees.find((element) => element.id === id);
-  if (employee) {
-    employees.splice(employees.indexOf(employee), 1);
-    fs.writeFile('./src/data/employees.json', JSON.stringify(employees), (err) => {
-      if (err) {
-        res.status(500).json({ error: 'Error writing file' });
-      } else {
-        res.status(201).json({ data: 'Deleted employee' });
-      }
-    });
-  } else {
-    res.status(404).json({ error: 'Employee not found' });
-  }
-};
-
-const fillterAllEmployees = (req, res) => {
-  let filterAll = employees;
-  const queriesArray = Object.keys(req.query);
-  queriesArray.forEach((query) => {
-    if (query !== 'id'
-      && query !== 'email'
-      && query !== 'name'
-      && query !== 'lastName'
-      && query !== 'phone') {
-      res.status(400).json({
-        message: 'message',
+export const getEmployeesById = async (req, res) => {
+  try {
+    const employee = await Employees.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({
+        message: `This employee id: ${req.params.id} does not exists`,
       });
-    } else {
-      if (req.query.id) {
-        filterAll = filterAll.filter((employee) => employee.id === parseInt(req.query.id, 10));
-      }
-      if (req.query.email) {
-        filterAll = filterAll.filter((employee) => employee.email === req.query.email);
-      }
-      if (req.query.name) {
-        filterAll = filterAll.filter((employee) => employee.name === req.query.name);
-      }
-      if (req.query.lastName) {
-        filterAll = filterAll.filter((employee) => employee.lastName === req.query.lastName);
-      }
-      if (req.query.phone) {
-        filterAll = filterAll.filter((employee) => employee.phone === req.query.phone);
-      }
-      res.status(200).json({ data: filterAll });
     }
-  });
+    return res.status(200).json({
+      message: 'Employee found',
+      data: employee,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `Something went wrong: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
 };
 
-module.exports = {
-  getAllEmployees,
-  getEmployeeById,
-  createNewEmployee,
-  editAnEmployee,
-  deleteAnEmployee,
-  fillterAllEmployees,
+export const createEmployees = async (req, res) => {
+  try {
+    const employee = new Employees({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    const result = await employee.save();
+    return res.status(201).json({
+      message: 'Employee created successfully',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: ' Something went wrong',
+      error: true,
+    });
+  }
+};
+
+export const deleteEmployees = async (req, res) => {
+  try {
+    const result = await Employees.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+      message: `Employee with id: ${req.params.id} deleted`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Something went wrong',
+      error: true,
+    });
+  }
+};
+
+export const editEmployees = async (req, res) => {
+  try {
+    const result = await Employees.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    return res.status(200).json({
+      message: `Employee id: ${req.params.id} edited`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: error.toString(),
+      error: true,
+    });
+  }
 };
