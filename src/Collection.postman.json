@@ -581,13 +581,13 @@
           "response": []
         },
         {
-          "name": "Create Admins",
+          "name": "Create Admin",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Dario\",\n    \"lastName\": \"mara\",\n    \"email\": \"genio@sohu.com\",\n    \"password\": \"202dssdfasds\"\n}",
+              "raw": "{\n    \"name\": \"juli\",\n    \"lastName\": \"jupiter\",\n    \"email\": \"negro@gmail.com\",\n    \"password\": \"k478fdj3ds\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -609,9 +609,58 @@
           "response": []
         },
         {
-          "name": "Get Admis By Id",
+          "name": "Get Admin By Id",
           "request": {
             "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/admins/634d98cbcc64d30860adb38d",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "admins",
+                "634d98cbcc64d30860adb38d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"JULIETA\",\n    \"lastName\": \"jupiter\",\n    \"email\": \"negro@gmail.com\",\n    \"password\": \"k478fdj3ds\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/admins/634d98cbcc64d30860adb38d",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "admins",
+                "634d98cbcc64d30860adb38d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Admin",
+          "request": {
+            "method": "DELETE",
             "header": [],
             "url": {
               "raw": "http://localhost:4000/admins/634b3d80190ec399997cb676",

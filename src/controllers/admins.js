@@ -15,7 +15,7 @@ export const getAllAdmins = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       message: `Error while getting all admins ${error}`,
       error: true,
     });
@@ -37,9 +37,9 @@ export const getAdminById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'Error while getting admin by id',
-      error: error.message,
+    return res.status(400).json({
+      message: `Error while getting admin by id ${error}`,
+      error: true,
     });
   }
 };
@@ -59,96 +59,53 @@ export const createAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'Error while creating admin',
-      error: error.message,
+    return res.status(400).json({
+      message: `Error while creating admin ${error}`,
+      error: true,
     });
   }
 };
-/*
 
-// DELETE AN ADMIN
-const deleteAdmin = (req, res) => {
-  const adminId = Number(req.params.id);
-  const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
-  const oneAdmin = admins.find((admin) => admin.id === adminId);
-  if (!oneAdmin) {
-    res.status(400).json({ msg:
-      `Cannot delete Admin with id ${req.params.id}, because it does not exist!` });
-  }
-  fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
-    if (err) {
-      res.status(400).json({ msg: 'An error has ocurred, please check!' });
-    } else {
-      res.status(200).json({ msg: `Admin ${adminId} has been deleted!` });
+export const deleteAdmin = async (req, res) => {
+  try {
+    const admin = await Admins.findByIdAndDelete(req.params.id);
+    if (!admin) {
+      return res.status(400).json({
+        message: 'No admin found',
+        error: true,
+      });
     }
-  });
-};
-
-// EDIT DATA ADMIN
-const editAdmin = (req, res) => {
-  const adminId = Number(req.params.id);
-  const oneAdmin = admins.find((admin) => admin.id === adminId);
-  if (oneAdmin) {
-    const updateAdmin = req.body;
-    admins.forEach((admin) => {
-      if (admin.id === adminId) {
-        oneAdmin.name = updateAdmin.name ? updateAdmin.name : oneAdmin.name;
-        oneAdmin.lastName = updateAdmin.lastName ? updateAdmin.lastName : oneAdmin.lastName;
-        oneAdmin.email = updateAdmin.email ? updateAdmin.email : oneAdmin.email;
-        oneAdmin.password = updateAdmin.password ? updateAdmin.password : oneAdmin.password;
-      }
+    return res.status(200).json({
+      message: 'Admin deleted',
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `Error while deleting admin ${error}`,
+      error: true,
     });
   }
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-    if (err) {
-      res.status(400).json({ msg: 'Error! Cannot update Admin' });
-    } else {
-      res.status(200).json({ msg: `Admin ${req.params.id} has been updated successfully!` });
+};
+
+export const updateAdmin = async (req, res) => {
+  try {
+    const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!admin) {
+      return res.status(400).json({
+        message: 'No admin found, there is not admin with that id',
+        error: true,
+      });
     }
-  });
+    return res.status(200).json({
+      message: `Admin Id: ${req.params.id}, was updated`,
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `Error while updating admin ${error}`,
+      error: true,
+    });
+  }
 };
-
-// SEARCH ADMINS BY FILTERS
-const filterAdmin = (req, res) => {
-  let filterByParams = admins;
-  // Checking that the user uses the correct filter params.
-  const queriesArray = Object.keys(req.query);
-  queriesArray.forEach((query) => {
-    if (query !== 'id' && query !== 'name' && query !== 'lastName' && query !== 'email') {
-      res.status(400).json({ msg: 'The filter you apply does not exist!' });
-    }
-  });
-
-  if (req.query.id) {
-    filterByParams = filterByParams.filter(
-      (admin) => admin.id === Number(req.query.id),
-    );
-  }
-  if (req.query.name) {
-    filterByParams = filterByParams.filter(
-      (admin) => admin.name === req.query.name,
-    );
-  }
-  if (req.query.lastName) {
-    filterByParams = filterByParams.filter(
-      (admin) => admin.lastName === req.query.lastName,
-    );
-  }
-  if (req.query.email) {
-    filterByParams = filterByParams.filter(
-      (admin) => admin.email === req.query.email,
-    );
-  }
-  res.status(200).json({ filterByParams });
-};
-
-module.exports = {
-  getAllAdmins,
-  getAdminsById,
-  addAdmin,
-  deleteAdmin,
-  editAdmin,
-  filterAdmin,
-};
-*/
