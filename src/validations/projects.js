@@ -46,3 +46,5 @@ export const validateEmployee = (req, res, next) => {
   }
   return next();
 };
+
+export default validateProjectBody;

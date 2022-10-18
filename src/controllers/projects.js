@@ -4,7 +4,7 @@ export const getProjects = async (req, res) => {
   try {
     const projects = await Projects.find(req.query);
 
-    if (!projects) {
+    if (!projects.length) {
       return res.status(404).json({
         message: 'Projects not found',
         error: true,
