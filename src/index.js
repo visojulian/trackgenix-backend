@@ -1,28 +1,25 @@
-// use "import" to import libraries
-import express from 'express';
 import mongoose from 'mongoose';
-import routes from './routes/index';
+import app from './app';
 
-const app = express();
-const port = 4000;
+require('dotenv').config();
 
-app.use(express.json());
-app.use('/', routes);
+const port = process.env.PORT || 3000;
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
-const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.2ktcmjk.mongodb.net/BaSP-database-Lucas-a?retryWrites=true&w=majority';
-
 mongoose.connect(
-  MONGO_URL,
+  process.env.DATABASE_URL,
   (error) => {
     if (error) {
+      // eslint-disable-next-line no-console
       console.log('Failed connection to database', error);
     } else {
+      // eslint-disable-next-line no-console
       console.log('Connected to database.');
       app.listen(port, () => {
+        // eslint-disable-next-line no-console
         console.log(`Server ready on port ${port}`);
       });
     }
