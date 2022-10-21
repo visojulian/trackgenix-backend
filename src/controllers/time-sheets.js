@@ -29,7 +29,10 @@ export const getAllTimeSheets = async (req, res) => {
 
 export const getTimeSheetById = async (req, res) => {
   try {
-    const timeSheet = await TimeSheets.findById(req.params.id);
+    const timeSheet = await TimeSheets.findById(req.params.id)
+      .populate('task')
+      .populate('employee')
+      .populate('proyect');
     if (!timeSheet) {
       return res.status(404).json({
         message: `There are no timesheet with id: ${req.params.id}`,
@@ -57,7 +60,9 @@ export const createTimeSheet = async (req, res) => {
       description: req.body.description,
       date: req.body.date,
       hours: req.body.hours,
-      tasks: req.body.tasks,
+      task: req.body.task,
+      employee: req.body.employee,
+      project: req.body.project,
     });
     const result = await timeSheet.save();
     return res.status(201).json({
