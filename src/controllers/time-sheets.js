@@ -2,7 +2,10 @@ import TimeSheets from '../models/Time-sheets';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
-    const timeSheets = await TimeSheets.find(req.query);
+    const timeSheets = await TimeSheets.find(req.query)
+      .populate('task')
+      .populate('employee')
+      .populate('proyect');
     if (!timeSheets.length) {
       return res.status(404).json({
         message: 'There are no timesheets',
