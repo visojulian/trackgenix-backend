@@ -1,0 +1,73 @@
+import mongoose from 'mongoose';
+
+export default [{
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
+  first_name: 'Jakie',
+  last_name: 'Linguard',
+  email: 'jlinguard0@imageshack.us',
+  phone: 9512613036,
+  password: '591gJWFkIlXt',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e401'),
+  first_name: 'Ondrea',
+  last_name: 'Grabbam',
+  email: 'ograbbam1@plala.jp',
+  phone: 1216462856,
+  password: '76pvVrjnG0HW',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e402'),
+  first_name: 'Oralla',
+  last_name: 'Blazy',
+  email: 'oblazy2@weebly.com',
+  phone: 9219096408,
+  password: 'b9nmK2as',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e403'),
+  first_name: 'Jodie',
+  last_name: 'Pech',
+  email: 'jpech3@un.org',
+  phone: 7143090769,
+  password: 'F8ndg6A4i',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e404'),
+  first_name: 'Eileen',
+  last_name: 'Crux',
+  email: 'ecrux4@globo.com',
+  phone: 6091836484,
+  password: 'fyvYmFYs2',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e405'),
+  first_name: 'Corri',
+  last_name: 'Scuffham',
+  email: 'cscuffham5@shareasale.com',
+  phone: 4851391482,
+  password: 'IDIPZW5I',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+  first_name: 'Jere',
+  last_name: 'Jickles',
+  email: 'jjickles6@123reg.uk',
+  phone: 3765064511,
+  password: 'cj0v3cv75Snt',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e407'),
+  first_name: 'Urbanus',
+  last_name: 'Brando',
+  email: 'ubrando7@amazonaws.com',
+  phone: 7919190109,
+  password: '00PIkTWmqo28',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e408'),
+  first_name: 'Amie',
+  last_name: 'Penman',
+  email: 'apenman8@google.jp',
+  phone: 7813488210,
+  password: 'eR3yrX8Lhr',
+}, {
+  _id: mongoose.Types.ObjectId('634d5803354e41cd60b9e409'),
+  first_name: 'Maryl',
+  last_name: 'Skoggins',
+  email: 'mskoggins9@amazon.com',
+  phone: 1444496006,
+  password: 'aJtEcc2da',
+}];
