@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
-const ProyectTask = new Schema({
+const ProjectTask = new Schema({
   description: { type: String, required: true },
 });
 
-export default mongoose.model('Task', ProyectTask);
+export default mongoose.model('Task', ProjectTask);
