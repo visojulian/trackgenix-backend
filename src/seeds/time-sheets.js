@@ -6,7 +6,7 @@ export default [{
   date: '2022-04-11',
   hours: 14,
   task: mongoose.Types.ObjectId('634adaf83e995e6b4c7864a7'),
-  employees: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
+  employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
   project: mongoose.Types.ObjectId('6354c31fa0f546fd19325575'),
 },
 {
