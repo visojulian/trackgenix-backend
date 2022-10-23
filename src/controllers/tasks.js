@@ -5,7 +5,7 @@ export const getAllTasks = async (req, res) => {
     const task = await Tasks.find(req.query);
     if (!task.length) {
       return res.status(404).json({
-        message: 'no task found',
+        message: 'No task found',
         error: true,
       });
     }
@@ -24,10 +24,10 @@ export const getAllTasks = async (req, res) => {
 
 export const getTasksById = async (req, res) => {
   try {
-    const task = await Tasks.findById(req.id);
+    const task = await Tasks.findById(req.params.id);
     if (!task) {
       return res.status(404).json({
-        message: 'no task found',
+        message: 'No task found',
         error: true,
       });
     }
@@ -51,7 +51,7 @@ export const createTask = async (req, res) => {
     });
     const resultTask = await newTask.save();
     return res.status(201).json({
-      message: 'Task create succesfully',
+      message: 'Task create successfully',
       data: resultTask,
       error: false,
     });
@@ -68,7 +68,7 @@ export const deleteTask = async (req, res) => {
     const task = await Tasks.findByIdAndDelete(req.params.id);
     if (!task) {
       return res.status(404).json({
-        message: 'no task found',
+        message: 'No task found',
         error: true,
       });
     }
@@ -94,7 +94,7 @@ export const editTask = async (req, res) => {
     );
     if (!task) {
       return res.status(404).json({
-        message: 'no task found',
+        message: 'No task found',
         error: true,
       });
     }
