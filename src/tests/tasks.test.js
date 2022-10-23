@@ -40,4 +40,27 @@ describe('Tasks - Unit tests', () => {
       expect(response.body.message).toBe('Task create successfully');
     });
   });
+
+  describe('PUT /tasks', () => {
+    const mockTask = {
+      description: 'Hello world',
+    };
+    test('should return status code 200', async () => {
+      const response = await request(app).put('/tasks/63548d1929a3478b830780cb').send(mockTask);
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.error).toBeDefined();
+      expect(response.body.message).toBe(`${response.body.message}`);
+    });
+  });
+
+  describe('DELETE /:id', () => {
+    test('should return status code 200', async () => {
+      const response = await request(app).delete('/tasks/63548d0f2e375d491a94b171').send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      expect(response.body.message).toBe(`${response.body.message}`);
+    });
+  });
 });
