@@ -143,7 +143,7 @@ export const assignEmployee = async (req, res) => {
 
     return res.status(200).json({
       // eslint-disable-next-line no-underscore-dangle
-      message: `Employee ${req.body._id} assign to project ${req.params.id}`,
+      message: `Employee ${req.body.employee} assign to project ${req.params.id}`,
       data: result,
       error: false,
     });
