@@ -2,7 +2,8 @@ import Projects from '../models/Projects';
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Projects.find(req.query);
+    const projects = await Projects.find(req.query)
+      .populate('employees');
 
     if (!projects.length) {
       return res.status(404).json({
@@ -17,8 +18,9 @@ export const getProjects = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    return res.json({
-      message: err,
+    return res.status(400).json({
+      message: `An error ocurred: ${err.message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -27,7 +29,8 @@ export const getProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const projects = await Projects.findById(id);
+    const projects = await Projects.findById(id)
+      .populate('employees');
 
     if (!projects) {
       return res.status(404).json({
@@ -42,8 +45,9 @@ export const getProjectById = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    return res.json({
-      message: err,
+    return res.status(400).json({
+      message: `An error ocurred: ${err.message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -92,7 +96,8 @@ export const deleteProject = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: err,
+      message: `An error ocurred: ${err.message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -120,7 +125,8 @@ export const updateProject = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: err,
+      message: `An error ocurred: ${err.message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -143,13 +149,14 @@ export const assignEmployee = async (req, res) => {
 
     return res.status(200).json({
       // eslint-disable-next-line no-underscore-dangle
-      message: `Employee ${req.body._id} assign to project ${req.params.id}`,
+      message: `Employee ${req.body.employee} assign to project ${req.params.id}`,
       data: result,
       error: false,
     });
   } catch (err) {
     return res.status(400).json({
-      message: err,
+      message: `An error ocurred: ${err.message}`,
+      data: undefined,
       error: true,
     });
   }
