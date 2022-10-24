@@ -93,17 +93,30 @@ describe('ERRORS PUT - invalid edits', () => {
     const response = await request(app).put('/admins/634b31caa18bcb2e7eb97458').send();
     expect(response.status).toBe(400);
   });
+
+  test('should return status code 200', async () => {
+    const correctAdmin = {
+      name: 'valen',
+      lastName: 'not real',
+      email: 'idontexist@hot.com',
+      password: 'password',
+    };
+    const response = await request(app).put('/admins/634b30cda84415df73652ecf').send(correctAdmin);
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBe(false);
+    expect(response.body.message).toBe('Admin was updated');
+  });
 });
 
 describe('POST - create admin', () => {
-  const adminMocked = {
+  const validAdmin = {
     name: 'balen',
     lastName: 'asaa',
     email: 'dasdasd@hotm.com',
     password: 'aaaaaaaaaaaaaaa',
   };
   test('should return status 201', async () => {
-    const response = await request(app).post('/admins').send(adminMocked);
+    const response = await request(app).post('/admins').send(validAdmin);
     expect(response.status).toBe(201);
     expect(response.body.error).toBe(false);
     expect(response.body.message).toBe('Admin created');
@@ -111,16 +124,14 @@ describe('POST - create admin', () => {
 });
 
 describe('ERROR POST - create empty admin', () => {
-  const adminMockedEmpty = {
-    description: '',
-    date: '',
-    hours: '',
-    task: '',
-    employee: '',
-    project: '',
+  const emptyAdmin = {
+    name: '',
+    lastName: '',
+    email: '',
+    password: '',
   };
   test('should return status 400', async () => {
-    const response = await request(app).post('/admins').send(adminMockedEmpty);
+    const response = await request(app).post('/admins').send(emptyAdmin);
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
