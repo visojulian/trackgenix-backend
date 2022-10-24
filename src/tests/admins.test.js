@@ -38,3 +38,24 @@ describe('ERROR GET - Filter by ID', () => {
     expect(response.body.data).toBe(undefined);
   });
 });
+
+const fakeAdmin = {
+  name: 'balen',
+  lastName: 'not real',
+  email: 'idontexist@hotmail.com',
+  password: 'password',
+};
+
+describe('ERRORS PUT - invalid edits', () => {
+  test('Should return "inputfield is required" ', async () => {
+    const response = await request(app).put('/admins/634b30cda844d15df73652exd').send(fakeAdmin);
+    expect(response.status).toBe(400);
+    console.log(response.body.message);
+    // como hacer un expect "mensaje de error" pero q sea dinamico? quiero asegurarme q siempre sea "x input is not allowed to be empty"
+  });
+
+  test('Should return "cast to objectId failed" ', async () => {
+    const response = await request(app).put('/admins/634b30cda844d15df73652exd').send();
+    expect(response.status).toBe(400);
+  });
+});
