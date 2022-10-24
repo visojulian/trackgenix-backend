@@ -126,3 +126,20 @@ describe('ERROR POST - create empty admin', () => {
     expect(response.body.data).toBe(undefined);
   });
 });
+
+describe('ERROR DELETE - invalid id', () => {
+  test('should return status 400', async () => {
+    const response = await request(app).delete('/admins/634b30cda84415df73472ecf').send();
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
+  });
+});
+
+describe('DELETE - delete admin', () => {
+  test('should return status 200', async () => {
+    const response = await request(app).delete('/admins/634b30cda84415df73652ecf').send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBe(false);
+  });
+});
