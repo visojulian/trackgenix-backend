@@ -138,4 +138,25 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.message).toBe('Something went wrong: "password" is not allowed to be empty ');
     });
   });
+
+  describe('DELETE /:id', () => {
+    test('Should return status code 200', async () => {
+      const response = await request(app).delete('/employees/634d5803354e41cd60b9e401').send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      console.log(response.body.message);
+      expect(response.body.message).toBe('Employee with id: 634d5803354e41cd60b9e401 deleted');
+    });
+  });
+
+  describe('DELETE ERROR /:id', () => {
+    test('Should return status code 404', async () => {
+      const response = await request(app).delete('/employees/634d5803354e41cd60b9e420').send();
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e420 does not exists');
+    });
+  });
 });
