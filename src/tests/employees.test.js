@@ -26,10 +26,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Employee found');
     });
-  });
 
-  describe('GET BY ID ERROR /employees/:id', () => {
-    test('Should return status code 404', async () => {
+    test('should return an status 404 when the employee does not exist in the database', async () => {
       const response = await request(app).get('/employees/634d5803354e41cd60b9e555').send();
       expect(response.status).toBe(404);
       expect(response.body.data).toBeUndefined();
@@ -52,10 +50,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Employee created successfully');
     });
-  });
 
-  describe('POST ERROR Name Required /employees', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the name is empty', async () => {
       const employeeMocked = {
         name: '',
         lastName: 'Bettini',
@@ -69,10 +65,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "name" is not allowed to be empty ');
     });
-  });
 
-  describe('POST ERROR Last Name Required /employees', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the lastName is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: '',
@@ -86,10 +80,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "lastName" is not allowed to be empty ');
     });
-  });
 
-  describe('POST ERROR Phone Required /employees', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the phone is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
@@ -103,10 +95,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "phone" is not allowed to be empty ');
     });
-  });
 
-  describe('POST ERROR Email Required /employees', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the email is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
@@ -120,10 +110,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "email" is not allowed to be empty ');
     });
-  });
 
-  describe('POST ERROR Password Required /employees', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the password is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
@@ -147,10 +135,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Employee with id: 634d5803354e41cd60b9e401 deleted');
     });
-  });
 
-  describe('DELETE ERROR /employees/:id', () => {
-    test('Should return status code 404', async () => {
+    test('should return an status 404 when the employee does not exist in the database', async () => {
       const response = await request(app).delete('/employees/634d5803354e41cd60b9e420').send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
@@ -174,10 +160,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e405 edited');
     });
-  });
 
-  describe('PUT ERROR ID /employees/:id', () => {
-    test('Should return status code 404', async () => {
+    test('should return an status 404 when the employee does not exist in the database', async () => {
       const employeeMocked = {
         name: 'Daniel',
         lastName: 'Vinzia',
@@ -191,10 +175,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e450 does not exists');
     });
-  });
 
-  describe('PUT ERROR Name Required /employees/:id', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the name is empty', async () => {
       const employeeMocked = {
         name: '',
         lastName: 'Bettini',
@@ -208,10 +190,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "name" is not allowed to be empty ');
     });
-  });
 
-  describe('PUT ERROR Last Name Required /employees/:id', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the lastName is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: '',
@@ -225,10 +205,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "lastName" is not allowed to be empty ');
     });
-  });
 
-  describe('PUT ERROR Phone Required /employees/:id', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the phone is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
@@ -242,10 +220,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "phone" is not allowed to be empty ');
     });
-  });
 
-  describe('PUT ERROR Email Required /employees/:id', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the email is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
@@ -259,10 +235,8 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toBe('Something went wrong: "email" is not allowed to be empty ');
     });
-  });
 
-  describe('PUT ERROR Password Required /employees/:id', () => {
-    test('Should return status code 400', async () => {
+    test('should return an error 400 when the password is empty', async () => {
       const employeeMocked = {
         name: 'Tomas',
         lastName: 'Bettini',
