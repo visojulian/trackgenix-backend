@@ -94,3 +94,35 @@ describe('ERRORS PUT - invalid edits', () => {
     expect(response.status).toBe(400);
   });
 });
+
+describe('POST - create admin', () => {
+  const adminMocked = {
+    name: 'balen',
+    lastName: 'asaa',
+    email: 'dasdasd@hotm.com',
+    password: 'aaaaaaaaaaaaaaa',
+  };
+  test('should return status 201', async () => {
+    const response = await request(app).post('/admins').send(adminMocked);
+    expect(response.status).toBe(201);
+    expect(response.body.error).toBe(false);
+    expect(response.body.message).toBe('Admin created');
+  });
+});
+
+describe('ERROR POST - create empty admin', () => {
+  const adminMockedEmpty = {
+    description: '',
+    date: '',
+    hours: '',
+    task: '',
+    employee: '',
+    project: '',
+  };
+  test('should return status 400', async () => {
+    const response = await request(app).post('/admins').send(adminMockedEmpty);
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
+  });
+});
