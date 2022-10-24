@@ -2,11 +2,20 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../app';
 import TimeSheets from '../models/Time-sheets';
+import Employees from '../models/Employees';
+import Projects from '../models/Projects';
+import Tasks from '../models/Tasks';
 import timeSheetsSeed from '../seeds/time-sheets';
+import employeesSeed from '../seeds/employees';
+import projectsSeed from '../seeds/projects';
+import tasksSeed from '../seeds/tasks';
 
 describe('Time-sheet - Unit tests', () => {
   beforeAll(async () => {
     await TimeSheets.collection.insertMany(timeSheetsSeed);
+    await Employees.collection.insertMany(employeesSeed);
+    await Projects.collection.insertMany(projectsSeed);
+    await Tasks.collection.insertMany(tasksSeed);
   });
 
   describe('GET /time-sheets', () => {
