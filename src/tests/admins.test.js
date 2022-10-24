@@ -22,10 +22,7 @@ describe('GET - Filter by ID', () => {
     const response = await request(app).get('/admins/634b30cda84415df73652ecf').send();
     expect(response.status).toBe(200);
     expect(response.body.error).toBe(false);
-    // pq esto es undefined?
-    console.log(response.body.data);
-    console.log(response.body.data.length);
-    expect(response.body.data.length).toBeGreaterThan(0);
+    expect(response.body.data).toBeTruthy();
     expect(response.body.message).toBe('Admin found');
   });
 });
@@ -39,23 +36,61 @@ describe('ERROR GET - Filter by ID', () => {
   });
 });
 
-const fakeAdmin = {
-  name: 'balen',
-  lastName: 'not real',
-  email: 'idontexist@hotmail.com',
-  password: 'password',
-};
-
 describe('ERRORS PUT - invalid edits', () => {
-  test('Should return "inputfield is required" ', async () => {
+  test('Should return "name empty" ', async () => {
+    const fakeAdmin = {
+      name: '',
+      lastName: 'not real',
+      email: 'asd@hotm.com',
+      password: '23132aaaaa',
+    };
+
     const response = await request(app).put('/admins/634b30cda844d15df73652exd').send(fakeAdmin);
     expect(response.status).toBe(400);
-    console.log(response.body.message);
-    // como hacer un expect "mensaje de error" pero q sea dinamico? quiero asegurarme q siempre sea "x input is not allowed to be empty"
+    expect(response.body.message).toBe('There was an error: "name" is not allowed to be empty');
+  });
+
+  test('Should return "lastName empty" ', async () => {
+    const fakeAdmin = {
+      name: 'asdasd',
+      lastName: '',
+      email: 'asd@hotm.com',
+      password: '23132aaaaa',
+    };
+
+    const response = await request(app).put('/admins/634b30cda844d15df73652exd').send(fakeAdmin);
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There was an error: "lastName" is not allowed to be empty');
+  });
+
+  test('Should return "email empty" ', async () => {
+    const fakeAdmin = {
+      name: 'asdasd',
+      lastName: 'not real',
+      email: '',
+      password: '23132aaaaa',
+    };
+
+    const response = await request(app).put('/admins/634b31caa18bcb2e7eb97458').send(fakeAdmin);
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There was an error: "email" is not allowed to be empty');
+  });
+
+  test('Should return "password empty" ', async () => {
+    const fakeAdmin = {
+      name: 'asdasd',
+      lastName: 'not real',
+      email: 'idontexist@hot.com',
+      password: '',
+    };
+
+    const response = await request(app).put('/admins/634b31caa18bcb2e7eb97458').send(fakeAdmin);
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There was an error: "password" is not allowed to be empty');
   });
 
   test('Should return "cast to objectId failed" ', async () => {
-    const response = await request(app).put('/admins/634b30cda844d15df73652exd').send();
+    const response = await request(app).put('/admins/634b31caa18bcb2e7eb97458').send();
     expect(response.status).toBe(400);
   });
 });
