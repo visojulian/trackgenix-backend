@@ -90,7 +90,7 @@ export const deleteProject = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Project ${req.params.id} deleted.`,
+      message: `Project ${req.params.id} deleted`,
       data: result,
       error: false,
     });
@@ -106,8 +106,8 @@ export const deleteProject = async (req, res) => {
 export const updateProject = async (req, res) => {
   try {
     const result = await Projects.findByIdAndUpdate(
-      { _id: req.params.id },
-      { ...req.body },
+      req.params.id,
+      req.body,
       { new: true },
     );
 
@@ -119,7 +119,7 @@ export const updateProject = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Project ${req.params.id} updated.`,
+      message: `Project ${req.params.id} updated`,
       data: result,
       error: false,
     });
@@ -148,7 +148,6 @@ export const assignEmployee = async (req, res) => {
     }
 
     return res.status(200).json({
-      // eslint-disable-next-line no-underscore-dangle
       message: `Employee ${req.body.employee} assign to project ${req.params.id}`,
       data: result,
       error: false,
