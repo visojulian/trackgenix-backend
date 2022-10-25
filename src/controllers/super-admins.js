@@ -83,13 +83,13 @@ export const deleteSuperAdmin = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Super admin with ${req.params.id} deleted`,
+      message: 'Super admin was deleted',
       data: superAdminDeleted,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: `An error ocurred! ${error.message}`,
+      message: 'An error ocurred!',
       error: true,
     });
   }
@@ -107,13 +107,13 @@ export const editSuperAdmin = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Super admin with ${req.params.id} edited`,
+      message: 'Super admin was edited',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: `An error ocurred! ${error.message}`,
+      message: 'An error ocurred!',
       error: true,
     });
   }
