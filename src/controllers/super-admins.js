@@ -42,7 +42,7 @@ export const getSuperAdminById = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: `An error ocurred! ${error.message}`,
+      message: 'An error ocurred!',
       error: true,
     });
   }

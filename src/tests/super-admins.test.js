@@ -18,4 +18,21 @@ describe('Super-Admins - Unit tests', () => {
     });
   });
 
+  describe('GET BY ID /super-admins/:id', () => {
+    test('should return status code 200', async () => {
+      const response = await request(app).get('/super-admins/63557f5186b431bda635cd0c').send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      expect(response.body.message).toBe(`${response.body.message}`);
+    });
+
+    test('should return status code 400', async () => {
+      const response = await request(app).get('/super-admins/63557f5186b431bda635ee').send();
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('An error ocurred!');
+    });
+  });
 });
