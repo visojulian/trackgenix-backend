@@ -7,7 +7,7 @@ beforeAll(async () => {
   await Admins.collection.insertMany(adminsSeeds);
 });
 
-describe('GET ALL /admins', () => {
+describe('GET - Get admins', () => {
   test('should return status 200', async () => {
     const response = await request(app).get('/admins').send();
     expect(response.status).toBe(200);
@@ -34,7 +34,7 @@ describe('GET - Filter by ID', () => {
   });
 });
 
-describe('PUT - invalid edits', () => {
+describe('PUT - Edit admins', () => {
   test('Should return an error when the name is empty', async () => {
     const invalidAdmin = {
       name: '',
@@ -106,7 +106,7 @@ describe('PUT - invalid edits', () => {
   });
 });
 
-describe('POST - create admin', () => {
+describe('POST - Create admin', () => {
   const validAdmin = {
     name: 'balen',
     lastName: 'asaa',
@@ -134,7 +134,7 @@ describe('POST - create admin', () => {
   });
 });
 
-describe('DELETE tests', () => {
+describe('DELETE - Remove admins', () => {
   test('should return status 400 when the id is invalid', async () => {
     const response = await request(app).delete('/admins/634b30cda84415df73472ecf').send();
     expect(response.status).toBe(400);
