@@ -40,13 +40,13 @@ export const getProjectById = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Project ${id} found`,
+      message: 'Project found',
       data: projects,
       error: false,
     });
   } catch (err) {
     return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
+      message: 'An error ocurred',
       data: undefined,
       error: true,
     });
