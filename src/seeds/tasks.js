@@ -34,7 +34,7 @@ export default [{
 },
 {
   _id: mongoose.Types.ObjectId('63548d3ae17c957b4bc5eb24'),
-  description: 'Rename Landsat ETM ',
+  description: 'Rename Landsat ETM',
 },
 {
   _id: mongoose.Types.ObjectId('63548d43e62b19a75901c9ec'),

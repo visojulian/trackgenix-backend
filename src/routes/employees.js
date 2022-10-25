@@ -1,5 +1,5 @@
 import express from 'express';
-import employeesValidations from '../validations/employees';
+import validateEmployeeBody from '../validations/employees';
 import {
   getAllEmployees,
   getEmployeesById,
@@ -13,8 +13,8 @@ const router = express.Router();
 router
   .get('/', getAllEmployees)
   .get('/:id', getEmployeesById)
-  .post('/', employeesValidations, createEmployees)
+  .post('/', validateEmployeeBody, createEmployees)
   .delete('/:id', deleteEmployees)
-  .put('/:id', editEmployees);
+  .put('/:id', validateEmployeeBody, editEmployees);
 
 export default router;

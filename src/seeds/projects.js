@@ -7,8 +7,8 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'), role: 'QA', rate: '5.2' },
-    { employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e402'), role: 'DEV', rate: '8' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'), role: 'QA', rate: 5.2 },
+    { employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e402'), role: 'DEV', rate: 8 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c31a6c738f0c041f5100'),
   name: 'Project2',
@@ -24,7 +24,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e401'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e401'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c30e0c4046be8489d215'),
   name: 'Project4',
@@ -32,7 +32,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e403'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e403'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c3096f344728c9dd84ae'),
   name: 'Project5',
@@ -40,7 +40,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e404'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e404'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c3046634d3f5d058bae8'),
   name: 'Project6',
@@ -48,7 +48,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e405'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e405'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c2fec90c95fd1e4c48ad'),
   name: 'Project7',
@@ -56,7 +56,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e406'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e406'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c2f7433945d3733be53a'),
   name: 'Project8',
@@ -64,7 +64,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e407'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e407'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354c2ee2c85bbe8fb51072c'),
   name: 'Project9',
@@ -72,7 +72,7 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e408'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e408'), role: 'QA', rate: 5.2 }],
 }, {
   _id: mongoose.Types.ObjectId('6354bac9656fc948c7d30ea4'),
   name: 'Project10',
@@ -80,5 +80,5 @@ export default [{
   startDate: '2022-12-11',
   endDate: '2022-12-15',
   clientName: 'pepito',
-  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e409'), role: 'QA', rate: '5.2' }],
+  employees: [{ employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e409'), role: 'QA', rate: 5.2 }],
 }];

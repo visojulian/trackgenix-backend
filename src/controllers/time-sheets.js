@@ -5,7 +5,7 @@ export const getAllTimeSheets = async (req, res) => {
     const timeSheets = await TimeSheets.find(req.query)
       .populate('task')
       .populate('employee')
-      .populate('proyect');
+      .populate('project');
     if (!timeSheets.length) {
       return res.status(404).json({
         message: 'There are no timesheets',
@@ -32,7 +32,7 @@ export const getTimeSheetById = async (req, res) => {
     const timeSheet = await TimeSheets.findById(req.params.id)
       .populate('task')
       .populate('employee')
-      .populate('proyect');
+      .populate('project');
     if (!timeSheet) {
       return res.status(404).json({
         message: `There are no timesheet with id: ${req.params.id}`,
