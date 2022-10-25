@@ -35,4 +35,76 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.body.message).toBe('An error ocurred!');
     });
   });
+
+  describe('POST /super-admins', () => {
+    test('should create a super-admin and return status 201', async () => {
+      const superAdminMooked = {
+        name: 'Sussy',
+        lastName: 'Flores',
+        email: 'csomerled2@4shared.com',
+        password: 'Pi44re12',
+      };
+      const response = await request(app).post('/super-admins').send(superAdminMooked);
+      expect(response.status).toBe(201);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      expect(response.body.message).toBe('Super Admin created successfuly');
+    });
+
+    test('should return status code 400 when a super admin is not created because it did not pass validation in name', async () => {
+      const superAdminMooked = {
+        name: '',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).post('/super-admins/').send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: "name" is not allowed to be empty');
+    });
+
+    test('should return status code 400 when a super admin is not created because it did not pass validation in lastName', async () => {
+      const superAdminMooked = {
+        name: 'Liza',
+        lastName: '',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).post('/super-admins/').send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: "lastName" is not allowed to be empty');
+    });
+
+    test('should return status code 400 when a super admin is not created because it did not pass validation in email', async () => {
+      const superAdminMooked = {
+        name: 'Liza',
+        lastName: 'Mickan',
+        email: '',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).post('/super-admins/').send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: "email" is not allowed to be empty');
+    });
+
+    test('should return status code 400 when a super admin is not created because it did not pass validation in password', async () => {
+      const superAdminMooked = {
+        name: 'Liza',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: '',
+      };
+      const response = await request(app).post('/super-admins/').send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: "password" is not allowed to be empty');
+    });
+  });
 });
