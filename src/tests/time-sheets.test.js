@@ -37,6 +37,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Time sheet found');
     });
+
     test('should return status code 400 when the time sheet _id supplied is invalid', async () => {
       const invalidObjectId = 'thisidisinvalid';
       const response = await request(app).get(`/time-sheets/${invalidObjectId}`).send();
@@ -45,6 +46,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toContain('An error ocurred:');
     });
+
     test('should return status code 404 when the time sheet _id supplied does not exist in the database', async () => {
       const validObjectId = '63548d04e3c0095bad9f0412';
       const response = await request(app).get(`/time-sheets/${validObjectId}`).send();
@@ -64,6 +66,7 @@ describe('Time-sheet - Unit tests', () => {
       employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
       project: mongoose.Types.ObjectId('6354c31fa0f546fd19325575'),
     };
+
     test('should return status code 201 if time sheet is created', async () => {
       const response = await request(app).post('/time-sheets').send(timeSheetMocked);
       expect(response.status).toBe(201);
@@ -71,6 +74,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Time sheet created successfully');
     });
+
     test('should return status code 400 if any field does not pass validations', async () => {
       const timeSheetMockedEmpty = {
         description: '',
@@ -97,6 +101,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe(`Time sheet with id ${existId} has been deleted`);
     });
+
     test('should return status code 400 when the time sheet _id supplied is invalid', async () => {
       const invalidObjectId = 'thisisaninvalidObjectId';
       const response = await request(app).delete(`/time-sheets/${invalidObjectId}`).send();
@@ -105,6 +110,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toContain('An error ocurred:');
     });
+
     test('should return status code 404 when the time sheet _id supplied does not exist in the database', async () => {
       const validObjectId = '63548d04e3c0095bad9f0412';
       const response = await request(app).delete(`/time-sheets/${validObjectId}`).send();
@@ -132,6 +138,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe(`Time sheet with id ${existId} has been updated`);
     });
+
     test('should return status code 400 if any field does not pass validations', async () => {
       const timeSheetEditEmpty = {
         description: '',
@@ -148,6 +155,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toContain('Validation has an error, please check:');
     });
+
     test('should return status code 404 when the time sheet _id supplied is invalid', async () => {
       const timeSheetMockedEdit = {
         description: 'we are feature',
