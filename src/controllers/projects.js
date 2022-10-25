@@ -82,7 +82,7 @@ export const deleteProject = async (req, res) => {
   try {
     const result = await Projects.findByIdAndDelete(req.params.id);
 
-    if (!result || !Projects.length) {
+    if (!result) {
       return res.status(404).json({
         message: `Project ${req.params.id} does not exist`,
         error: true,
@@ -96,7 +96,7 @@ export const deleteProject = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'Invalid Project Id',
+      message: `An error ocurred: ${err.message}`,
       data: undefined,
       error: true,
     });
@@ -125,7 +125,7 @@ export const updateProject = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'Invalid Project Id',
+      message: `An error ocurred: ${err.message}`,
       data: undefined,
       error: true,
     });
@@ -154,7 +154,7 @@ export const assignEmployee = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'Invalid Project Id',
+      message: `An error ocurred: ${err.message}`,
       data: undefined,
       error: true,
     });

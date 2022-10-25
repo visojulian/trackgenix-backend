@@ -31,7 +31,7 @@ describe('Project - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Invalid Project Id');
+      expect(response.body.message).toContain('An error ocurred:');
     });
   });
 
@@ -71,13 +71,13 @@ describe('Project - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Invalid Project Id');
+      expect(response.body.message).toContain('An error ocurred:');
     });
 
-    const projectMockBad = {
-      name: 25,
-    };
     test('Should return an status 400 when body data is wrong', async () => {
+      const projectMockBad = {
+        name: 25,
+      };
       const response = await request(app).put('/projects/6354c31a6c738f0c041f5100/update').send(projectMockBad);
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
@@ -114,15 +114,15 @@ describe('Project - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Invalid Project Id');
+      expect(response.body.message).toContain('An error ocurred:');
     });
 
-    const employeeMockBad = {
-      employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
-      role: 'DEV',
-      rate: 'a lot',
-    };
     test('Should return an status 400 when body data is wrong', async () => {
+      const employeeMockBad = {
+        employee: mongoose.Types.ObjectId('634d5803354e41cd60b9e400'),
+        role: 'DEV',
+        rate: 'a lot',
+      };
       const response = await request(app).put('/projects/6354c31a6c738f0c041f5100/assignEmployee').send(employeeMockBad);
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
