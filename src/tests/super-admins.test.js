@@ -107,4 +107,21 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.body.message).toBe('There was an error: "password" is not allowed to be empty');
     });
   });
+
+  describe('DELETE /super-admins/:id', () => {
+    test('should return status code 200 if superadmin _id is deleted', async () => {
+      const response = await request(app).delete('/super-admins/63557febf3b39e6ffe36f580').send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      expect(response.body.message).toBe('Super admin was deleted');
+    });
+    test('should return status code 400 when the superadmin _id supplied is invalid', async () => {
+      const response = await request(app).delete('/super-admins/6354c3046634d3f5d058ba').send();
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toContain('An error ocurred!');
+    });
+  });
 });
