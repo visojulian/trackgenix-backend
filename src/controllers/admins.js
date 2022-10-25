@@ -98,7 +98,7 @@ export const updateAdmin = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: `Admin Id: ${req.params.id}, was updated`,
+      message: 'Admin was updated',
       data: admin,
       error: false,
     });
