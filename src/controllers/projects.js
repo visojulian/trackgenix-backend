@@ -148,14 +148,13 @@ export const assignEmployee = async (req, res) => {
     }
 
     return res.status(200).json({
-      // eslint-disable-next-line no-underscore-dangle
       message: `Employee ${req.body.employee} assign to project ${req.params.id}`,
       data: result,
       error: false,
     });
   } catch (err) {
     return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
+      message: 'Invalid Project Id',
       data: undefined,
       error: true,
     });
