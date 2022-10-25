@@ -51,7 +51,7 @@ export const createTask = async (req, res) => {
     });
     const resultTask = await newTask.save();
     return res.status(201).json({
-      message: 'Task create successfully',
+      message: 'Task created successfully',
       data: resultTask,
       error: false,
     });
@@ -73,7 +73,7 @@ export const deleteTask = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: `Task with id ${req.params.id} deleted `,
+      message: `Task with id ${req.params.id} deleted`,
       data: task,
       error: false,
     });
@@ -99,7 +99,7 @@ export const editTask = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: `Task with id ${req.params.id} updated `,
+      message: `Task with id ${req.params.id} updated`,
       data: task,
       error: false,
     });
