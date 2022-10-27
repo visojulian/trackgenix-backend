@@ -1,15 +1,9 @@
 import SuperAdmins from '../models/Super-admins';
+import APIError from '../utils/APIError';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
     const superAdmins = await SuperAdmins.find(req.query);
-
-    if (!superAdmins.length) {
-      return res.status(404).json({
-        message: 'The super admin does not exist',
-        error: true,
-      });
-    }
 
     return res.status(200).json({
       message: 'Super admins found',
@@ -17,8 +11,8 @@ export const getAllSuperAdmins = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred! ${error.message}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -29,9 +23,9 @@ export const getSuperAdminById = async (req, res) => {
     const superAdmin = await SuperAdmins.findById(req.params.id);
 
     if (!superAdmin) {
-      return res.status(404).json({
-        message: `The super admin with id: ${req.params.id} does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Super Admin not found',
+        status: 404,
       });
     }
 
@@ -41,8 +35,8 @@ export const getSuperAdminById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error ocurred!',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -59,13 +53,13 @@ export const createSuperAdmin = async (req, res) => {
 
     const result = await superAdmin.save();
     return res.status(201).json({
-      message: 'Super Admin created successfuly',
+      message: 'Super Admin created successfully',
       data: result,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred! ${error.message}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -76,9 +70,9 @@ export const deleteSuperAdmin = async (req, res) => {
     const superAdminDeleted = await SuperAdmins.findByIdAndDelete(req.params.id);
 
     if (!superAdminDeleted) {
-      return res.status(404).json({
-        message: `The super admin with id: ${req.params.id} you want to delete does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Super Admin not found',
+        status: 404,
       });
     }
 
@@ -88,8 +82,8 @@ export const deleteSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error ocurred!',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -100,9 +94,9 @@ export const editSuperAdmin = async (req, res) => {
     const result = await SuperAdmins.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
     if (!result) {
-      return res.status(404).json({
-        message: `The super admin with id: ${req.params.id} you want to edit does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Super Admin not found',
+        status: 404,
       });
     }
 
@@ -112,8 +106,8 @@ export const editSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error ocurred!',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

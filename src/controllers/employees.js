@@ -1,21 +1,17 @@
 import Employees from '../models/Employees';
+import APIError from '../utils/APIError';
 
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employees.find(req.query);
-    if (!employees.length) {
-      return res.status(404).json({
-        message: `This employee id: ${req.params.id} does not exists`,
-      });
-    }
     return res.status(200).json({
       message: 'Employees found',
       data: employees,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'Something went wrong',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -25,8 +21,9 @@ export const getEmployeesById = async (req, res) => {
   try {
     const employee = await Employees.findById(req.params.id);
     if (!employee) {
-      return res.status(404).json({
-        message: `This employee id: ${req.params.id} does not exists`,
+      throw new APIError({
+        message: 'Employee not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -35,9 +32,8 @@ export const getEmployeesById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -60,8 +56,8 @@ export const createEmployees = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: ' Something went wrong',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -71,9 +67,9 @@ export const deleteEmployees = async (req, res) => {
   try {
     const result = await Employees.findByIdAndDelete(req.params.id);
     if (!result) {
-      return res.status(404).json({
-        message: `Employee id: ${req.params.id} does not exists`,
-        error: true,
+      throw new APIError({
+        message: 'Employee not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -82,8 +78,8 @@ export const deleteEmployees = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'Something went wrong',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -97,9 +93,9 @@ export const editEmployees = async (req, res) => {
       { new: true },
     );
     if (!result) {
-      return res.status(404).json({
-        message: `Employee id: ${req.params.id} does not exists`,
-        error: true,
+      throw new APIError({
+        message: 'Employee not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -108,8 +104,8 @@ export const editEmployees = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'Something went wrong',
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

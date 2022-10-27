@@ -31,7 +31,7 @@ describe('Time-sheet - Unit tests', () => {
       const response = await request(app).get('/employees/634d5803354e41cd60b9e555').send();
       expect(response.status).toBe(404);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('This employee id: 634d5803354e41cd60b9e555 does not exists');
+      expect(response.body.message).toBe('Employee not found');
     });
   });
 
@@ -141,7 +141,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e420 does not exists');
+      expect(response.body.message).toBe('Employee not found');
     });
   });
 
@@ -173,7 +173,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e450 does not exists');
+      expect(response.body.message).toBe('Employee not found');
     });
 
     test('should return an error 400 when the name is empty', async () => {

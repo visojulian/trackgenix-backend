@@ -38,13 +38,13 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.message).toBe('Time sheet found');
     });
 
-    test('should return status code 400 when the time sheet _id supplied is invalid', async () => {
+    test('should return status code 500 when the time sheet _id supplied is invalid', async () => {
       const invalidObjectId = 'thisidisinvalid';
       const response = await request(app).get(`/time-sheets/${invalidObjectId}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred:');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "thisidisinvalid" (type string) at path "_id" for model "TimeSheets"');
     });
 
     test('should return status code 404 when the time sheet _id supplied does not exist in the database', async () => {
@@ -53,7 +53,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe(`There are no timesheet with id: ${validObjectId}`);
+      expect(response.body.message).toBe('Time sheet not found');
     });
   });
 
@@ -102,13 +102,13 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.message).toBe(`Time sheet with id ${existId} has been deleted`);
     });
 
-    test('should return status code 400 when the time sheet _id supplied is invalid', async () => {
+    test('should return status code 500 when the time sheet _id supplied is invalid', async () => {
       const invalidObjectId = 'thisisaninvalidObjectId';
       const response = await request(app).delete(`/time-sheets/${invalidObjectId}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred:');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "thisisaninvalidObjectId" (type string) at path "_id" for model "TimeSheets"');
     });
 
     test('should return status code 404 when the time sheet _id supplied does not exist in the database', async () => {
@@ -117,7 +117,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe(`There are no timesheet with id: ${validObjectId}`);
+      expect(response.body.message).toBe('Time sheet not found');
     });
   });
 
@@ -170,7 +170,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe(`There are no timesheet with id: ${invalidObjectId}`);
+      expect(response.body.message).toBe('Time sheet not found');
     });
   });
 });

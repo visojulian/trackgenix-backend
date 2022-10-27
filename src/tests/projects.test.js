@@ -27,12 +27,13 @@ describe('Projects - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Project found');
     });
-    test('should return status code 400 when filtered id is invalid', async () => {
+
+    test('should return status code 500 when filtered id is invalid', async () => {
       const response = await request(app).get('/projects/6354c2ee2c85bbe8fb51072').send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('An error ocurred');
+      expect(response.body.message).toBe('Cast to ObjectId failed for value "6354c2ee2c85bbe8fb51072" (type string) at path "_id" for model "Projects"');
     });
   });
 
@@ -56,6 +57,7 @@ describe('Projects - Unit tests', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.message).toBe('Project created successfully!');
     });
+
     test('should return status code 400 when a project is not created because it did not pass validation in name', async () => {
       const projectsMooked = {
         name: '',
@@ -65,7 +67,7 @@ describe('Projects - Unit tests', () => {
         clientName: 'jhonDeere',
         employees: [{
           employee:
-          mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+            mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
           role: 'QA',
           rate: 5.2,
         }],
@@ -85,7 +87,7 @@ describe('Projects - Unit tests', () => {
         clientName: 'jhonDeere',
         employees: [{
           employee:
-          mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+            mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
           role: 'QA',
           rate: 5.2,
         }],
@@ -105,7 +107,7 @@ describe('Projects - Unit tests', () => {
         clientName: 'jhonDeere',
         employees: [{
           employee:
-          mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+            mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
           role: 'QA',
           rate: 5.2,
         }],
@@ -125,7 +127,7 @@ describe('Projects - Unit tests', () => {
         clientName: 'jhonDeere',
         employees: [{
           employee:
-          mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+            mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
           role: 'QA',
           rate: 5.2,
         }],
@@ -145,7 +147,7 @@ describe('Projects - Unit tests', () => {
         clientName: '',
         employees: [{
           employee:
-          mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
+            mongoose.Types.ObjectId('634d5803354e41cd60b9e406'),
           role: 'QA',
           rate: 5.2,
         }],
@@ -187,15 +189,15 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Project 6354c31fa0f546fd19325570 does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
 
     test('Should return an status 400 when the project id is invalid', async () => {
       const response = await request(app).delete('/projects/6').send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred:');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Projects"');
     });
   });
 
@@ -227,15 +229,15 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Project 6354c31a6c738f0c041f5101 does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
 
     test('Should return an status 400 when the project id is invalid', async () => {
       const response = await request(app).put('/projects/6/update').send(projectMock);
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred:');
+      expect(response.body.message).toContain('Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Projects"');
     });
 
     test('Should return an status 400 when body data is wrong', async () => {
@@ -270,15 +272,15 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Project 6354c31a6c738f0c041f5101 does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
 
     test('Should return an status 400 when the project id is invalid', async () => {
       const response = await request(app).put('/projects/6/assignEmployee').send(employeeMock);
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred:');
+      expect(response.body.message).toEqual("Cast to ObjectId failed for value \"{ _id: '6' }\" (type Object) at path \"_id\" for model \"Projects\"");
     });
 
     test('Should return an status 400 when body data is wrong', async () => {

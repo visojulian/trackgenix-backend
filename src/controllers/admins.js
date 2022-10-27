@@ -1,22 +1,17 @@
 import Admins from '../models/Admins';
+import APIError from '../utils/APIError';
 
 export const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admins.find(req.query);
-    if (!admins.length) {
-      return res.status(404).json({
-        message: 'No admins found',
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'Admins found',
       data: admins,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Error while getting all admins ${error}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -26,9 +21,9 @@ export const getAdminById = async (req, res) => {
   try {
     const admin = await Admins.findById(req.params.id);
     if (!admin) {
-      return res.status(400).json({
-        message: 'No admin found',
-        error: true,
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -37,8 +32,8 @@ export const getAdminById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Error while getting admin by id ${error}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -59,8 +54,8 @@ export const createAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Error while creating admin ${error}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -70,9 +65,9 @@ export const deleteAdmin = async (req, res) => {
   try {
     const admin = await Admins.findByIdAndDelete(req.params.id);
     if (!admin) {
-      return res.status(400).json({
-        message: 'No admin found',
-        error: true,
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -81,8 +76,8 @@ export const deleteAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Error while deleting admin ${error}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -92,9 +87,9 @@ export const updateAdmin = async (req, res) => {
   try {
     const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!admin) {
-      return res.status(400).json({
-        message: 'No admin found, there is not admin with that id',
-        error: true,
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -103,8 +98,8 @@ export const updateAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Error while updating admin ${error}`,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

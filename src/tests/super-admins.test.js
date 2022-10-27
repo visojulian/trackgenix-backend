@@ -28,13 +28,13 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.body.message).toBe('Super admin found');
     });
 
-    test('should return status code 400', async () => {
+    test('should return status code 500', async () => {
       const superAdminId = '63557f5186b431bda635ee';
       const response = await request(app).get(`/super-admins/${superAdminId}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('An error ocurred!');
+      expect(response.body.message).toBe('Cast to ObjectId failed for value "63557f5186b431bda635ee" (type string) at path "_id" for model "Super-admins"');
     });
   });
 
@@ -50,7 +50,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Super Admin created successfuly');
+      expect(response.body.message).toBe('Super Admin created successfully');
     });
 
     test('should return status code 400 when a super admin is not created because it did not pass validation in name', async () => {
@@ -122,10 +122,10 @@ describe('Super-Admins - Unit tests', () => {
     test('should return status code 400 when the superadmin _id supplied is invalid', async () => {
       const superAdminId = '6354c3046634d3f5d058ba';
       const response = await request(app).delete(`/super-admins/${superAdminId}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toContain('An error ocurred!');
+      expect(response.body.message).toContain('Cast to ObjectId failed for value "6354c3046634d3f5d058ba" (type string) at path "_id" for model "Super-admins"');
     });
   });
 

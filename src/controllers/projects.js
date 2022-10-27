@@ -1,26 +1,19 @@
 import Projects from '../models/Projects';
+import APIError from '../utils/APIError';
 
 export const getProjects = async (req, res) => {
   try {
     const projects = await Projects.find(req.query)
       .populate('employees');
 
-    if (!projects.length) {
-      return res.status(404).json({
-        message: 'Projects not found',
-        error: true,
-      });
-    }
-
     return res.status(200).json({
       message: 'All Projects',
       data: projects,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -29,25 +22,24 @@ export const getProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const projects = await Projects.findById(id)
+    const project = await Projects.findById(id)
       .populate('employees');
 
-    if (!projects) {
-      return res.status(404).json({
-        message: `Project ${req.params.id} does not exist`,
-        error: true,
+    if (!project) {
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
 
     return res.status(200).json({
       message: 'Project found',
-      data: projects,
+      data: project,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: 'An error ocurred',
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -69,10 +61,9 @@ export const createProject = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: err,
-      data: req.body,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -83,9 +74,9 @@ export const deleteProject = async (req, res) => {
     const result = await Projects.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).json({
-        message: `Project ${req.params.id} does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
 
@@ -94,10 +85,9 @@ export const deleteProject = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -112,9 +102,9 @@ export const updateProject = async (req, res) => {
     );
 
     if (!result) {
-      return res.status(404).json({
-        message: `Project ${req.params.id} does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
 
@@ -123,10 +113,9 @@ export const updateProject = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -141,9 +130,9 @@ export const assignEmployee = async (req, res) => {
     );
 
     if (!result) {
-      return res.status(404).json({
-        message: `Project ${req.params.id} does not exist`,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
 
@@ -152,10 +141,9 @@ export const assignEmployee = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error ocurred: ${err.message}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

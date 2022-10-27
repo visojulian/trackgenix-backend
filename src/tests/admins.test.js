@@ -26,9 +26,9 @@ describe('GET - Filter by ID', () => {
     expect(response.body.message).toBe('Admin found');
   });
 
-  test('Should return status 400 when the id is invalid', async () => {
+  test('Should return status 404 when the id is invalid', async () => {
     const response = await request(app).get('/admins/634b30cda84415df76492ecf').send();
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
   });
@@ -87,8 +87,14 @@ describe('PUT - Edit admins', () => {
   });
 
   test('Should return an error when the id is invalid', async () => {
-    const response = await request(app).put('/admins/634b31caa18bcb2e7eb97458').send();
-    expect(response.status).toBe(400);
+    const correctAdmin = {
+      name: 'valen',
+      lastName: 'not real',
+      email: 'idontexist@hot.com',
+      password: 'password',
+    };
+    const response = await request(app).put('/admins/634b31caa18bcb2e7eb97457').send(correctAdmin);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
   });
 
@@ -126,6 +132,7 @@ describe('POST - Create admin', () => {
     email: '',
     password: '',
   };
+
   test('should return status 400', async () => {
     const response = await request(app).post('/admins').send(emptyAdmin);
     expect(response.status).toBe(400);
@@ -135,9 +142,9 @@ describe('POST - Create admin', () => {
 });
 
 describe('DELETE - Remove admins', () => {
-  test('should return status 400 when the id is invalid', async () => {
+  test('should return status 404 when the id is invalid', async () => {
     const response = await request(app).delete('/admins/634b30cda84415df73472ecf').send();
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
   });

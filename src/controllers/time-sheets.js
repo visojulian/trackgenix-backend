@@ -1,4 +1,5 @@
 import TimeSheets from '../models/Time-sheets';
+import APIError from '../utils/APIError';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
@@ -6,22 +7,15 @@ export const getAllTimeSheets = async (req, res) => {
       .populate('task')
       .populate('employee')
       .populate('project');
-    if (!timeSheets.length) {
-      return res.status(404).json({
-        message: 'There are no timesheets',
-        data: undefined,
-        error: true,
-      });
-    }
+
     return res.status(200).json({
       message: 'Time sheets found',
       data: timeSheets,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -34,10 +28,9 @@ export const getTimeSheetById = async (req, res) => {
       .populate('employee')
       .populate('project');
     if (!timeSheet) {
-      return res.status(404).json({
-        message: `There are no timesheet with id: ${req.params.id}`,
-        data: undefined,
-        error: true,
+      throw new APIError({
+        message: 'Time sheet not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -46,9 +39,8 @@ export const getTimeSheetById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -71,9 +63,8 @@ export const createTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -83,10 +74,9 @@ export const deleteTimeSheet = async (req, res) => {
   try {
     const timeSheet = await TimeSheets.findByIdAndDelete(req.params.id);
     if (!timeSheet) {
-      return res.status(404).json({
-        message: `There are no timesheet with id: ${req.params.id}`,
-        data: undefined,
-        error: true,
+      throw new APIError({
+        message: 'Time sheet not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -95,9 +85,8 @@ export const deleteTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -111,10 +100,9 @@ export const editTimeSheet = async (req, res) => {
       { new: true },
     );
     if (!timeSheet) {
-      return res.status(404).json({
-        message: `There are no timesheet with id: ${req.params.id}`,
-        data: undefined,
-        error: true,
+      throw new APIError({
+        message: 'Time sheet not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -123,9 +111,8 @@ export const editTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error ocurred: ${error.message}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
