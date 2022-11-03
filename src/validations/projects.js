@@ -4,7 +4,7 @@ export const validateProjectBody = (req, res, next) => {
   const employeeValidation = Joi.object({
     employee: Joi.string().length(24).required(),
     role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
-    rate: Joi.number().required(),
+    rate: Joi.number().positive().required(),
   });
 
   const projectValidation = Joi.object({
