@@ -1,11 +1,11 @@
-import Tasks from '../models/Tasks';
-import APIError from '../utils/APIError';
+import Tasks from "../models/Tasks";
+import APIError from "../utils/APIError";
 
 export const getAllTasks = async (req, res) => {
   try {
     const task = await Tasks.find(req.query);
     return res.status(200).json({
-      message: 'Task found',
+      message: "Tasks found",
       data: task,
       error: false,
     });
@@ -23,13 +23,13 @@ export const getTasksById = async (req, res) => {
 
     if (!task) {
       throw new APIError({
-        message: 'Task not found',
+        message: "Task not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: 'Task found',
+      message: "Task found",
       data: task,
       error: false,
     });
@@ -48,7 +48,7 @@ export const createTask = async (req, res) => {
     });
     const resultTask = await newTask.save();
     return res.status(201).json({
-      message: 'Task created successfully',
+      message: "Task created",
       data: resultTask,
       error: false,
     });
@@ -65,12 +65,12 @@ export const deleteTask = async (req, res) => {
     const task = await Tasks.findByIdAndDelete(req.params.id);
     if (!task) {
       throw new APIError({
-        message: 'Task not found',
+        message: "Task not found",
         status: 404,
       });
     }
-    return res.status(200).json({
-      message: `Task with id ${req.params.id} deleted`,
+    return res.status(204).json({
+      message: `Task with id: ${req.params.id} deleted`,
       data: task,
       error: false,
     });
@@ -87,16 +87,16 @@ export const editTask = async (req, res) => {
     const task = await Tasks.findByIdAndUpdate(
       { _id: req.params.id },
       { ...req.body },
-      { new: true },
+      { new: true }
     );
     if (!task) {
       throw new APIError({
-        message: 'Task not found',
+        message: "Task not found",
         status: 404,
       });
     }
     return res.status(200).json({
-      message: `Task with id ${req.params.id} updated`,
+      message: `Task with id: ${req.params.id} edited`,
       data: task,
       error: false,
     });

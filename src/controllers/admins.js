@@ -1,11 +1,11 @@
-import Admins from '../models/Admins';
-import APIError from '../utils/APIError';
+import Admins from "../models/Admins";
+import APIError from "../utils/APIError";
 
 export const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admins.find(req.query);
     return res.status(200).json({
-      message: 'Admins found',
+      message: "Admins found",
       data: admins,
       error: false,
     });
@@ -22,12 +22,12 @@ export const getAdminById = async (req, res) => {
     const admin = await Admins.findById(req.params.id);
     if (!admin) {
       throw new APIError({
-        message: 'Admin not found',
+        message: "Admin not found",
         status: 404,
       });
     }
     return res.status(200).json({
-      message: 'Admin found',
+      message: "Admin found",
       data: admin,
       error: false,
     });
@@ -49,7 +49,7 @@ export const createAdmin = async (req, res) => {
     });
     const admin = await newAdmin.save();
     return res.status(201).json({
-      message: 'Admin created',
+      message: "Admin created",
       data: admin,
       error: false,
     });
@@ -66,12 +66,12 @@ export const deleteAdmin = async (req, res) => {
     const admin = await Admins.findByIdAndDelete(req.params.id);
     if (!admin) {
       throw new APIError({
-        message: 'Admin not found',
+        message: "Admin not found",
         status: 404,
       });
     }
-    return res.status(200).json({
-      message: 'Admin deleted',
+    return res.status(204).json({
+      message: `Admin with id: ${req.params.id} deleted`,
       data: admin,
       error: false,
     });
@@ -85,15 +85,17 @@ export const deleteAdmin = async (req, res) => {
 
 export const updateAdmin = async (req, res) => {
   try {
-    const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const admin = await Admins.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!admin) {
       throw new APIError({
-        message: 'Admin not found',
+        message: "Admin not found",
         status: 404,
       });
     }
     return res.status(200).json({
-      message: 'Admin was updated',
+      message: `Admin with id: ${req.params.id} edited`,
       data: admin,
       error: false,
     });

@@ -1,12 +1,12 @@
-import SuperAdmins from '../models/Super-admins';
-import APIError from '../utils/APIError';
+import SuperAdmins from "../models/Super-admins";
+import APIError from "../utils/APIError";
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
     const superAdmins = await SuperAdmins.find(req.query);
 
     return res.status(200).json({
-      message: 'Super admins found',
+      message: "Super admins found",
       data: superAdmins,
       error: false,
     });
@@ -24,13 +24,13 @@ export const getSuperAdminById = async (req, res) => {
 
     if (!superAdmin) {
       throw new APIError({
-        message: 'Super Admin not found',
+        message: "Super admin not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: 'Super admin found',
+      message: "Super admin found",
       data: superAdmin,
       error: false,
     });
@@ -53,7 +53,7 @@ export const createSuperAdmin = async (req, res) => {
 
     const result = await superAdmin.save();
     return res.status(201).json({
-      message: 'Super Admin created successfully',
+      message: "Super admin created",
       data: result,
       error: false,
     });
@@ -67,17 +67,19 @@ export const createSuperAdmin = async (req, res) => {
 
 export const deleteSuperAdmin = async (req, res) => {
   try {
-    const superAdminDeleted = await SuperAdmins.findByIdAndDelete(req.params.id);
+    const superAdminDeleted = await SuperAdmins.findByIdAndDelete(
+      req.params.id
+    );
 
     if (!superAdminDeleted) {
       throw new APIError({
-        message: 'Super Admin not found',
+        message: "Super admin not found",
         status: 404,
       });
     }
 
-    return res.status(200).json({
-      message: 'Super admin was deleted',
+    return res.status(204).json({
+      message: `Superadmin with id: ${req.params.id} deleted`,
       data: superAdminDeleted,
       error: false,
     });
@@ -91,17 +93,21 @@ export const deleteSuperAdmin = async (req, res) => {
 
 export const editSuperAdmin = async (req, res) => {
   try {
-    const result = await SuperAdmins.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const result = await SuperAdmins.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
 
     if (!result) {
       throw new APIError({
-        message: 'Super Admin not found',
+        message: "Super admin not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: 'Super admin was edited',
+      message: `Super admin with id: ${req.params.id} edited`,
       data: result,
       error: false,
     });
