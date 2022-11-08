@@ -78,11 +78,7 @@ export const deleteProject = async (req, res) => {
       });
     }
 
-    return res.status(204).json({
-      message: `Project with id: ${req.params.id} deleted`,
-      data: result,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,

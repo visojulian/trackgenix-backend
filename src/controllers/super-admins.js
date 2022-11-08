@@ -78,11 +78,7 @@ export const deleteSuperAdmin = async (req, res) => {
       });
     }
 
-    return res.status(204).json({
-      message: `Superadmin with id: ${req.params.id} deleted`,
-      data: superAdminDeleted,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,

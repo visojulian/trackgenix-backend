@@ -72,11 +72,7 @@ export const deleteEmployees = async (req, res) => {
         status: 404,
       });
     }
-    return res.status(204).json({
-      message: `Employee with id: ${req.params.id} deleted`,
-      data: result,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,

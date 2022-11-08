@@ -69,11 +69,7 @@ export const deleteTask = async (req, res) => {
         status: 404,
       });
     }
-    return res.status(204).json({
-      message: `Task with id: ${req.params.id} deleted`,
-      data: task,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,

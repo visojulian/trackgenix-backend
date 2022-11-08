@@ -79,11 +79,7 @@ export const deleteTimeSheet = async (req, res) => {
         status: 404,
       });
     }
-    return res.status(204).json({
-      message: `Timesheet with id: ${req.params.id} deleted`,
-      data: timeSheet,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,
