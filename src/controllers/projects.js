@@ -1,13 +1,12 @@
-import Projects from '../models/Projects';
-import APIError from '../utils/APIError';
+import Projects from "../models/Projects";
+import APIError from "../utils/APIError";
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Projects.find(req.query)
-      .populate('employees');
+    const projects = await Projects.find(req.query).populate("employees");
 
     return res.status(200).json({
-      message: 'All Projects',
+      message: "Projects found",
       data: projects,
       error: false,
     });
@@ -22,18 +21,17 @@ export const getProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await Projects.findById(id)
-      .populate('employees');
+    const project = await Projects.findById(id).populate("employees");
 
     if (!project) {
       throw new APIError({
-        message: 'Project not found',
+        message: "Project not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: 'Project found',
+      message: "Project found",
       data: project,
       error: false,
     });
@@ -57,7 +55,7 @@ export const createProject = async (req, res) => {
     });
     const result = await project.save();
     return res.status(201).json({
-      message: 'Project created successfully!',
+      message: "Project created",
       data: result,
       error: false,
     });
@@ -75,16 +73,12 @@ export const deleteProject = async (req, res) => {
 
     if (!result) {
       throw new APIError({
-        message: 'Project not found',
+        message: "Project not found",
         status: 404,
       });
     }
 
-    return res.status(200).json({
-      message: `Project ${req.params.id} deleted`,
-      data: result,
-      error: false,
-    });
+    return res.status(204);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,
@@ -95,21 +89,19 @@ export const deleteProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   try {
-    const result = await Projects.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-    );
+    const result = await Projects.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
     if (!result) {
       throw new APIError({
-        message: 'Project not found',
+        message: "Project not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: `Project ${req.params.id} updated`,
+      message: `Project with id: ${req.params.id} edited`,
       data: result,
       error: false,
     });
@@ -126,18 +118,18 @@ export const assignEmployee = async (req, res) => {
     const result = await Projects.findByIdAndUpdate(
       { _id: req.params.id },
       { $push: { employees: req.body } },
-      { new: true },
+      { new: true }
     );
 
     if (!result) {
       throw new APIError({
-        message: 'Project not found',
+        message: "Project not found",
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: `Employee ${req.body.employee} assign to project ${req.params.id}`,
+      message: `Employee assigned to project ${req.params.id}`,
       data: result,
       error: false,
     });
