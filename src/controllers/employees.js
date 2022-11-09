@@ -1,11 +1,11 @@
-import Employees from "../models/Employees";
-import APIError from "../utils/APIError";
+import Employees from '../models/Employees';
+import APIError from '../utils/APIError';
 
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employees.find(req.query);
     return res.status(200).json({
-      message: "Employees found",
+      message: 'Employees found',
       data: employees,
       error: false,
     });
@@ -22,12 +22,12 @@ export const getEmployeesById = async (req, res) => {
     const employee = await Employees.findById(req.params.id);
     if (!employee) {
       throw new APIError({
-        message: "Employee not found",
+        message: 'Employee not found',
         status: 404,
       });
     }
     return res.status(200).json({
-      message: "Employee found",
+      message: 'Employee found',
       data: employee,
       error: false,
     });
@@ -51,7 +51,7 @@ export const createEmployees = async (req, res) => {
 
     const result = await employee.save();
     return res.status(201).json({
-      message: "Employee created",
+      message: 'Employee created',
       data: result,
       error: false,
     });
@@ -68,7 +68,7 @@ export const deleteEmployees = async (req, res) => {
     const result = await Employees.findByIdAndDelete(req.params.id);
     if (!result) {
       throw new APIError({
-        message: "Employee not found",
+        message: 'Employee not found',
         status: 404,
       });
     }
@@ -88,7 +88,7 @@ export const editEmployees = async (req, res) => {
     });
     if (!result) {
       throw new APIError({
-        message: "Employee not found",
+        message: 'Employee not found',
         status: 404,
       });
     }
