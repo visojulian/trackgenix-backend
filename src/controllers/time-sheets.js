@@ -1,15 +1,32 @@
-import TimeSheets from '../models/Time-sheets';
-import APIError from '../utils/APIError';
+/* eslint-disable quotes */
+import TimeSheets from "../models/Time-sheets";
+import Tasks from "../models/Tasks";
+import Employees from "../models/Employees";
+import Projects from "../models/Projects";
+import APIError from "../utils/APIError";
 
 export const getAllTimeSheets = async (req, res) => {
   try {
     const timeSheets = await TimeSheets.find(req.query)
-      .populate('task')
-      .populate('employee')
-      .populate('project');
-
+      .populate("task")
+      .populate("employee")
+      .populate("project");
+    timeSheets.forEach(async (element, index) => {
+      if (element.task === null) {
+        timeSheets.splice(index, 1);
+        await TimeSheets.findByIdAndDelete(element.id);
+      }
+      if (element.employee === null) {
+        timeSheets.splice(index, 1);
+        await TimeSheets.findByIdAndDelete(element.id);
+      }
+      if (element.project === null) {
+        timeSheets.splice(index, 1);
+        await TimeSheets.findByIdAndDelete(element.id);
+      }
+    });
     return res.status(200).json({
-      message: 'Time sheets found',
+      message: "Time sheets found",
       data: timeSheets,
       error: false,
     });
@@ -24,17 +41,17 @@ export const getAllTimeSheets = async (req, res) => {
 export const getTimeSheetById = async (req, res) => {
   try {
     const timeSheet = await TimeSheets.findById(req.params.id)
-      .populate('task')
-      .populate('employee')
-      .populate('project');
+      .populate("task")
+      .populate("employee")
+      .populate("project");
     if (!timeSheet) {
       throw new APIError({
-        message: 'Time sheet not found',
+        message: "Time sheet not found",
         status: 404,
       });
     }
     return res.status(200).json({
-      message: 'Time sheet found',
+      message: "Time sheet found",
       data: timeSheet,
       error: false,
     });
@@ -56,9 +73,31 @@ export const createTimeSheet = async (req, res) => {
       employee: req.body.employee,
       project: req.body.project,
     });
+    let scan = await Tasks.find({ _id: req.body.task });
+    if (scan.length === 0) {
+      throw new Error("Cannot create timesheet with unexistent task");
+    }
+    scan = await Employees.find({ _id: req.body.employee });
+    if (scan.length === 0) {
+      throw new Error("Cannot create timesheet with unexistent employee");
+    }
+    scan = await Projects.find({ _id: req.body.project });
+    if (scan.length === 0) {
+      throw new Error("Cannot create timesheet with unexistent project");
+    }
+    const match = scan[0].employees.filter(
+      // eslint-disable-next-line comma-dangle
+      (employee) => employee.employee.toString() === req.body.employee
+    );
+    if (match.length === 0) {
+      throw new Error(
+        // eslint-disable-next-line comma-dangle
+        "Cannot create timesheet with an employee not assigned to the selected project"
+      );
+    }
     const result = await timeSheet.save();
     return res.status(201).json({
-      message: 'Time sheet created successfully',
+      message: "Time sheet created successfully",
       data: result,
       error: false,
     });
@@ -75,7 +114,7 @@ export const deleteTimeSheet = async (req, res) => {
     const timeSheet = await TimeSheets.findByIdAndDelete(req.params.id);
     if (!timeSheet) {
       throw new APIError({
-        message: 'Time sheet not found',
+        message: "Time sheet not found",
         status: 404,
       });
     }
@@ -94,14 +133,38 @@ export const deleteTimeSheet = async (req, res) => {
 
 export const editTimeSheet = async (req, res) => {
   try {
+    let scan;
+    scan = await Tasks.find({ _id: req.body.task });
+    if (scan.length === 0) {
+      throw new Error("Cannot update timesheet with unexistent task");
+    }
+    scan = await Employees.find({ _id: req.body.employee });
+    if (scan.length === 0) {
+      throw new Error("Cannot update timesheet with unexistent employee");
+    }
+    scan = await Projects.find({ _id: req.body.project });
+    if (scan.length === 0) {
+      throw new Error("Cannot update timesheet with non existent project");
+    }
+    const match = scan[0].employees.filter(
+      // eslint-disable-next-line comma-dangle
+      (employee) => employee.employee.toString() === req.body.employee
+    );
+    if (match.length === 0) {
+      throw new Error(
+        // eslint-disable-next-line comma-dangle
+        "Cannot update timesheet with an employee unrelated to the project"
+      );
+    }
     const timeSheet = await TimeSheets.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true },
+      // eslint-disable-next-line comma-dangle
+      { new: true }
     );
     if (!timeSheet) {
       throw new APIError({
-        message: 'Time sheet not found',
+        message: "Time sheet not found",
         status: 404,
       });
     }
