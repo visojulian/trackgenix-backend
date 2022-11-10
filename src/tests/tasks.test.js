@@ -14,7 +14,7 @@ describe('Tasks - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.error).toBeDefined();
-      expect(response.body.message).toBe('Task found');
+      expect(response.body.message).toBe('Tasks found');
     });
   });
 
@@ -43,17 +43,16 @@ describe('Tasks - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
       expect(response.body.error).toBeDefined();
-      expect(response.body.message).toBe('Task created successfully');
+      expect(response.body.message).toBe('Task created');
     });
   });
 
   describe('DELETE ERROR /tasks/:id', () => {
     test('should return status 200 when task is found and deleted', async () => {
       const response = await request(app).delete('/tasks/63548d0f2e375d491a94b171').send();
-      expect(response.status).toBe(200);
-      expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Task with id 63548d0f2e375d491a94b171 deleted');
+      expect(response.status).toBe(204);
     });
+
     test('should return status 404 when the id is invalid', async () => {
       const response = await request(app).delete('/tasks/63548d1929a3478b83078099').send();
       expect(response.status).toBe(404);
@@ -71,7 +70,7 @@ describe('Tasks - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.error).toBeDefined();
-      expect(response.body.message).toEqual('Task with id 63548d1929a3478b830780cb updated');
+      expect(response.body.message).toEqual('Task with id: 63548d1929a3478b830780cb edited');
     });
   });
 });

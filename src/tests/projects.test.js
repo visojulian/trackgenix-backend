@@ -15,7 +15,7 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('All Projects');
+      expect(response.body.message).toBe('Projects found');
     });
   });
 
@@ -55,7 +55,7 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Project created successfully!');
+      expect(response.body.message).toBe('Project created');
     });
 
     test('should return status code 400 when a project is not created because it did not pass validation in name', async () => {
@@ -176,12 +176,9 @@ describe('Projects - Unit tests', () => {
   });
 
   describe('DELETE - deleteProject', () => {
-    test('Should return an status 200 when the project id is correct and exist in the database', async () => {
+    test('should return an status 200 when the project id is correct and exist in the database', async () => {
       const response = await request(app).delete('/projects/6354c31fa0f546fd19325575').send();
-      expect(response.status).toBe(200);
-      expect(response.body.error).toBe(false);
-      expect(response.body.data).toBeDefined();
-      expect(response.body.message).toEqual('Project 6354c31fa0f546fd19325575 deleted');
+      expect(response.status).toBe(204);
     });
 
     test('Should return an status 404 when the project id is correct but does not exist in the database', async () => {
@@ -221,7 +218,7 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toEqual('Project 6354c31a6c738f0c041f5100 updated');
+      expect(response.body.message).toEqual('Project with id: 6354c31a6c738f0c041f5100 edited');
     });
 
     test('Sending correct non existing id should return status code 404', async () => {
@@ -264,7 +261,7 @@ describe('Projects - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toEqual('Employee 634d5803354e41cd60b9e400 assign to project 6354c31a6c738f0c041f5100');
+      expect(response.body.message).toEqual('Employee assigned to project 6354c31a6c738f0c041f5100');
     });
 
     test('Sending correct non existing id should return status code 404', async () => {
