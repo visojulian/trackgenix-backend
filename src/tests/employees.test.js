@@ -48,7 +48,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Employee created successfully');
+      expect(response.body.message).toBe('Employee created');
     });
 
     test('should return an error 400 when the name is empty', async () => {
@@ -128,12 +128,9 @@ describe('Time-sheet - Unit tests', () => {
   });
 
   describe('DELETE /employees/:id', () => {
-    test('Should return status code 200', async () => {
+    test('Should return status code 204', async () => {
       const response = await request(app).delete('/employees/634d5803354e41cd60b9e401').send();
-      expect(response.status).toBe(200);
-      expect(response.body.error).toBeFalsy();
-      expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Employee with id: 634d5803354e41cd60b9e401 deleted');
+      expect(response.status).toBe(204);
     });
 
     test('should return an status 404 when the employee does not exist in the database', async () => {
@@ -158,7 +155,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Employee id: 634d5803354e41cd60b9e405 edited');
+      expect(response.body.message).toBe('Employee with id: 634d5803354e41cd60b9e405 edited');
     });
 
     test('should return an status 404 when the employee does not exist in the database', async () => {

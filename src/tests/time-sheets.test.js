@@ -24,7 +24,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Time sheets found');
+      expect(response.body.message).toBe('Timesheets found');
     });
   });
 
@@ -35,7 +35,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Time sheet found');
+      expect(response.body.message).toBe('Timesheet found');
     });
 
     test('should return status code 500 when the time sheet _id supplied is invalid', async () => {
@@ -53,7 +53,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Time sheet not found');
+      expect(response.body.message).toBe('Timesheet not found');
     });
   });
 
@@ -72,7 +72,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Time sheet created successfully');
+      expect(response.body.message).toBe('Timesheet created');
     });
 
     test('should return status code 400 if any field does not pass validations', async () => {
@@ -93,13 +93,10 @@ describe('Time-sheet - Unit tests', () => {
   });
 
   describe('DELETE /time-sheets/:id', () => {
-    test('should return status code 200 if time sheet _id is deleted', async () => {
+    test('should return status code 204 if time sheet _id is deleted', async () => {
       const existId = '634adbce3e995e6b4c7864ab';
       const response = await request(app).delete(`/time-sheets/${existId}`).send();
-      expect(response.status).toBe(200);
-      expect(response.body.error).toBe(false);
-      expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe(`Time sheet with id ${existId} has been deleted`);
+      expect(response.status).toBe(204);
     });
 
     test('should return status code 500 when the time sheet _id supplied is invalid', async () => {
@@ -117,7 +114,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Time sheet not found');
+      expect(response.body.message).toBe('Timesheet not found');
     });
   });
 
@@ -136,7 +133,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe(`Time sheet with id ${existId} has been updated`);
+      expect(response.body.message).toBe('Timesheet with id: 63535ae7fc13ae517a000035 edited');
     });
 
     test('should return status code 400 if any field does not pass validations', async () => {
@@ -170,7 +167,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Time sheet not found');
+      expect(response.body.message).toBe('Timesheet not found');
     });
   });
 });

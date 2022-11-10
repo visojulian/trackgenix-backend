@@ -1,12 +1,12 @@
-import SuperAdmins from "../models/Super-admins";
-import APIError from "../utils/APIError";
+import SuperAdmins from '../models/Super-admins';
+import APIError from '../utils/APIError';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
     const superAdmins = await SuperAdmins.find(req.query);
 
     return res.status(200).json({
-      message: "Super admins found",
+      message: 'Super admins found',
       data: superAdmins,
       error: false,
     });
@@ -24,13 +24,13 @@ export const getSuperAdminById = async (req, res) => {
 
     if (!superAdmin) {
       throw new APIError({
-        message: "Super admin not found",
+        message: 'Super admin not found',
         status: 404,
       });
     }
 
     return res.status(200).json({
-      message: "Super admin found",
+      message: 'Super admin found',
       data: superAdmin,
       error: false,
     });
@@ -53,7 +53,7 @@ export const createSuperAdmin = async (req, res) => {
 
     const result = await superAdmin.save();
     return res.status(201).json({
-      message: "Super admin created",
+      message: 'Super admin created',
       data: result,
       error: false,
     });
@@ -68,17 +68,17 @@ export const createSuperAdmin = async (req, res) => {
 export const deleteSuperAdmin = async (req, res) => {
   try {
     const superAdminDeleted = await SuperAdmins.findByIdAndDelete(
-      req.params.id
+      req.params.id,
     );
 
     if (!superAdminDeleted) {
       throw new APIError({
-        message: "Super admin not found",
+        message: 'Super admin not found',
         status: 404,
       });
     }
 
-    return res.status(204);
+    return res.status(204).send();
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || error,
@@ -92,12 +92,12 @@ export const editSuperAdmin = async (req, res) => {
     const result = await SuperAdmins.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
 
     if (!result) {
       throw new APIError({
-        message: "Super admin not found",
+        message: 'Super admin not found',
         status: 404,
       });
     }

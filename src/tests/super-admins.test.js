@@ -50,7 +50,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Super Admin created successfully');
+      expect(response.body.message).toBe('Super admin created');
     });
 
     test('should return status code 400 when a super admin is not created because it did not pass validation in name', async () => {
@@ -111,13 +111,10 @@ describe('Super-Admins - Unit tests', () => {
   });
 
   describe('DELETE /super-admins/:id', () => {
-    test('should return status code 200 if superadmin _id is deleted', async () => {
+    test('should return status code 204 if super admin is deleted', async () => {
       const superAdminId = '63557febf3b39e6ffe36f580';
       const response = await request(app).delete(`/super-admins/${superAdminId}`).send();
-      expect(response.status).toBe(200);
-      expect(response.body.error).toBe(false);
-      expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Super admin was deleted');
+      expect(response.status).toBe(204);
     });
     test('should return status code 400 when the superadmin _id supplied is invalid', async () => {
       const superAdminId = '6354c3046634d3f5d058ba';
@@ -142,7 +139,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBe(false);
       expect(response.body.data).toBeDefined();
-      expect(response.body.message).toBe('Super admin was edited');
+      expect(response.body.message).toBe('Super admin with id: 63557ff1d2da47ee05366c85 edited');
     });
 
     test('should return status code 400 when a super admin is not edited because it did not pass validation in name', async () => {

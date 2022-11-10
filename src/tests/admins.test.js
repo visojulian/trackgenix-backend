@@ -108,7 +108,7 @@ describe('PUT - Edit admins', () => {
     const response = await request(app).put('/admins/634b30cda84415df73652ecf').send(correctAdmin);
     expect(response.status).toBe(200);
     expect(response.body.error).toBe(false);
-    expect(response.body.message).toBe('Admin was updated');
+    expect(response.body.message).toBe('Admin with id: 634b30cda84415df73652ecf edited');
   });
 });
 
@@ -149,9 +149,8 @@ describe('DELETE - Remove admins', () => {
     expect(response.body.data).toBe(undefined);
   });
 
-  test('should return status 200', async () => {
+  test('should return status 204', async () => {
     const response = await request(app).delete('/admins/634b30cda84415df73652ecf').send();
-    expect(response.status).toBe(200);
-    expect(response.body.error).toBe(false);
+    expect(response.status).toBe(204);
   });
 });
