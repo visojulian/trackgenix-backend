@@ -63,7 +63,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "name" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with name field.');
     });
 
     test('should return an error 400 when the lastName is empty', async () => {
@@ -78,7 +78,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "lastName" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with lastName field.');
     });
 
     test('should return an error 400 when the phone is empty', async () => {
@@ -93,7 +93,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "phone" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with phone field.');
     });
 
     test('should return an error 400 when the email is empty', async () => {
@@ -108,7 +108,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "email" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with email field.');
     });
 
     test('should return an error 400 when the password is empty', async () => {
@@ -123,7 +123,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "password" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with password field.');
     });
   });
 
@@ -185,7 +185,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "name" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with name field.');
     });
 
     test('should return an error 400 when the lastName is empty', async () => {
@@ -200,7 +200,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "lastName" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with lastName field.');
     });
 
     test('should return an error 400 when the phone is empty', async () => {
@@ -215,7 +215,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "phone" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with phone field.');
     });
 
     test('should return an error 400 when the email is empty', async () => {
@@ -230,7 +230,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "email" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with email field.');
     });
 
     test('should return an error 400 when the password is empty', async () => {
@@ -245,7 +245,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong: "password" is not allowed to be empty ');
+      expect(response.body.message).toBe('Something went wrong with password field.');
     });
   });
 });
