@@ -64,7 +64,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "name" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Name cannot be empty');
     });
 
     test('should return status code 400 when a super admin is not created because it did not pass validation in lastName', async () => {
@@ -78,7 +78,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "lastName" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Last Name cannot be empty');
     });
 
     test('should return status code 400 when a super admin is not created because it did not pass validation in email', async () => {
@@ -92,7 +92,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "email" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Email cannot be empty');
     });
 
     test('should return status code 400 when a super admin is not created because it did not pass validation in password', async () => {
@@ -106,7 +106,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "password" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Password cannot be empty');
     });
   });
 
@@ -142,7 +142,7 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.body.message).toBe('Super admin with id: 63557ff1d2da47ee05366c85 edited');
     });
 
-    test('should return status code 400 when a super admin is not edited because it did not pass validation in name', async () => {
+    test('Should return an error when the name is empty', async () => {
       const superAdminId = '63557ff1d2da47ee05366c85';
       const superAdminMooked = {
         name: '',
@@ -154,10 +154,141 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "name" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Name cannot be empty');
     });
 
-    test('should return status code 400 when a super admin is not edited because it did not pass validation in email', async () => {
+    test('Should return an error when the name is less than 3 characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'ab',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name must have at least 3 characters');
+    });
+
+    test('Should return an error when the name has more than 20 characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'aaaaabbbbbcccccdddddeeeee',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name cannot exceed 20 characters');
+    });
+
+    test('Should return an error when the name has special characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abc!@#@$',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name cannot not have special characters');
+    });
+
+    test('Should return an error when the name has numbers', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: '1234abcd',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name can only have letters');
+    });
+
+    test('Should return an error when the last name is empty', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abcd',
+        lastName: '',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name cannot be empty');
+    });
+    test('Should return an error when the last name is less than 3 characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abcd',
+        lastName: 'ab',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name must have at least 3 characters');
+    });
+    test('Should return an error when the last name has more than 25 characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abcd',
+        lastName: 'aaaaabbbbbcccccdddddeeeeefffff',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name cannot exceed 25 characters');
+    });
+    test('Should return an error when the last name has special character', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abcd',
+        lastName: 'abcd !@#!$ad',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name cannot not have special characters');
+    });
+    test('Should return an error when the last name has numbers', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'abcd',
+        lastName: '123abc',
+        email: 'lmickan9@sun.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name can only have letters');
+    });
+
+    test('Should return an error when the email is empty', async () => {
       const superAdminId = '63557ff1d2da47ee05366c85';
       const superAdminMooked = {
         name: 'Percy',
@@ -169,10 +300,24 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "email" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Email cannot be empty');
+    });
+    test('Should return an error when the email has an invalid format', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'Percy',
+        lastName: 'Mickan',
+        email: 'abc@.#!@abc.com',
+        password: 'ChangePassword1',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Email needs to be a valid email address');
     });
 
-    test('should return status code 400 when a super admin is not edited because it did not pass validation in password', async () => {
+    test('Should return an error when the password is empty', async () => {
       const superAdminId = '63557ff1d2da47ee05366c85';
       const superAdminMooked = {
         name: 'Percy',
@@ -184,7 +329,35 @@ describe('Super-Admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBe(true);
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('There was an error: "password" is not allowed to be empty');
+      expect(response.body.message).toBe('There was an error: Password cannot be empty');
+    });
+    test('Should return an error when the password is less than 8 characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'Percy',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'abc123',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Password must have at least 8 characters');
+    });
+    test('Should return an error when the password has special characters', async () => {
+      const superAdminId = '63557ff1d2da47ee05366c85';
+      const superAdminMooked = {
+        name: 'Percy',
+        lastName: 'Mickan',
+        email: 'lmickan9@sun.com',
+        password: 'abc123#$!@',
+      };
+      const response = await request(app).put(`/super-admins/${superAdminId}`).send(superAdminMooked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(true);
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Password cannot contain special characters');
     });
   });
 });
