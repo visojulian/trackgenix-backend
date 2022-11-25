@@ -63,7 +63,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with name field.');
+      expect(response.body.message).toBe('There was an error: Name cannot be empty');
     });
 
     test('should return an error 400 when the lastName is empty', async () => {
@@ -78,7 +78,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with lastName field.');
+      expect(response.body.message).toBe('There was an error: Last Name cannot be empty');
     });
 
     test('should return an error 400 when the phone is empty', async () => {
@@ -93,7 +93,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with phone field.');
+      expect(response.body.message).toBe('There was an error: Phone cannot be empty');
     });
 
     test('should return an error 400 when the email is empty', async () => {
@@ -108,7 +108,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with email field.');
+      expect(response.body.message).toBe('There was an error: Email cannot be empty');
     });
 
     test('should return an error 400 when the password is empty', async () => {
@@ -123,7 +123,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with password field.');
+      expect(response.body.message).toBe('There was an error: Password cannot be empty');
     });
   });
 
@@ -185,7 +185,52 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with name field.');
+      expect(response.body.message).toBe('There was an error: Name cannot be empty');
+    });
+
+    test('should return an error 400 when the name is less than 3 characters', async () => {
+      const employeeMocked = {
+        name: 'ab',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name must have at least 3 characters');
+    });
+
+    test('should return an error 400 when the name has more than 20 characters', async () => {
+      const employeeMocked = {
+        name: 'aaaaabbbbbcccccdddddeeeee',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name cannot exceed 20 characters');
+    });
+
+    test('should return an error 400 when the name has numbers or special characters', async () => {
+      const employeeMocked = {
+        name: '123 abc @cdf$#',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Name can only have letters');
     });
 
     test('should return an error 400 when the lastName is empty', async () => {
@@ -200,7 +245,52 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with lastName field.');
+      expect(response.body.message).toBe('There was an error: Last Name cannot be empty');
+    });
+
+    test('should return an error 400 when the lastName is less than 3 characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'ab',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name must have at least 3 characters');
+    });
+
+    test('should return an error 400 when the lastName has more than 25 characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'aaaaabbbbbcccccdddddeeeeefffff',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name cannot exceed 25 characters');
+    });
+
+    test('should return an error 400 when the lastName has numbers or special characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: '123#$!@#',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Last Name can only have letters');
     });
 
     test('should return an error 400 when the phone is empty', async () => {
@@ -215,7 +305,37 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with phone field.');
+      expect(response.body.message).toBe('There was an error: Phone cannot be empty');
+    });
+
+    test('should return an error 400 when the phone exceeds 10 numbers', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'Bettini',
+        phone: '12345678901',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Phone cannot exceed 10 numbers');
+    });
+
+    test('should return an error 400 when the phone has letters or special characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'Bettini',
+        phone: 'abc @#!$!@',
+        email: 'tomasbettini@gmail.com',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Phone can only have numbers');
     });
 
     test('should return an error 400 when the email is empty', async () => {
@@ -230,7 +350,22 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with email field.');
+      expect(response.body.message).toBe('There was an error: Email cannot be empty');
+    });
+
+    test('should return an error 400 when the email has an invalid format', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'abc.abc@.com.@abc',
+        password: '591gJWFkIlF8',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Email needs to be a valid address');
     });
 
     test('should return an error 400 when the password is empty', async () => {
@@ -245,7 +380,35 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toBe('Something went wrong with password field.');
+      expect(response.body.message).toBe('There was an error: Password cannot be empty');
+    });
+    test('should return an error 400 when the password is less than 8 characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: 'abc123',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Password must have at least 8 characters');
+    });
+    test('should return an error 400 when the password has special characters', async () => {
+      const employeeMocked = {
+        name: 'Tomas',
+        lastName: 'Bettini',
+        phone: '9512613592',
+        email: 'tomasbettini@gmail.com',
+        password: 'abc123#$%',
+      };
+      const response = await request(app).put('/employees/634d5803354e41cd60b9e409').send(employeeMocked);
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toBe('There was an error: Password cannot contain special characters');
     });
   });
 });
