@@ -94,18 +94,28 @@ export const deleteEmployees = async (req, res) => {
 
 export const editEmployees = async (req, res) => {
   try {
-    const result = await Employees.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (!result) {
+    const employee = await Employees.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      },
+    );
+    if (!employee) {
       throw new APIError({
         message: 'Employee not found',
         status: 404,
       });
     }
+
+    await firebase.auth().updateUser(req.body.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Employee with id: ${req.params.id} edited`,
-      data: result,
+      data: employee,
       error: false,
     });
   } catch (error) {

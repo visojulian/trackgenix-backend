@@ -96,22 +96,27 @@ export const deleteSuperAdmin = async (req, res) => {
 
 export const editSuperAdmin = async (req, res) => {
   try {
-    const result = await SuperAdmins.findByIdAndUpdate(
+    const superAdmin = await SuperAdmins.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },
     );
 
-    if (!result) {
+    if (!superAdmin) {
       throw new APIError({
         message: 'Super admin not found',
         status: 404,
       });
     }
 
+    await firebase.auth().updateUser(req.body.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Super admin with id: ${req.params.id} edited`,
-      data: result,
+      data: superAdmin,
       error: false,
     });
   } catch (error) {

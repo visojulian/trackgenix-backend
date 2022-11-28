@@ -102,6 +102,12 @@ export const updateAdmin = async (req, res) => {
         status: 404,
       });
     }
+
+    await firebase.auth().updateUser(req.body.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Admin with id: ${req.params.id} edited`,
       data: admin,
