@@ -7,14 +7,15 @@ import {
   deleteEmployees,
   editEmployees,
 } from '../controllers/employees';
+import checkAuth from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
 router
-  .get('/', getAllEmployees)
-  .get('/:id', getEmployeesById)
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getAllEmployees)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getEmployeesById)
   .post('/', validateEmployeeBody, createEmployees)
-  .delete('/:id', deleteEmployees)
-  .put('/:id', validateEmployeeBody, editEmployees);
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteEmployees)
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEmployeeBody, editEmployees);
 
 export default router;

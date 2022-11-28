@@ -8,14 +8,15 @@ import {
   deleteTimeSheet,
   editTimeSheet,
 } from '../controllers/time-sheets';
+import checkAuth from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
 router
-  .get('/', getAllTimeSheets)
-  .get('/:id', getTimeSheetById)
-  .post('/', validateCreation, createTimeSheet)
-  .delete('/:id', deleteTimeSheet)
-  .put('/:id', validateCreation, editTimeSheet);
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getAllTimeSheets)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getTimeSheetById)
+  .post('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateCreation, createTimeSheet)
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteTimeSheet)
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateCreation, editTimeSheet);
 
 export default router;
