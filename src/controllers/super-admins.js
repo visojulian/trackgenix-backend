@@ -1,5 +1,6 @@
 import SuperAdmins from '../models/Super-admins';
 import APIError from '../utils/APIError';
+import firebase from '../helpers/firebase';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
@@ -44,17 +45,25 @@ export const getSuperAdminById = async (req, res) => {
 
 export const createSuperAdmin = async (req, res) => {
   try {
-    const superAdmin = new SuperAdmins({
-      name: req.body.name,
-      lastName: req.body.lastName,
+    const newFirebaseUser = await firebase.auth().createUser({
       email: req.body.email,
       password: req.body.password,
     });
 
-    const result = await superAdmin.save();
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'SUPER_ADMIN' });
+
+    const newSuperAdmin = new SuperAdmins({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      firebaseUid: newFirebaseUser.uid,
+    });
+    const superAdmin = await newSuperAdmin.save();
     return res.status(201).json({
       message: 'Super admin created',
-      data: result,
+      data: superAdmin,
       error: false,
     });
   } catch (error) {
@@ -67,17 +76,15 @@ export const createSuperAdmin = async (req, res) => {
 
 export const deleteSuperAdmin = async (req, res) => {
   try {
-    const superAdminDeleted = await SuperAdmins.findByIdAndDelete(
-      req.params.id,
-    );
-
-    if (!superAdminDeleted) {
+    const superAdmin = await SuperAdmins.findById(req.params.id);
+    await firebase.auth().deleteUser(superAdmin.firebaseUid);
+    const result = await SuperAdmins.findByIdAndDelete(req.params.id);
+    if (!result) {
       throw new APIError({
         message: 'Super admin not found',
         status: 404,
       });
     }
-
     return res.status(204).send();
   } catch (error) {
     return res.status(error.status || 500).json({
@@ -89,22 +96,27 @@ export const deleteSuperAdmin = async (req, res) => {
 
 export const editSuperAdmin = async (req, res) => {
   try {
-    const result = await SuperAdmins.findByIdAndUpdate(
+    const superAdmin = await SuperAdmins.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },
     );
 
-    if (!result) {
+    if (!superAdmin) {
       throw new APIError({
         message: 'Super admin not found',
         status: 404,
       });
     }
 
+    await firebase.auth().updateUser(superAdmin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Super admin with id: ${req.params.id} edited`,
-      data: result,
+      data: superAdmin,
       error: false,
     });
   } catch (error) {

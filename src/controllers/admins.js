@@ -1,5 +1,6 @@
 import Admins from '../models/Admins';
 import APIError from '../utils/APIError';
+import firebase from '../helpers/firebase';
 
 export const getAllAdmins = async (req, res) => {
   try {
@@ -41,11 +42,20 @@ export const getAdminById = async (req, res) => {
 
 export const createAdmin = async (req, res) => {
   try {
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+
     const newAdmin = new Admins({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
+      firebaseUid: newFirebaseUser.uid,
     });
     const admin = await newAdmin.save();
     return res.status(201).json({
@@ -63,8 +73,10 @@ export const createAdmin = async (req, res) => {
 
 export const deleteAdmin = async (req, res) => {
   try {
-    const admin = await Admins.findByIdAndDelete(req.params.id);
-    if (!admin) {
+    const admin = await Admins.findById(req.params.id);
+    await firebase.auth().deleteUser(admin.firebaseUid);
+    const result = await Admins.findByIdAndDelete(req.params.id);
+    if (!result) {
       throw new APIError({
         message: 'Admin not found',
         status: 404,
@@ -90,6 +102,12 @@ export const updateAdmin = async (req, res) => {
         status: 404,
       });
     }
+
+    await firebase.auth().updateUser(admin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Admin with id: ${req.params.id} edited`,
       data: admin,

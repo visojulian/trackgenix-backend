@@ -14,6 +14,8 @@ const checkAuth = (roles) => async (req, res, next) => {
       throw new Error('Invalid role');
     }
 
+    req.firebaseUid = user.uid;
+
     return next();
   } catch (error) {
     return res.status(400).json({ message: error.toString() });
