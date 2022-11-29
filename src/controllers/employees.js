@@ -108,7 +108,7 @@ export const editEmployees = async (req, res) => {
       });
     }
 
-    await firebase.auth().updateUser(req.body.firebaseUid, {
+    await firebase.auth().updateUser(employee.firebaseUid, {
       email: req.body.email,
       password: req.body.password,
     });

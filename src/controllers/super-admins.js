@@ -109,7 +109,7 @@ export const editSuperAdmin = async (req, res) => {
       });
     }
 
-    await firebase.auth().updateUser(req.body.firebaseUid, {
+    await firebase.auth().updateUser(superAdmin.firebaseUid, {
       email: req.body.email,
       password: req.body.password,
     });
