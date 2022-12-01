@@ -8,7 +8,7 @@ const getUserProfile = async (req, res) => {
     if (role === 'ADMIN') {
       const admin = await Admins.findOne({ firebaseUid });
       if (admin) {
-        return res.status(201).json({
+        return res.status(200).json({
           message: 'Admin found',
           data: admin,
         });
@@ -18,7 +18,7 @@ const getUserProfile = async (req, res) => {
     if (role === 'SUPER_ADMIN') {
       const superAdmin = await SuperAdmins.findOne({ firebaseUid });
       if (superAdmin) {
-        return res.status(201).json({
+        return res.status(200).json({
           message: 'Super Admin found',
           data: superAdmin,
         });
@@ -28,7 +28,7 @@ const getUserProfile = async (req, res) => {
     if (role === 'EMPLOYEE') {
       const employee = await Employees.findOne({ firebaseUid });
       if (employee) {
-        return res.status(201).json({
+        return res.status(200).json({
           message: 'Employee found',
           data: employee,
         });
