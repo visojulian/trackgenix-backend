@@ -1,5 +1,5 @@
 import express from 'express';
-import validateEmployeeBody from '../validations/employees';
+import { validateEmployeeBody, validateEditEmployee } from '../validations/employees';
 import {
   getAllEmployees,
   getEmployeesById,
@@ -16,6 +16,6 @@ router
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getEmployeesById)
   .post('/', validateEmployeeBody, createEmployees)
   .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteEmployees)
-  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEmployeeBody, editEmployees);
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEditEmployee, editEmployees);
 
 export default router;

@@ -8,7 +8,7 @@ import {
 } from '../controllers/super-admins';
 import checkAuth from '../middlewares/authMiddleware';
 
-import validateSuperAdminBody from '../validations/super-admins';
+import { validateEditSuperAdmin, validateSuperAdminBody } from '../validations/super-admins';
 
 const router = express.Router();
 
@@ -17,6 +17,6 @@ router
   .get('/:id', checkAuth(['SUPER_ADMIN']), getSuperAdminById)
   .post('/', checkAuth(['SUPER_ADMIN']), validateSuperAdminBody, createSuperAdmin)
   .delete('/:id', checkAuth(['SUPER_ADMIN']), deleteSuperAdmin)
-  .put('/:id', checkAuth(['SUPER_ADMIN']), validateSuperAdminBody, editSuperAdmin);
+  .put('/:id', checkAuth(['SUPER_ADMIN']), validateEditSuperAdmin, editSuperAdmin);
 
 export default router;
