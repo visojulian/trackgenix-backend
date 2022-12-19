@@ -29,7 +29,7 @@ const validateEmployeeBody = (req, res, next) => {
     phone: Joi.string()
       .required()
       .length(10)
-      .pattern(/^[0-9]+$/)
+      .pattern(/^[0-9]*$/)
       .messages({
         'string.required': 'Phone is required',
         'string.empty': 'Phone cannot be empty',
@@ -97,7 +97,7 @@ const validateEditEmployee = (req, res, next) => {
     phone: Joi.string()
       .required()
       .length(10)
-      .pattern(/^[0-9]+$/)
+      .pattern(/^[0-9]*$/)
       .messages({
         'string.required': 'Phone is required',
         'string.empty': 'Phone cannot be empty',
