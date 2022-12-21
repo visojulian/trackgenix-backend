@@ -6,7 +6,7 @@ const validateEmployeeBody = (req, res, next) => {
       .required()
       .min(3)
       .max(20)
-      .pattern(/^[a-zA-Z]{3,50}$/)
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .messages({
         'string.required': 'Name is required',
         'string.empty': 'Name cannot be empty',
@@ -18,7 +18,7 @@ const validateEmployeeBody = (req, res, next) => {
       .required()
       .min(3)
       .max(25)
-      .pattern(/^[a-zA-Z]{3,50}$/)
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .messages({
         'string.required': 'Last Name is required',
         'string.empty': 'Last Name cannot be empty',
@@ -74,7 +74,7 @@ const validateEditEmployee = (req, res, next) => {
       .required()
       .min(3)
       .max(20)
-      .pattern(/^[a-zA-Z]{3,50}$/)
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .messages({
         'string.required': 'Name is required',
         'string.empty': 'Name cannot be empty',
@@ -86,7 +86,7 @@ const validateEditEmployee = (req, res, next) => {
       .required()
       .min(3)
       .max(25)
-      .pattern(/^[a-zA-Z]{3,50}$/)
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .messages({
         'string.required': 'Last Name is required',
         'string.empty': 'Last Name cannot be empty',
