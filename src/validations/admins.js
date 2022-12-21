@@ -6,8 +6,7 @@ const validateAdminBody = (req, res, next) => {
     name: Joi.string()
       .min(3)
       .max(20)
-      .pattern(/^[a-zA-Z\s]*$/)
-      .trim()
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .required()
       .messages({
         'string.empty': 'Name cannot be empty',
@@ -19,8 +18,7 @@ const validateAdminBody = (req, res, next) => {
     lastName: Joi.string()
       .min(3)
       .max(25)
-      .pattern(/^[a-zA-Z\s]*$/)
-      .trim()
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .required()
       .messages({
         'string.empty': 'Last Name cannot be empty',
@@ -61,8 +59,7 @@ const validateEditAdminBody = (req, res, next) => {
     name: Joi.string()
       .min(3)
       .max(20)
-      .pattern(/^[a-zA-Z\s]*$/)
-      .trim()
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .required()
       .messages({
         'string.empty': 'Name cannot be empty',
@@ -74,8 +71,7 @@ const validateEditAdminBody = (req, res, next) => {
     lastName: Joi.string()
       .min(3)
       .max(25)
-      .pattern(/^[a-zA-Z\s]*$/)
-      .trim()
+      .pattern(/^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/)
       .required()
       .messages({
         'string.empty': 'Last Name cannot be empty',
