@@ -42,13 +42,9 @@ npm run lint:fix
 
 ### Members
 
-Daniel Vinzia | danielvinzia@gmail.com |[@kolodani](https://github.com/kolodani)
-Dario Marañes | dario.sjs@gmail.com |[@mara666](https://github.com/mara666)
-Julian Piaggio| julianpiaggio@gmail.com |[@julianpiaggio](https://github.com/julianpiaggio)
-Julieta Balcaza | julibalcaza15@gmail.com |[@julibalcaza](https://github.com/julibalcaza)
-Mateo Scarabino | matescarabino@gmail.com |[@matescarabino](https://github.com/matescarabino)
-Tomas Bettini | tomas.bettini98@gmail.com |[@tomasbettini](https://github.com/tomasbettini)
-Valentin Sanabria | valensanabria21@gmail.com |[@valentin-sanabria](https://github.com/valentin-sanabria)
+|Photo | Name  | Mail | Github
+| :-----: | :-----: | :-----: | :-----: |
+<img src="https://avatars.githubusercontent.com/u/15916297?s=400&u=dfa35967b8db963baedf96f1febc27e13b38aca6&v=4" height="50" width="50">| Julián Viso | julian.viso.romero@gmail.com | [@visojulian](https://github.com/visojulian)
 
 
 
